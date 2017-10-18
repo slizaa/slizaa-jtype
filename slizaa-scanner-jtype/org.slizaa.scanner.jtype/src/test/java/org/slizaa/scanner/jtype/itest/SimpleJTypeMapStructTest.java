@@ -11,7 +11,7 @@
 package org.slizaa.scanner.jtype.itest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.slizaa.scanner.neo4j.testfwk.junit.ContentDefinitionsUtils.multipleBinaryMvnArtifacts;
+import static org.slizaa.scanner.neo4j.testfwk.ContentDefinitionsUtils.multipleBinaryMvnArtifacts;
 
 import java.io.IOException;
 
@@ -20,8 +20,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.neo4j.driver.v1.StatementResult;
 import org.neo4j.kernel.api.exceptions.KernelException;
-import org.slizaa.scanner.neo4j.testfwk.junit.SlizaaClientRule;
-import org.slizaa.scanner.neo4j.testfwk.junit.SlizaaTestServerRule;
+import org.slizaa.scanner.neo4j.testfwk.SlizaaClientRule;
+import org.slizaa.scanner.neo4j.testfwk.SlizaaTestServerRule;
 
 /**
   */

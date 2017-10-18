@@ -16,7 +16,7 @@
 
 	<modules>
 		<module>org.slizaa.scanner.jtype</module>
-		
+		<module>org.slizaa.scanner.jtype.osgi.itest</module>
 	</modules>
 
 </project>

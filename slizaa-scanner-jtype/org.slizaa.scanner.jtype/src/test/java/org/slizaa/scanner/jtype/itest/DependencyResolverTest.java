@@ -10,7 +10,7 @@
  ******************************************************************************/
 package org.slizaa.scanner.jtype.itest;
 
-import static org.slizaa.scanner.neo4j.testfwk.junit.ContentDefinitionsUtils.multipleBinaryMvnArtifacts;
+import static org.slizaa.scanner.neo4j.testfwk.ContentDefinitionsUtils.multipleBinaryMvnArtifacts;
 
 import java.util.concurrent.TimeUnit;
 
@@ -18,8 +18,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.neo4j.driver.v1.StatementResult;
-import org.slizaa.scanner.neo4j.testfwk.junit.SlizaaClientRule;
-import org.slizaa.scanner.neo4j.testfwk.junit.SlizaaTestServerRule;
+import org.slizaa.scanner.neo4j.testfwk.SlizaaClientRule;
+import org.slizaa.scanner.neo4j.testfwk.SlizaaTestServerRule;
 
 import com.google.common.base.Stopwatch;
 

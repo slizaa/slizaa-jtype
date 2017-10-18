@@ -11,7 +11,7 @@
 package org.slizaa.scanner.jtype.itest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.slizaa.scanner.neo4j.testfwk.junit.ContentDefinitionsUtils.simpleBinaryFile;
+import static org.slizaa.scanner.neo4j.testfwk.ContentDefinitionsUtils.simpleBinaryFile;
 
 import java.util.Collections;
 import java.util.List;
@@ -28,8 +28,8 @@ import org.slizaa.scanner.jtype.itest.examplecode.SimpleClassWithOneField;
 import org.slizaa.scanner.jtype.itest.examplecode.SuperClass;
 import org.slizaa.scanner.jtype.itest.examplecode.SuperInterface;
 import org.slizaa.scanner.jtype.model.ITypeNode;
-import org.slizaa.scanner.neo4j.testfwk.junit.SlizaaClientRule;
-import org.slizaa.scanner.neo4j.testfwk.junit.SlizaaTestServerRule;
+import org.slizaa.scanner.neo4j.testfwk.SlizaaClientRule;
+import org.slizaa.scanner.neo4j.testfwk.SlizaaTestServerRule;
 
 public class ExampleCodeTest {
 

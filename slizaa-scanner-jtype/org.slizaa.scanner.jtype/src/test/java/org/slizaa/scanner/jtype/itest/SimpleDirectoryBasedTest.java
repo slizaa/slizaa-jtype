@@ -20,8 +20,8 @@ import org.neo4j.driver.v1.StatementResult;
 import org.slizaa.scanner.core.contentdefinition.FileBasedContentDefinitionProvider;
 import org.slizaa.scanner.core.spi.contentdefinition.AnalyzeMode;
 import org.slizaa.scanner.core.spi.contentdefinition.IContentDefinitionProvider;
-import org.slizaa.scanner.neo4j.testfwk.junit.SlizaaClientRule;
-import org.slizaa.scanner.neo4j.testfwk.junit.SlizaaTestServerRule;
+import org.slizaa.scanner.neo4j.testfwk.SlizaaClientRule;
+import org.slizaa.scanner.neo4j.testfwk.SlizaaTestServerRule;
 
 public class SimpleDirectoryBasedTest {
 
