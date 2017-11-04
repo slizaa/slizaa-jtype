@@ -123,24 +123,24 @@ public class PrimitiveDatatypeNodeProvider implements IPrimitiveDatatypeNodeProv
 
     // we have to create nodes for the primitive data types (byte, short, int etc.) if they don't already exist
     _primitiveDatatypeByte = createPrimitveDataTypeIfNotExists(graphDatabase, "byte",
-        JTypeLabel.PRIMITIVE_DATA_TYPE);
+        JTypeLabel.PrimitiveDataType);
     _primitiveDatatypeShort = createPrimitveDataTypeIfNotExists(graphDatabase, "short",
-        JTypeLabel.PRIMITIVE_DATA_TYPE);
+        JTypeLabel.PrimitiveDataType);
     _primitiveDatatypeInt = createPrimitveDataTypeIfNotExists(graphDatabase, "int",
-        JTypeLabel.PRIMITIVE_DATA_TYPE);
+        JTypeLabel.PrimitiveDataType);
     _primitiveDatatypeLong = createPrimitveDataTypeIfNotExists(graphDatabase, "long",
-        JTypeLabel.PRIMITIVE_DATA_TYPE);
+        JTypeLabel.PrimitiveDataType);
     _primitiveDatatypeFloat = createPrimitveDataTypeIfNotExists(graphDatabase, "float",
-        JTypeLabel.PRIMITIVE_DATA_TYPE);
+        JTypeLabel.PrimitiveDataType);
     _primitiveDatatypeDouble = createPrimitveDataTypeIfNotExists(graphDatabase, "double",
-        JTypeLabel.PRIMITIVE_DATA_TYPE);
+        JTypeLabel.PrimitiveDataType);
     _primitiveDatatypeChar = createPrimitveDataTypeIfNotExists(graphDatabase, "char",
-        JTypeLabel.PRIMITIVE_DATA_TYPE);
+        JTypeLabel.PrimitiveDataType);
     _primitiveDatatypeBoolean = createPrimitveDataTypeIfNotExists(graphDatabase, "boolean",
-        JTypeLabel.PRIMITIVE_DATA_TYPE);
+        JTypeLabel.PrimitiveDataType);
 
     // void
-    _void = createPrimitveDataTypeIfNotExists(graphDatabase, "void", JTypeLabel.VOID);
+    _void = createPrimitveDataTypeIfNotExists(graphDatabase, "void", JTypeLabel.Void);
   }
 
   /**

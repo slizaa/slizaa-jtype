@@ -21,7 +21,7 @@ public class ConstructorTest extends AbstractByteBuddyBytecodeTest {
     //
     INode fieldNode = node.getRelationships(CoreModelRelationshipType.CONTAINS).get(0).getTargetBean();
 
-    assertThat(fieldNode.getLabels()).containsOnly(JTypeLabel.METHOD, JTypeLabel.CONSTRUCTOR);
+    assertThat(fieldNode.getLabels()).containsOnly(JTypeLabel.Method, JTypeLabel.Constructor);
     assertThat(fieldNode.getProperty("name")).isEqualTo("<init>");
   }
 }

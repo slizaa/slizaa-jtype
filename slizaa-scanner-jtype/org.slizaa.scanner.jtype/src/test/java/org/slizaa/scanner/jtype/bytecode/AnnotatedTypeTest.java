@@ -32,7 +32,7 @@ public class AnnotatedTypeTest extends AbstractByteBuddyBytecodeTest {
 
     System.out.println(annotationNode);
 
-    assertThat(annotationNode.getLabels()).containsOnly(JTypeLabel.ANNOTATION_INSTANCE);
+    assertThat(annotationNode.getLabels()).containsOnly(JTypeLabel.AnnotationInstance);
     // assertThat(fieldNode.getProperty("name")).isEqualTo("hurz");
   }
 }

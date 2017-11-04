@@ -98,7 +98,7 @@ public class JTypeClassVisitor extends ClassVisitor {
     _classLocalTypeReferenceCache.setTypeBean(_typeBean);
 
     // add the type of the type
-    _typeBean.addLabel(JTypeLabel.TYPE);
+    _typeBean.addLabel(JTypeLabel.Type);
     _typeBean.addLabel(getJTypeLabel(access));
 
     // class name
@@ -165,13 +165,13 @@ public class JTypeClassVisitor extends ClassVisitor {
     for (String ifaceName : interfaces) {
 
       switch (getJTypeLabel(access)) {
-      case CLASS:
+      case Class:
         _classLocalTypeReferenceCache.addTypeReference(_typeBean, ifaceName, JTypeModelRelationshipType.IMPLEMENTS);
         break;
-      case INTERFACE:
+      case Interface:
         _classLocalTypeReferenceCache.addTypeReference(_typeBean, ifaceName, JTypeModelRelationshipType.EXTENDS);
         break;
-      case ANNOTATION:
+      case Annotation:
         _classLocalTypeReferenceCache.addTypeReference(_typeBean, ifaceName, JTypeModelRelationshipType.EXTENDS);
         break;
       default:
@@ -191,7 +191,7 @@ public class JTypeClassVisitor extends ClassVisitor {
     _typeBean.addRelationship(annotationInstanceBean, JTypeModelRelationshipType.ANNOTATED_BY);
 
     // set labels
-    annotationInstanceBean.addLabel(JTypeLabel.ANNOTATION_INSTANCE);
+    annotationInstanceBean.addLabel(JTypeLabel.AnnotationInstance);
 
     // class annotation
     _classLocalTypeReferenceCache.addTypeReference(annotationInstanceBean, Type.getType(desc),
@@ -217,9 +217,9 @@ public class JTypeClassVisitor extends ClassVisitor {
     methodBean.putProperty(IMethodNode.FQN, methodSignature);
 
     // set labels
-    methodBean.addLabel(JTypeLabel.METHOD);
+    methodBean.addLabel(JTypeLabel.Method);
     if ("<init>".equals(name)) {
-      methodBean.addLabel(JTypeLabel.CONSTRUCTOR);
+      methodBean.addLabel(JTypeLabel.Constructor);
     }
 
     // signature
@@ -286,7 +286,7 @@ public class JTypeClassVisitor extends ClassVisitor {
 
     // create bean and add it to the type bean
     INode fieldBean = NodeFactory.createNode();
-    fieldBean.addLabel(JTypeLabel.FIELD);
+    fieldBean.addLabel(JTypeLabel.Field);
     _typeBean.addRelationship(fieldBean, CoreModelRelationshipType.CONTAINS);
 
     // TODO!!
@@ -490,19 +490,19 @@ public class JTypeClassVisitor extends ClassVisitor {
 
     // handle annotation
     if ((access & Opcodes.ACC_ANNOTATION) == Opcodes.ACC_ANNOTATION) {
-      return JTypeLabel.ANNOTATION;
+      return JTypeLabel.Annotation;
     }
     // handle interface
     else if ((access & Opcodes.ACC_INTERFACE) == Opcodes.ACC_INTERFACE) {
-      return JTypeLabel.INTERFACE;
+      return JTypeLabel.Interface;
     }
     // handle enum
     else if ((access & Opcodes.ACC_ENUM) == Opcodes.ACC_ENUM) {
-      return JTypeLabel.ENUM;
+      return JTypeLabel.Enum;
     }
     // handle class
     else {
-      return JTypeLabel.CLASS;
+      return JTypeLabel.Class;
     }
   }
 }

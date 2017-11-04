@@ -22,7 +22,7 @@ public class TypeTest extends AbstractByteBuddyBytecodeTest {
     assertThat(node.getProperty("classVersion")).isEqualTo("52");
     assertThat(node.getProperty("visibility")).isEqualTo("public");
 
-    assertThat(node.getLabels()).containsExactly(JTypeLabel.TYPE, JTypeLabel.CLASS);
+    assertThat(node.getLabels()).containsExactly(JTypeLabel.Type, JTypeLabel.Class);
   }
 
   @Test
@@ -37,7 +37,7 @@ public class TypeTest extends AbstractByteBuddyBytecodeTest {
     assertThat(node.getProperty("classVersion")).isEqualTo("52");
     assertThat(node.getProperty("visibility")).isEqualTo("public");
 
-    assertThat(node.getLabels()).containsExactly(JTypeLabel.TYPE, JTypeLabel.INTERFACE);
+    assertThat(node.getLabels()).containsExactly(JTypeLabel.Type, JTypeLabel.Interface);
   }
 
   @Test
@@ -53,7 +53,7 @@ public class TypeTest extends AbstractByteBuddyBytecodeTest {
     assertThat(node.getProperty("visibility")).isEqualTo("public");
     assertThat(node.getProperty("signature")).isEqualTo("Ljava/lang/Enum<Lexample/Type;>;");
 
-    assertThat(node.getLabels()).containsExactly(JTypeLabel.TYPE, JTypeLabel.ENUM);
+    assertThat(node.getLabels()).containsExactly(JTypeLabel.Type, JTypeLabel.Enum);
   }
   
   @Test
@@ -68,7 +68,7 @@ public class TypeTest extends AbstractByteBuddyBytecodeTest {
     assertThat(node.getProperty("classVersion")).isEqualTo("52");
     assertThat(node.getProperty("visibility")).isEqualTo("public");
 
-    assertThat(node.getLabels()).containsExactly(JTypeLabel.TYPE, JTypeLabel.ANNOTATION);
+    assertThat(node.getLabels()).containsExactly(JTypeLabel.Type, JTypeLabel.Annotation);
   }
   
   @Test
@@ -82,6 +82,6 @@ public class TypeTest extends AbstractByteBuddyBytecodeTest {
     assertThat(node.getProperty("classVersion")).isEqualTo("52");
     assertThat(node.getProperty("visibility")).isEqualTo("default");
 
-    assertThat(node.getLabels()).containsExactly(JTypeLabel.TYPE, JTypeLabel.CLASS);
+    assertThat(node.getLabels()).containsExactly(JTypeLabel.Type, JTypeLabel.Class);
   }
 }

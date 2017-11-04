@@ -14,7 +14,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.objectweb.asm.Attribute;
 import org.objectweb.asm.ClassReader;
 import org.slizaa.scanner.core.spi.contentdefinition.IContentDefinition;
 import org.slizaa.scanner.core.spi.contentdefinition.filebased.IFile;
@@ -82,12 +81,12 @@ public class JTypeByteCodeParser extends AbstractParser<JTypeByteCodeParserFacto
       IParserContext context) {
 
     // tag parent directory as package
-    if (!context.getParentDirectoryNode().getLabels().contains(JTypeLabel.PACKAGE)) {
-      context.getParentDirectoryNode().addLabel(JTypeLabel.PACKAGE);
+    if (!context.getParentDirectoryNode().getLabels().contains(JTypeLabel.Package)) {
+      context.getParentDirectoryNode().addLabel(JTypeLabel.Package);
     }
 
     // add CLASSFILE label
-    resourceBean.addLabel(JTypeLabel.CLASSFILE);
+    resourceBean.addLabel(JTypeLabel.ClassFile);
 
     // create the visitor...
     JTypeClassVisitor visitor = new JTypeClassVisitor(this.getParserFactory());
