@@ -48,12 +48,12 @@ public class ExampleCodeTest {
   public void testTypeType() {
 
     //
-    StatementResult statementResult = _client.getSession().run("Match (t:TYPE {fqn: $name }) return t",
+    StatementResult statementResult = _client.getSession().run("Match (t:Type {fqn: $name }) return t",
         Collections.singletonMap("name", ExampleInterface.class.getName()));
     Node node = statementResult.single().get(0).asNode();
 
     // asserts
-    assertThat(node.labels()).containsOnly("TYPE", "INTERFACE");
+    assertThat(node.labels()).containsOnly("Type", "Interface");
     assertThat(node.asMap()).containsEntry(ITypeNode.FQN, ExampleInterface.class.getName());
     assertThat(node.asMap()).containsEntry(ITypeNode.NAME, ExampleInterface.class.getSimpleName());
     assertThat(node.asMap()).containsEntry(ITypeNode.VISIBILITY, "public");
@@ -61,22 +61,22 @@ public class ExampleCodeTest {
     assertThat(node.asMap()).containsEntry(ITypeNode.CLASS_VERSION, "52");
     assertThat(node.asMap()).containsEntry(ITypeNode.ABSTRACT, true);
 
-    // Node node = getSingleNode(executeStatement("Match (t:TYPE {fqn: $name}) return t",
+    // Node node = getSingleNode(executeStatement("Match (t:Type {fqn: $name}) return t",
     // Collections.singletonMap("name", ExampleClass.class.getName())));
-    // assertThat(node.hasLabel(convert(JTypeLabel.TYPE))).isTrue();
+    // assertThat(node.hasLabel(convert(JTypeLabel.Type))).isTrue();
     // assertThat(node.hasLabel(convert(JTypeLabel.CLASS))).isTrue();
     // assertThat(node.getProperty(IMethodNode.VISIBILITY)).isEqualTo("public");
 
     // node = getTypeNode(ExampleInterface.class.getName());
-    // assertThat(node.hasLabel(convert(JTypeLabel.TYPE)), is(true));
-    // assertThat(node.hasLabel(convert(JTypeLabel.INTERFACE)), is(true));
+    // assertThat(node.hasLabel(convert(JTypeLabel.Type)), is(true));
+    // assertThat(node.hasLabel(convert(JTypeLabel.Interface)), is(true));
     //
     // node = getTypeNode(ExampleEnum.class.getName());
-    // assertThat(node.hasLabel(convert(JTypeLabel.TYPE)), is(true));
+    // assertThat(node.hasLabel(convert(JTypeLabel.Type)), is(true));
     // assertThat(node.hasLabel(convert(JTypeLabel.ENUM)), is(true));
     //
     // node = getTypeNode(ExampleAnnotation.class.getName());
-    // assertThat(node.hasLabel(convert(JTypeLabel.TYPE)), is(true));
+    // assertThat(node.hasLabel(convert(JTypeLabel.Type)), is(true));
     // assertThat(node.hasLabel(convert(JTypeLabel.ANNOTATION)), is(true));
   }
 
@@ -92,7 +92,7 @@ public class ExampleCodeTest {
   public void testImplements() {
 
     StatementResult statementResult = _client.getSession().run(
-        "Match (t:TYPE {fqn: $name })-[rel:IMPLEMENTS]->(typeReference:TYPE_REFERENCE) return typeReference.fqn",
+        "Match (t:Type {fqn: $name })-[rel:IMPLEMENTS]->(typeReference:TypeReference) return typeReference.fqn",
         Collections.singletonMap("name", ExampleClass.class.getName()));
 
     List<String> records = statementResult.list(rec -> rec.get(0).asString());
@@ -113,7 +113,7 @@ public class ExampleCodeTest {
   public void testExtends_1() {
 
     StatementResult statementResult = _client.getSession().run(
-        "Match (t:TYPE {fqn: $name })-[rel:EXTENDS]->(typeReference:TYPE_REFERENCE) return typeReference.fqn",
+        "Match (t:Type {fqn: $name })-[rel:EXTENDS]->(typeReference:TypeReference) return typeReference.fqn",
         Collections.singletonMap("name", ExampleClass.class.getName()));
 
     List<String> records = statementResult.list(rec -> rec.get(0).asString());
@@ -134,7 +134,7 @@ public class ExampleCodeTest {
   public void testExtends_2() {
 
     StatementResult statementResult = _client.getSession().run(
-        "Match (t:TYPE {fqn: $name })-[rel:EXTENDS]->(typeReference:TYPE_REFERENCE) return typeReference.fqn",
+        "Match (t:Type {fqn: $name })-[rel:EXTENDS]->(typeReference:TypeReference) return typeReference.fqn",
         Collections.singletonMap("name", SuperClass.class.getName()));
 
     List<String> records = statementResult.list(rec -> rec.get(0).asString());
@@ -149,7 +149,7 @@ public class ExampleCodeTest {
   @Test
   public void testAbstract_1() {
 
-    StatementResult statementResult = _client.getSession().run("Match (t:TYPE {fqn: $name }) return t.abstract",
+    StatementResult statementResult = _client.getSession().run("Match (t:Type {fqn: $name }) return t.abstract",
         Collections.singletonMap("name", AbstractExampleClass.class.getName()));
 
     assertThat(statementResult.single().get(0).asBoolean()).isTrue();
@@ -162,7 +162,7 @@ public class ExampleCodeTest {
   @Test
   public void testAbstract_2() {
 
-    StatementResult statementResult = _client.getSession().run("Match (t:TYPE {fqn: $name }) return t.abstract",
+    StatementResult statementResult = _client.getSession().run("Match (t:Type {fqn: $name }) return t.abstract",
         Collections.singletonMap("name", ExampleInterface.class.getName()));
 
     assertThat(statementResult.single().get(0).asBoolean()).isTrue();
@@ -180,7 +180,7 @@ public class ExampleCodeTest {
 
     //
     StatementResult statementResult = _client.getSession().run(
-        "MATCH (m:METHOD {name: 'exampleInvokesMethod'})-[:INVOKES]->(mref:METHOD_REFERENCE)-[rel]->(typeReference:TYPE_REFERENCE) return mref.name, type(rel), typeReference.fqn");
+        "MATCH (m:Method {name: 'exampleInvokesMethod'})-[:INVOKES]->(mref:MethodReference)-[rel]->(typeReference:TypeReference) return mref.name, type(rel), typeReference.fqn");
 
     List<String[]> records = statementResult
         .list(rec -> new String[] { rec.get(0).asString(), rec.get(1).asString(), rec.get(2).asString() });
@@ -202,13 +202,13 @@ public class ExampleCodeTest {
 
     //
     StatementResult statementResult = _client.getSession().run(
-        "Match (t:TYPE {fqn: $name})-[:CONTAINS]->(f:FIELD) return f",
+        "Match (t:Type {fqn: $name})-[:CONTAINS]->(f:Field) return f",
         Collections.singletonMap("name", SimpleClassWithOneField.class.getName()));
     List<Node> nodes = statementResult.list(rec -> rec.get(0).asNode());
 
     //
     assertThat(nodes).hasSize(1);
-    assertThat(nodes.get(0).labels()).containsExactly("FIELD");
+    assertThat(nodes.get(0).labels()).containsExactly("Field");
     assertThat(nodes.get(0).asMap()).containsOnlyKeys("accessFlags", "deprecated", "final", "fqn", "name", "static",
         "transient", "visibility", "volatile");
     assertThat(nodes.get(0).asMap()).containsEntry("accessFlags", "2");
@@ -223,13 +223,13 @@ public class ExampleCodeTest {
 
     //
     StatementResult statementResult = _client.getSession().run(
-        "Match (t:TYPE {fqn: $name})-[:CONTAINS]->(f:FIELD) return f",
+        "Match (t:Type {fqn: $name})-[:CONTAINS]->(f:Field) return f",
         Collections.singletonMap("name", ExampleClass.class.getName()));
     List<Node> nodes = statementResult.list(rec -> rec.get(0).asNode());
 
     //
     assertThat(nodes).hasSize(1);
-    assertThat(nodes.get(0).labels()).containsExactly("FIELD");
+    assertThat(nodes.get(0).labels()).containsExactly("Field");
     assertThat(nodes.get(0).asMap()).containsOnlyKeys("accessFlags", "deprecated", "final", "fqn", "name", "static",
         "transient", "visibility", "volatile");
     assertThat(nodes.get(0).asMap()).containsEntry("accessFlags", "2");

@@ -46,7 +46,7 @@ public class SimpleJTypeMapStructTest {
   public void test() throws KernelException, IOException {
 
     //
-    StatementResult statementResult = _client.getSession().run("Match (t:TYPE) return count(t)");
+    StatementResult statementResult = _client.getSession().run("Match (t:Type) return count(t)");
     assertThat(statementResult.single().get(0).asInt()).isEqualTo(148);
   }
 }
