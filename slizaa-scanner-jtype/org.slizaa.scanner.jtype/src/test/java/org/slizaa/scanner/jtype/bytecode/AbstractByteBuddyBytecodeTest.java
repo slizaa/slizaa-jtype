@@ -7,7 +7,6 @@ import java.util.function.Supplier;
 import org.slizaa.scanner.core.spi.parser.IParser;
 import org.slizaa.scanner.core.spi.parser.IParserContext;
 import org.slizaa.scanner.core.spi.parser.model.INode;
-import org.slizaa.scanner.core.spi.parser.model.INode;
 import org.slizaa.scanner.core.spi.parser.model.NodeFactory;
 import org.slizaa.scanner.core.spi.parser.model.resource.CoreModelRelationshipType;
 import org.slizaa.scanner.jtype.bytecode.util.ContentCreator;
