@@ -15,7 +15,7 @@ import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.util.tracker.BundleTracker;
 import org.slizaa.scanner.core.classpathscanner.ClasspathScannerFactoryBuilder;
 import org.slizaa.scanner.core.classpathscanner.IClasspathScannerFactory;
-import org.slizaa.scanner.core.spi.annotations.SlizaaParserFactory;
+import org.slizaa.scanner.core.spi.annotations.ParserFactory;
 import org.slizaa.scanner.jtype.bytecode.JTypeByteCodeParserFactory;
 
 public class CheckSlizaaExtensionsTest extends AbstractJTypeTest {
@@ -23,7 +23,7 @@ public class CheckSlizaaExtensionsTest extends AbstractJTypeTest {
   /**
    * <p>
    * </p>
-   * 
+   *
    * @throws BundleException
    */
   @Test
@@ -46,7 +46,7 @@ public class CheckSlizaaExtensionsTest extends AbstractJTypeTest {
     Map<String, List<Class<?>>> scanResult = new HashMap<>();
 
     // scan
-    scannerFactory.createScanner((Object[]) tracker.getBundles()).matchClassesWithAnnotation(SlizaaParserFactory.class,
+    scannerFactory.createScanner((Object[]) tracker.getBundles()).matchClassesWithAnnotation(ParserFactory.class,
         (source, pf) -> scanResult.put(((Bundle) source).getSymbolicName(), pf)).scan();
 
     //
@@ -63,7 +63,7 @@ public class CheckSlizaaExtensionsTest extends AbstractJTypeTest {
     /**
      * <p>
      * </p>
-     * 
+     *
      * @param context
      * @param stateMask
      * @param customizer

@@ -1,19 +1,16 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 Slizaa project team.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- *    Slizaa project team - initial API and implementation
+ * Copyright (c) 2011-2015 Slizaa project team. All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is
+ * available at http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: Slizaa project team - initial API and implementation
  ******************************************************************************/
 package org.slizaa.scanner.jtype.bytecode;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Transaction;
-import org.slizaa.scanner.core.spi.annotations.SlizaaParserFactory;
+import org.slizaa.scanner.core.spi.annotations.ParserFactory;
 import org.slizaa.scanner.core.spi.contentdefinition.IContentDefinitionProvider;
 import org.slizaa.scanner.core.spi.parser.IParser;
 import org.slizaa.scanner.core.spi.parser.IParserFactory;
@@ -23,10 +20,10 @@ import org.slizaa.scanner.jtype.bytecode.internal.PrimitiveDatatypeNodeProvider;
  * <p>
  * The {@link IParserFactory} to create instances of {@link JTypeByteCodeParser}.
  * </p>
- * 
+ *
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-@SlizaaParserFactory
+@ParserFactory
 public class JTypeByteCodeParserFactory extends IParserFactory.Adapter implements IParserFactory {
 
   /** - */
@@ -39,7 +36,7 @@ public class JTypeByteCodeParserFactory extends IParserFactory.Adapter implement
    * @return
    */
   public IPrimitiveDatatypeNodeProvider getDatatypeNodeProviderMap() {
-    return _datatypeNodeProvider;
+    return this._datatypeNodeProvider;
   }
 
   /**
@@ -60,7 +57,7 @@ public class JTypeByteCodeParserFactory extends IParserFactory.Adapter implement
     GraphDatabaseService graphDatabaseService = (GraphDatabaseService) graphDatabase;
 
     try (Transaction transaction = graphDatabaseService.beginTx()) {
-      _datatypeNodeProvider = new PrimitiveDatatypeNodeProvider((GraphDatabaseService) graphDatabase);
+      this._datatypeNodeProvider = new PrimitiveDatatypeNodeProvider((GraphDatabaseService) graphDatabase);
     }
 
     //
@@ -80,6 +77,6 @@ public class JTypeByteCodeParserFactory extends IParserFactory.Adapter implement
       IProgressMonitor subMonitor) {
 
     //
-    _datatypeNodeProvider = null;
+    this._datatypeNodeProvider = null;
   }
 }
