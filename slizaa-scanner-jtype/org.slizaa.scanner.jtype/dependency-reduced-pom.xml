@@ -94,7 +94,7 @@
     <dependency>
       <groupId>org.neo4j</groupId>
       <artifactId>server-api</artifactId>
-      <version>3.2.3</version>
+      <version>3.3.3</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
@@ -108,10 +108,6 @@
         <exclusion>
           <artifactId>commons-configuration</artifactId>
           <groupId>commons-configuration</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>commons-digester</artifactId>
-          <groupId>commons-digester</groupId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -140,7 +136,7 @@
     <dependency>
       <groupId>org.neo4j.test</groupId>
       <artifactId>neo4j-harness</artifactId>
-      <version>3.2.3</version>
+      <version>3.3.3</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
@@ -200,6 +196,10 @@
           <groupId>org.slizaa.scanner.core</groupId>
         </exclusion>
         <exclusion>
+          <artifactId>org.slizaa.scanner.core.cypherregistry</artifactId>
+          <groupId>org.slizaa.scanner.core</groupId>
+        </exclusion>
+        <exclusion>
           <artifactId>org.slizaa.scanner.neo4j.importer</artifactId>
           <groupId>org.slizaa.scanner.neo4j</groupId>
         </exclusion>
@@ -220,7 +220,7 @@
     <dependency>
       <groupId>org.neo4j.driver</groupId>
       <artifactId>neo4j-java-driver</artifactId>
-      <version>1.4.3</version>
+      <version>1.5.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
