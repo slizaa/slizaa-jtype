@@ -21,6 +21,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.neo4j.driver.v1.StatementResult;
 import org.neo4j.driver.v1.types.Node;
+import org.neo4j.driver.v1.types.Relationship;
 import org.slizaa.scanner.jtype.itest.examplecode.AbstractExampleClass;
 import org.slizaa.scanner.jtype.itest.examplecode.ExampleClass;
 import org.slizaa.scanner.jtype.itest.examplecode.ExampleInterface;
@@ -238,6 +239,45 @@ public class ExampleCodeTest {
     assertThat(nodes.get(0).asMap()).containsEntry("fqn", "java.io.Serializable _serializable");
     assertThat(nodes.get(0).asMap()).containsEntry("name", "_serializable");
   }
+
+  @Test
+  public void testFieldReference_1() {
+
+    //
+    StatementResult statementResult = _client.getSession().run(
+        "Match (m:Method {name: $name})-[rel]->(fref) return rel",
+        Collections.singletonMap("name", "fieldRef"));
+    
+//  StatementResult statementResult = _client.getSession().run(
+//  "Match (m:Method) return m");
+//    
+    //
+    for (Relationship relationship : statementResult.list(rec -> rec.get(0).asRelationship())) {
+      System.out.println(relationship.type());
+    }
+    
+//    INVOKES
+//    REFERENCES
+//    READ
+//    USES
+    
+    
+//    for (Node node : statementResult.list(rec -> rec.get(0).asNode())) {
+//      System.out.println(node.asMap());
+//    }
+//    
+    //
+//    assertThat(nodes).hasSize(1);
+//    assertThat(nodes.get(0).labels()).containsExactly("Field");
+//    assertThat(nodes.get(0).asMap()).containsOnlyKeys("accessFlags", "deprecated", "final", "fqn", "name", "static",
+//        "transient", "visibility", "volatile");
+//    assertThat(nodes.get(0).asMap()).containsEntry("accessFlags", "2");
+//    assertThat(nodes.get(0).asMap()).containsEntry("deprecated", false);
+//    assertThat(nodes.get(0).asMap()).containsEntry("final", false);
+//    assertThat(nodes.get(0).asMap()).containsEntry("fqn", "java.io.Serializable _serializable");
+//    assertThat(nodes.get(0).asMap()).containsEntry("name", "_serializable");
+  }
+
   //
   // @Test
   // public void testArrayField() {

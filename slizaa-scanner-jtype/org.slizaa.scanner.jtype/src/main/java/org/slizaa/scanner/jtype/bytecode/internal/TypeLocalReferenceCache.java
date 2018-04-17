@@ -37,10 +37,10 @@ import com.google.common.cache.LoadingCache;
 public class TypeLocalReferenceCache {
 
   /** - */
-  private IPrimitiveDatatypeNodeProvider                           _primitiveDatatypeNodes;
+  private IPrimitiveDatatypeNodeProvider                 _primitiveDatatypeNodes;
 
   /** - */
-  private LoadingCache<String, INode>                              _typeReferenceNodeCache;
+  private LoadingCache<String, INode>                    _typeReferenceNodeCache;
 
   /** - */
   private LoadingCache<FieldReferenceDescriptor, INode>  _fieldReferenceNodeCache;
@@ -49,7 +49,7 @@ public class TypeLocalReferenceCache {
   private LoadingCache<MethodReferenceDescriptor, INode> _methodReferenceNodeCache;
 
   /** - */
-  private List<INode>                                              _dependsOnRelationshipTargets;
+  private List<INode>                                    _dependsOnRelationshipTargets;
 
   /** - */
   private INode                                          _typeBean;
@@ -70,21 +70,19 @@ public class TypeLocalReferenceCache {
     });
 
     //
-    _fieldReferenceNodeCache = CacheBuilder.newBuilder()
-        .build(new CacheLoader<FieldReferenceDescriptor, INode>() {
-          public INode load(FieldReferenceDescriptor referencedField) {
-            return JTypeNodeHelper.createFieldReferenceNode(referencedField);
-          }
-        });
+    _fieldReferenceNodeCache = CacheBuilder.newBuilder().build(new CacheLoader<FieldReferenceDescriptor, INode>() {
+      public INode load(FieldReferenceDescriptor referencedField) {
+        return JTypeNodeHelper.createFieldReferenceNode(referencedField);
+      }
+    });
 
     //
-    _methodReferenceNodeCache = CacheBuilder.newBuilder()
-        .build(new CacheLoader<MethodReferenceDescriptor, INode>() {
-          public INode load(MethodReferenceDescriptor referencedMethod) {
-            return JTypeNodeHelper.createMethodReferenceNode(referencedMethod);
-          }
-        });
-    
+    _methodReferenceNodeCache = CacheBuilder.newBuilder().build(new CacheLoader<MethodReferenceDescriptor, INode>() {
+      public INode load(MethodReferenceDescriptor referencedMethod) {
+        return JTypeNodeHelper.createMethodReferenceNode(referencedMethod);
+      }
+    });
+
     //
     _dependsOnRelationshipTargets = new ArrayList<>();
   }
@@ -128,22 +126,20 @@ public class TypeLocalReferenceCache {
    * @param relationshipType
    * @return
    */
-  public IRelationship addFieldReference(final INode startNode,
-      final FieldReferenceDescriptor fieldDescriptor, final RelationshipType relationshipType) {
+  public IRelationship addFieldReference(final INode startNode, final FieldReferenceDescriptor fieldDescriptor,
+      final RelationshipType relationshipType) {
 
-    //
+    // step 1: resolve the type of the referenced field (and add a depends-on-relationship)
     INode fieldTypeBean = _typeReferenceNodeCache.getUnchecked(fieldDescriptor.getFieldType().replace('/', '.'));
-
-    //
     if (!fieldDescriptor.isPrimitive()) {
       addDependsOnRelationship(fieldTypeBean);
     }
 
-    //
+    // step 2: resolve the type that contains the referenced field (and add a depends-on-relationship)
     INode fieldOwnerBean = _typeReferenceNodeCache.getUnchecked(fieldDescriptor.getOwnerTypeName().replace('/', '.'));
     addDependsOnRelationship(fieldOwnerBean);
 
-    // field access
+    // step 3: add the field access
     return startNode.addRelationship(_fieldReferenceNodeCache.getUnchecked(fieldDescriptor), relationshipType);
   }
 

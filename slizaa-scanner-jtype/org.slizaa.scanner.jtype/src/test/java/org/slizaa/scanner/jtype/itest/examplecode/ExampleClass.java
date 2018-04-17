@@ -23,4 +23,8 @@ public class ExampleClass extends SuperClass implements SuperInterface {
   public ExampleClass(Serializable serializable) {
     _serializable = serializable;
   }
+  
+  public void fieldRef() {
+    Object content = new SimpleClassWithOneField()._serializable;
+  }
 }

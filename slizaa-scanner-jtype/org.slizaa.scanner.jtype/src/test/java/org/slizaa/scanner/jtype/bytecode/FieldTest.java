@@ -23,6 +23,8 @@ public class FieldTest extends AbstractByteBuddyBytecodeTest {
     //
     INode fieldNode = node.getRelationships(CoreModelRelationshipType.CONTAINS).get(0).getTargetBean();
 
+    System.out.println(fieldNode.getProperties());
+    
     assertThat(fieldNode.getLabels()).containsOnly(JTypeLabel.Field);
     assertThat(fieldNode.getProperty("name")).isEqualTo("hurz");
   }

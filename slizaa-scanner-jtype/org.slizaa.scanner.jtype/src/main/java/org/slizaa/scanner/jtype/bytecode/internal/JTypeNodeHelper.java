@@ -75,7 +75,7 @@ public class JTypeNodeHelper {
     //
     INode node = NodeFactory.createNode();
     node.addLabel(JTypeLabel.FieldReference);
-    node.putProperty(IFieldReferenceNode.OWNER_TYPE_NAME, fieldDescriptor.getOwnerTypeName().replace('/', '.'));
+    node.putProperty(IFieldReferenceNode.OWNER_TYPE_FQN, fieldDescriptor.getOwnerTypeName().replace('/', '.'));
     node.putProperty(IFieldReferenceNode.NAME, fieldDescriptor.getFieldName());
     node.putProperty(IFieldReferenceNode.TYPE, fieldDescriptor.getFieldType());
 
@@ -96,7 +96,7 @@ public class JTypeNodeHelper {
     //
     INode node = NodeFactory.createNode();
     node.addLabel(JTypeLabel.MethodReference);
-    node.putProperty(IMethodReferenceNode.OWNER_TYPE_NAME, referencedMethod.getOwnerTypeName().replace('/', '.'));
+    node.putProperty(IMethodReferenceNode.OWNER_TYPE_FQN, referencedMethod.getOwnerTypeName().replace('/', '.'));
     node.putProperty(IMethodReferenceNode.NAME, referencedMethod.getMethodName());
     node.putProperty(IMethodReferenceNode.SIGNATURE, referencedMethod.getMethodSignature());
     node.putProperty(IMethodReferenceNode.FQN, Utils.getMethodSignature(ownerTypeName + "." + referencedMethod.getMethodName(), referencedMethod.getMethodSignature()));

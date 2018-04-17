@@ -14,5 +14,5 @@ import java.io.Serializable;
 
 public class SimpleClassWithOneField {
 
-  private Serializable _serializable;
+  protected Serializable _serializable;
 }
