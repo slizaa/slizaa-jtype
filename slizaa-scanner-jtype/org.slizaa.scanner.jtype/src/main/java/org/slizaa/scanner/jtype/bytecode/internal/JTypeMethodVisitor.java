@@ -137,8 +137,8 @@ public class JTypeMethodVisitor extends MethodVisitor {
 
     //
     JTypeModelRelationshipType relationshipType = opcode == Opcodes.GETSTATIC || opcode == Opcodes.GETFIELD
-        ? JTypeModelRelationshipType.READ
-        : JTypeModelRelationshipType.WRITE;
+        ? JTypeModelRelationshipType.READS
+        : JTypeModelRelationshipType.WRITES;
 
     //
     _typeLocalReferenceCache.addFieldReference(_methodNodeBean, fieldDescriptor, relationshipType);

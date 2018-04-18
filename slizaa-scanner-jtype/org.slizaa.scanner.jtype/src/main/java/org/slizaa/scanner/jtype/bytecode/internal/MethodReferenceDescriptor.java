@@ -46,7 +46,7 @@ public class MethodReferenceDescriptor {
     return _methodSignature;
   }
 
-  public boolean isStatic() {
+  public boolean isInterface() {
     return _isInterface;
   }
 

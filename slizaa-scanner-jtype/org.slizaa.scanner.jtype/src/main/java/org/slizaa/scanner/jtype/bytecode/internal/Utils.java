@@ -22,10 +22,9 @@ public class Utils {
   }
 
   public static boolean isVoidOrPrimitive(Type type) {
-   return isVoid(type) || isPrimitive(type);
+    return isVoid(type) || isPrimitive(type);
   }
 
-  
   public static boolean isVoid(Type type) {
 
     type = resolveArrayType(type);
@@ -78,6 +77,61 @@ public class Utils {
     }
   }
 
+  /**
+   * <p>
+   * </p>
+   *
+   * @param type
+   * @return
+   */
+  public static String typeToString(Type type) {
+
+    //
+    Type t = Utils.resolveArrayType(type);
+
+    //
+    if (Utils.isVoid(t)) {
+      return "void";
+    }
+    //
+    else if (Utils.isPrimitive(t)) {
+      switch (t.getSort()) {
+      case Type.BOOLEAN: {
+        return "boolean";
+      }
+      case Type.BYTE: {
+        return "byte";
+      }
+      case Type.CHAR: {
+        return "char";
+      }
+      case Type.DOUBLE: {
+        return "double";
+      }
+      case Type.FLOAT: {
+        return "float";
+      }
+      case Type.INT: {
+        return "int";
+      }
+      case Type.LONG: {
+        return "long";
+      }
+      case Type.SHORT: {
+        return "short";
+      }
+      default: {
+        // TODO
+        throw new RuntimeException(t.toString());
+      }
+      }
+    }
+    //
+    else {
+      return t.getClassName();
+    }
+  }
+
   // /**
   // * Returns the Java type name corresponding to the given internal name.
   // *
@@ -126,7 +180,7 @@ public class Utils {
 
   /**
    * Return a method signature.
-   * 
+   *
    * @param name
    *          The method name.
    * @param rawSignature
@@ -155,7 +209,7 @@ public class Utils {
 
   /**
    * Return a field signature.
-   * 
+   *
    * @param name
    *          The field name.
    * @param rawSignature

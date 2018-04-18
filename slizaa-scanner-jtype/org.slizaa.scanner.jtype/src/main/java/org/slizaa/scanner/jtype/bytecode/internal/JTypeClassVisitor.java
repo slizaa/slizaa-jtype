@@ -1,12 +1,9 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 Slizaa project team.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- *    Slizaa project team - initial API and implementation
+ * Copyright (c) 2011-2015 Slizaa project team. All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is
+ * available at http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: Slizaa project team - initial API and implementation
  ******************************************************************************/
 package org.slizaa.scanner.jtype.bytecode.internal;
 
@@ -39,7 +36,7 @@ import org.slizaa.scanner.jtype.model.JavaTypeUtils;
 public class JTypeClassVisitor extends ClassVisitor {
 
   /** - */
-  private INode            _typeBean;
+  private INode                      _typeBean;
 
   /** - */
   private TypeLocalReferenceCache    _classLocalTypeReferenceCache;
@@ -51,17 +48,17 @@ public class JTypeClassVisitor extends ClassVisitor {
    * <p>
    * Creates a new instance of type {@link JTypeClassVisitor}.
    * </p>
-   * 
+   *
    * @param batchInserter
    */
   public JTypeClassVisitor(JTypeByteCodeParserFactory parserFactory) {
     super(Opcodes.ASM6);
 
     //
-    _parserFactory = checkNotNull(parserFactory);
+    this._parserFactory = checkNotNull(parserFactory);
 
     //
-    _classLocalTypeReferenceCache = new TypeLocalReferenceCache(_parserFactory.getDatatypeNodeProviderMap());
+    this._classLocalTypeReferenceCache = new TypeLocalReferenceCache(this._parserFactory.getDatatypeNodeProviderMap());
   }
 
   /**
@@ -71,17 +68,17 @@ public class JTypeClassVisitor extends ClassVisitor {
    * @return
    */
   public TypeLocalReferenceCache getTypeLocalReferenceCache() {
-    return _classLocalTypeReferenceCache;
+    return this._classLocalTypeReferenceCache;
   }
 
   /**
    * <p>
    * </p>
-   * 
+   *
    * @return
    */
   public INode getTypeBean() {
-    return _typeBean;
+    return this._typeBean;
   }
 
   /**
@@ -92,25 +89,25 @@ public class JTypeClassVisitor extends ClassVisitor {
       final String superName, final String[] interfaces) {
 
     //
-    _typeBean = NodeFactory.createNode();
+    this._typeBean = NodeFactory.createNode();
 
     // add type bean to type local cache
-    _classLocalTypeReferenceCache.setTypeBean(_typeBean);
+    this._classLocalTypeReferenceCache.setTypeBean(this._typeBean);
 
     // add the type of the type
-    _typeBean.addLabel(JTypeLabel.Type);
-    _typeBean.addLabel(getJTypeLabel(access));
+    this._typeBean.addLabel(JTypeLabel.Type);
+    this._typeBean.addLabel(getJTypeLabel(access));
 
     // class name
-    _typeBean.putProperty(ITypeNode.FQN, name.replace('/', '.'));
-    _typeBean.putProperty(ITypeNode.NAME, JavaTypeUtils.getSimpleName(name.replace('/', '.')));
+    this._typeBean.putProperty(ITypeNode.FQN, name.replace('/', '.'));
+    this._typeBean.putProperty(ITypeNode.NAME, JavaTypeUtils.getSimpleName(name.replace('/', '.')));
 
     // class version
-    _typeBean.putProperty(ITypeNode.CLASS_VERSION, Integer.toString(version));
+    this._typeBean.putProperty(ITypeNode.CLASS_VERSION, Integer.toString(version));
 
     // deprecated
     if ((access & Opcodes.ACC_DEPRECATED) == Opcodes.ACC_DEPRECATED) {
-      _typeBean.putProperty(ITypeNode.DEPRECATED, true);
+      this._typeBean.putProperty(ITypeNode.DEPRECATED, true);
     }
 
     // // access flags
@@ -118,61 +115,64 @@ public class JTypeClassVisitor extends ClassVisitor {
 
     //
     if ((access & Opcodes.ACC_ABSTRACT) == Opcodes.ACC_ABSTRACT) {
-      _typeBean.putProperty(ITypeNode.ABSTRACT, true);
+      this._typeBean.putProperty(ITypeNode.ABSTRACT, true);
     }
 
     //
     if ((access & Opcodes.ACC_STATIC) == Opcodes.ACC_STATIC) {
-      _typeBean.putProperty(ITypeNode.STATIC, true);
+      this._typeBean.putProperty(ITypeNode.STATIC, true);
     }
 
     //
     if ((access & Opcodes.ACC_FINAL) == Opcodes.ACC_FINAL) {
-      _typeBean.putProperty(ITypeNode.FINAL, true);
+      this._typeBean.putProperty(ITypeNode.FINAL, true);
     }
 
     //
     if ((access & Opcodes.ACC_PUBLIC) == Opcodes.ACC_PUBLIC) {
-      _typeBean.putProperty(ITypeNode.VISIBILITY, IVisibility.PUBLIC);
+      this._typeBean.putProperty(ITypeNode.VISIBILITY, IVisibility.PUBLIC);
     }
     //
     else if ((access & Opcodes.ACC_PRIVATE) == Opcodes.ACC_PRIVATE) {
-      _typeBean.putProperty(ITypeNode.VISIBILITY, IVisibility.PRIVATE);
+      this._typeBean.putProperty(ITypeNode.VISIBILITY, IVisibility.PRIVATE);
     }
     //
     else if ((access & Opcodes.ACC_PROTECTED) == Opcodes.ACC_PROTECTED) {
-      _typeBean.putProperty(ITypeNode.VISIBILITY, IVisibility.PROTECTED);
+      this._typeBean.putProperty(ITypeNode.VISIBILITY, IVisibility.PROTECTED);
     }
     //
     else {
-      _typeBean.putProperty(ITypeNode.VISIBILITY, IVisibility.DEFAULT);
+      this._typeBean.putProperty(ITypeNode.VISIBILITY, IVisibility.DEFAULT);
     }
 
     // TODO!!
     if (signature != null) {
 
       // set signature
-      _typeBean.putProperty(ITypeNode.SIGNATURE, signature);
+      this._typeBean.putProperty(ITypeNode.SIGNATURE, signature);
 
-      JTypeTypeSignatureVisitor sv = new JTypeTypeSignatureVisitor(_typeBean, _classLocalTypeReferenceCache);
+      JTypeTypeSignatureVisitor sv = new JTypeTypeSignatureVisitor(this._typeBean, this._classLocalTypeReferenceCache);
       new SignatureReader(signature).accept(sv);
     }
 
     // add 'extends' references
-    _classLocalTypeReferenceCache.addTypeReference(_typeBean, superName, JTypeModelRelationshipType.EXTENDS);
+    this._classLocalTypeReferenceCache.addTypeReference(this._typeBean, superName, JTypeModelRelationshipType.EXTENDS);
 
     // add 'implements' references
     for (String ifaceName : interfaces) {
 
       switch (getJTypeLabel(access)) {
       case Class:
-        _classLocalTypeReferenceCache.addTypeReference(_typeBean, ifaceName, JTypeModelRelationshipType.IMPLEMENTS);
+        this._classLocalTypeReferenceCache.addTypeReference(this._typeBean, ifaceName,
+            JTypeModelRelationshipType.IMPLEMENTS);
         break;
       case Interface:
-        _classLocalTypeReferenceCache.addTypeReference(_typeBean, ifaceName, JTypeModelRelationshipType.EXTENDS);
+        this._classLocalTypeReferenceCache.addTypeReference(this._typeBean, ifaceName,
+            JTypeModelRelationshipType.EXTENDS);
         break;
       case Annotation:
-        _classLocalTypeReferenceCache.addTypeReference(_typeBean, ifaceName, JTypeModelRelationshipType.EXTENDS);
+        this._classLocalTypeReferenceCache.addTypeReference(this._typeBean, ifaceName,
+            JTypeModelRelationshipType.EXTENDS);
         break;
       default:
         break;
@@ -188,13 +188,13 @@ public class JTypeClassVisitor extends ClassVisitor {
 
     // create and add new method bean
     INode annotationInstanceBean = NodeFactory.createNode();
-    _typeBean.addRelationship(annotationInstanceBean, JTypeModelRelationshipType.ANNOTATED_BY);
+    this._typeBean.addRelationship(annotationInstanceBean, JTypeModelRelationshipType.ANNOTATED_BY);
 
     // set labels
     annotationInstanceBean.addLabel(JTypeLabel.AnnotationInstance);
 
     // class annotation
-    _classLocalTypeReferenceCache.addTypeReference(annotationInstanceBean, Type.getType(desc),
+    this._classLocalTypeReferenceCache.addTypeReference(annotationInstanceBean, Type.getType(desc),
         JTypeModelRelationshipType.IS_OF_TYPE);
 
     //
@@ -209,7 +209,7 @@ public class JTypeClassVisitor extends ClassVisitor {
 
     // create and add new method bean
     INode methodBean = NodeFactory.createNode();
-    _typeBean.addRelationship(methodBean, CoreModelRelationshipType.CONTAINS);
+    this._typeBean.addRelationship(methodBean, CoreModelRelationshipType.CONTAINS);
 
     // add method name
     methodBean.putProperty(IMethodNode.NAME, name);
@@ -225,7 +225,8 @@ public class JTypeClassVisitor extends ClassVisitor {
     // signature
     if (signature != null) {
       methodBean.putProperty("signature", signature);
-      new SignatureReader(signature).accept(new JTypeMethodSignatureVisitor(methodBean, _classLocalTypeReferenceCache));
+      new SignatureReader(signature)
+          .accept(new JTypeMethodSignatureVisitor(methodBean, this._classLocalTypeReferenceCache));
     }
 
     //
@@ -275,7 +276,7 @@ public class JTypeClassVisitor extends ClassVisitor {
     }
 
     //
-    return new JTypeMethodVisitor(_typeBean, methodBean, _classLocalTypeReferenceCache);
+    return new JTypeMethodVisitor(this._typeBean, methodBean, this._classLocalTypeReferenceCache);
   }
 
   /**
@@ -287,10 +288,11 @@ public class JTypeClassVisitor extends ClassVisitor {
     // create bean and add it to the type bean
     INode fieldBean = NodeFactory.createNode();
     fieldBean.addLabel(JTypeLabel.Field);
-    _typeBean.addRelationship(fieldBean, CoreModelRelationshipType.CONTAINS);
+    this._typeBean.addRelationship(fieldBean, CoreModelRelationshipType.CONTAINS);
 
-    // TODO!!
-    fieldBean.putProperty(IMethodNode.FQN, Utils.getFieldSignature(name, desc));
+    //
+    fieldBean.putProperty(IMethodNode.FQN,
+        Utils.typeToString(Type.getType(desc)) + " " + this._typeBean.getFullyQualifiedName() + "." + name);
 
     // get the type
     addReference(fieldBean, Type.getType(desc), JTypeModelRelationshipType.IS_OF_TYPE);
@@ -343,7 +345,7 @@ public class JTypeClassVisitor extends ClassVisitor {
 
   @Override
   public void visitSource(String source, String debug) {
-    _typeBean.putProperty(ITypeNode.SOURCE_FILE_NAME, source);
+    this._typeBean.putProperty(ITypeNode.SOURCE_FILE_NAME, source);
   }
 
   /**
@@ -354,7 +356,7 @@ public class JTypeClassVisitor extends ClassVisitor {
     // System.out.println("visitOuterClass: " + owner + " : " + name + " : " + rawSignature);
 
     // owner
-    _classLocalTypeReferenceCache.addTypeReference(_typeBean, Type.getObjectType(owner),
+    this._classLocalTypeReferenceCache.addTypeReference(this._typeBean, Type.getObjectType(owner),
         JTypeModelRelationshipType.REFERENCES);
 
     // TODO: EnclosingMethod!
@@ -363,8 +365,8 @@ public class JTypeClassVisitor extends ClassVisitor {
       // return type
       Type returnType = org.objectweb.asm.Type.getReturnType(rawSignature);
       if (!Utils.isVoidOrPrimitive(returnType)) {
-        _classLocalTypeReferenceCache.addTypeReference(_typeBean, Utils.resolveArrayType(returnType).getClassName(),
-            JTypeModelRelationshipType.REFERENCES);
+        this._classLocalTypeReferenceCache.addTypeReference(this._typeBean,
+            Utils.resolveArrayType(returnType).getClassName(), JTypeModelRelationshipType.REFERENCES);
       }
 
       // arg types type
@@ -373,8 +375,8 @@ public class JTypeClassVisitor extends ClassVisitor {
         if (!Utils.isVoidOrPrimitive(types[i])) {
 
           // TODO: array types!
-          _classLocalTypeReferenceCache.addTypeReference(_typeBean, Utils.resolveArrayType(types[i]).getClassName(),
-              JTypeModelRelationshipType.REFERENCES);
+          this._classLocalTypeReferenceCache.addTypeReference(this._typeBean,
+              Utils.resolveArrayType(types[i]).getClassName(), JTypeModelRelationshipType.REFERENCES);
         }
       }
     }
@@ -399,40 +401,40 @@ public class JTypeClassVisitor extends ClassVisitor {
     // + innerName + ", " + access + ")");
 
     //
-    if (name.replace('/', '.').equals(_typeBean.getFullyQualifiedName())) {
+    if (name.replace('/', '.').equals(this._typeBean.getFullyQualifiedName())) {
 
       if (outerName != null) {
-        _classLocalTypeReferenceCache.addTypeReference(_typeBean, outerName.replace('/', '.'),
+        this._classLocalTypeReferenceCache.addTypeReference(this._typeBean, outerName.replace('/', '.'),
             JTypeModelRelationshipType.IS_INNER_CLASS_DEFINED_BY);
       }
 
-      _typeBean.putProperty(ITypeNode.INNER_CLASS, true);
+      this._typeBean.putProperty(ITypeNode.INNER_CLASS, true);
 
       // outer name
       if (outerName != null) {
-        _typeBean.putProperty(ITypeNode.OUTER_CLASSNAME, outerName.replace('/', '.'));
+        this._typeBean.putProperty(ITypeNode.OUTER_CLASSNAME, outerName.replace('/', '.'));
       }
 
       // access flags
       if (access != 0) {
 
-        _typeBean.putProperty(ITypeNode.INNER_CLASS_ACCESS_FLAGS, Integer.toHexString(access).toUpperCase());
+        this._typeBean.putProperty(ITypeNode.INNER_CLASS_ACCESS_FLAGS, Integer.toHexString(access).toUpperCase());
 
         //
         if ((access & Opcodes.ACC_PUBLIC) == Opcodes.ACC_PUBLIC) {
-          _typeBean.putProperty(ITypeNode.INNER_CLASS_ACCESS_LEVEL, IVisibility.PUBLIC);
+          this._typeBean.putProperty(ITypeNode.INNER_CLASS_ACCESS_LEVEL, IVisibility.PUBLIC);
         }
         //
         else if ((access & Opcodes.ACC_PROTECTED) == Opcodes.ACC_PROTECTED) {
-          _typeBean.putProperty(ITypeNode.INNER_CLASS_ACCESS_LEVEL, IVisibility.PROTECTED);
+          this._typeBean.putProperty(ITypeNode.INNER_CLASS_ACCESS_LEVEL, IVisibility.PROTECTED);
         }
         //
         else if ((access & Opcodes.ACC_PRIVATE) == Opcodes.ACC_PRIVATE) {
-          _typeBean.putProperty(ITypeNode.INNER_CLASS_ACCESS_LEVEL, IVisibility.PRIVATE);
+          this._typeBean.putProperty(ITypeNode.INNER_CLASS_ACCESS_LEVEL, IVisibility.PRIVATE);
         }
         //
         else {
-          _typeBean.putProperty(ITypeNode.INNER_CLASS_ACCESS_LEVEL, IVisibility.DEFAULT);
+          this._typeBean.putProperty(ITypeNode.INNER_CLASS_ACCESS_LEVEL, IVisibility.DEFAULT);
         }
       }
     }
@@ -442,13 +444,13 @@ public class JTypeClassVisitor extends ClassVisitor {
     else if (outerName != null) {
 
       //
-      if (outerName.replace('/', '.').equals(_typeBean.getFullyQualifiedName())) {
-        _classLocalTypeReferenceCache.addTypeReference(_typeBean, name.replace('/', '.'),
+      if (outerName.replace('/', '.').equals(this._typeBean.getFullyQualifiedName())) {
+        this._classLocalTypeReferenceCache.addTypeReference(this._typeBean, name.replace('/', '.'),
             JTypeModelRelationshipType.DEFINES_INNER_CLASS);
       }
       //
       else {
-        _classLocalTypeReferenceCache.addTypeReference(_typeBean, outerName.replace('/', '.'),
+        this._classLocalTypeReferenceCache.addTypeReference(this._typeBean, outerName.replace('/', '.'),
             JTypeModelRelationshipType.REFERENCES);
       }
     }
@@ -465,12 +467,11 @@ public class JTypeClassVisitor extends ClassVisitor {
   /**
    * <p>
    * </p>
-   * 
+   *
    * @param fieldBean
    * @param type
    */
-  private IRelationship addReference(INode fieldBean, Type type,
-      JTypeModelRelationshipType relationshipType) {
+  private IRelationship addReference(INode fieldBean, Type type, JTypeModelRelationshipType relationshipType) {
 
     //
     Type t = Utils.resolveArrayType(type);
@@ -479,10 +480,10 @@ public class JTypeClassVisitor extends ClassVisitor {
     if (Utils.isVoid(type)) {
       return null;
     } else if (Utils.isPrimitive(t)) {
-      return fieldBean.addRelationship(Utils.getPrimitiveDatatypeNode(t, _parserFactory.getDatatypeNodeProviderMap()),
-          relationshipType);
+      return fieldBean.addRelationship(
+          Utils.getPrimitiveDatatypeNode(t, this._parserFactory.getDatatypeNodeProviderMap()), relationshipType);
     } else {
-      return _classLocalTypeReferenceCache.addTypeReference(fieldBean, t.getClassName(), relationshipType);
+      return this._classLocalTypeReferenceCache.addTypeReference(fieldBean, t.getClassName(), relationshipType);
     }
   }
 

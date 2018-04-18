@@ -1,12 +1,9 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 Slizaa project team.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- *    Slizaa project team - initial API and implementation
+ * Copyright (c) 2011-2015 Slizaa project team. All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is
+ * available at http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: Slizaa project team - initial API and implementation
  ******************************************************************************/
 package org.slizaa.scanner.jtype.itest;
 
@@ -21,7 +18,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.neo4j.driver.v1.StatementResult;
 import org.neo4j.driver.v1.types.Node;
-import org.neo4j.driver.v1.types.Relationship;
 import org.slizaa.scanner.jtype.itest.examplecode.AbstractExampleClass;
 import org.slizaa.scanner.jtype.itest.examplecode.ExampleClass;
 import org.slizaa.scanner.jtype.itest.examplecode.ExampleInterface;
@@ -49,7 +45,7 @@ public class ExampleCodeTest {
   public void testTypeType() {
 
     //
-    StatementResult statementResult = _client.getSession().run("Match (t:Type {fqn: $name }) return t",
+    StatementResult statementResult = this._client.getSession().run("Match (t:Type {fqn: $name }) return t",
         Collections.singletonMap("name", ExampleInterface.class.getName()));
     Node node = statementResult.single().get(0).asNode();
 
@@ -83,7 +79,7 @@ public class ExampleCodeTest {
 
   /**
    * <p>
-   * 
+   *
    * <pre>
    * public class org.slizaa.scanner.itest.jtype.simple.example.ExampleClass extends org.slizaa.scanner.itest.jtype.simple.example.SuperClass implements org.slizaa.scanner.itest.jtype.simple.example.SuperInterface
    * </pre>
@@ -92,7 +88,7 @@ public class ExampleCodeTest {
   @Test
   public void testImplements() {
 
-    StatementResult statementResult = _client.getSession().run(
+    StatementResult statementResult = this._client.getSession().run(
         "Match (t:Type {fqn: $name })-[rel:IMPLEMENTS]->(typeReference:TypeReference) return typeReference.fqn",
         Collections.singletonMap("name", ExampleClass.class.getName()));
 
@@ -104,7 +100,7 @@ public class ExampleCodeTest {
   /**
    * <p>
    * Tests that the 'EXTENDS' relationship exists.
-   * 
+   *
    * <pre>
    * public class org.slizaa.scanner.itest.jtype.simple.example.ExampleClass extends org.slizaa.scanner.itest.jtype.simple.example.SuperClass implements org.slizaa.scanner.itest.jtype.simple.example.SuperInterface
    * </pre>
@@ -113,7 +109,7 @@ public class ExampleCodeTest {
   @Test
   public void testExtends_1() {
 
-    StatementResult statementResult = _client.getSession().run(
+    StatementResult statementResult = this._client.getSession().run(
         "Match (t:Type {fqn: $name })-[rel:EXTENDS]->(typeReference:TypeReference) return typeReference.fqn",
         Collections.singletonMap("name", ExampleClass.class.getName()));
 
@@ -125,7 +121,7 @@ public class ExampleCodeTest {
   /**
    * <p>
    * Tests that the 'EXTENDS' relationship exists.
-   * 
+   *
    * <pre>
    * public class org.slizaa.scanner.itest.jtype.simple.example.SuperClass
    * </pre>
@@ -134,7 +130,7 @@ public class ExampleCodeTest {
   @Test
   public void testExtends_2() {
 
-    StatementResult statementResult = _client.getSession().run(
+    StatementResult statementResult = this._client.getSession().run(
         "Match (t:Type {fqn: $name })-[rel:EXTENDS]->(typeReference:TypeReference) return typeReference.fqn",
         Collections.singletonMap("name", SuperClass.class.getName()));
 
@@ -150,7 +146,7 @@ public class ExampleCodeTest {
   @Test
   public void testAbstract_1() {
 
-    StatementResult statementResult = _client.getSession().run("Match (t:Type {fqn: $name }) return t.abstract",
+    StatementResult statementResult = this._client.getSession().run("Match (t:Type {fqn: $name }) return t.abstract",
         Collections.singletonMap("name", AbstractExampleClass.class.getName()));
 
     assertThat(statementResult.single().get(0).asBoolean()).isTrue();
@@ -163,7 +159,7 @@ public class ExampleCodeTest {
   @Test
   public void testAbstract_2() {
 
-    StatementResult statementResult = _client.getSession().run("Match (t:Type {fqn: $name }) return t.abstract",
+    StatementResult statementResult = this._client.getSession().run("Match (t:Type {fqn: $name }) return t.abstract",
         Collections.singletonMap("name", ExampleInterface.class.getName()));
 
     assertThat(statementResult.single().get(0).asBoolean()).isTrue();
@@ -171,7 +167,7 @@ public class ExampleCodeTest {
 
   /**
    * Tests that the METHOD_REFERENCE has 'IS_DEFINED_BY' and 'RETURNS' relationships:
-   * 
+   *
    * <pre>
    * 4: invokeinterface #19,  1           // InterfaceMethod org/neo4j/graphdb/GraphDatabaseService.beginTx:()Lorg/neo4j/graphdb/Transaction;
    * </pre>
@@ -180,7 +176,7 @@ public class ExampleCodeTest {
   public void testInvokesMethod() {
 
     //
-    StatementResult statementResult = _client.getSession().run(
+    StatementResult statementResult = this._client.getSession().run(
         "MATCH (m:Method {name: 'exampleInvokesMethod'})-[:INVOKES]->(mref:MethodReference)-[rel]->(typeReference:TypeReference) return mref.name, type(rel), typeReference.fqn");
 
     List<String[]> records = statementResult
@@ -202,7 +198,7 @@ public class ExampleCodeTest {
   public void testField_1() {
 
     //
-    StatementResult statementResult = _client.getSession().run(
+    StatementResult statementResult = this._client.getSession().run(
         "Match (t:Type {fqn: $name})-[:CONTAINS]->(f:Field) return f",
         Collections.singletonMap("name", SimpleClassWithOneField.class.getName()));
     List<Node> nodes = statementResult.list(rec -> rec.get(0).asNode());
@@ -212,10 +208,11 @@ public class ExampleCodeTest {
     assertThat(nodes.get(0).labels()).containsExactly("Field");
     assertThat(nodes.get(0).asMap()).containsOnlyKeys("accessFlags", "deprecated", "final", "fqn", "name", "static",
         "transient", "visibility", "volatile");
-    assertThat(nodes.get(0).asMap()).containsEntry("accessFlags", "2");
+    assertThat(nodes.get(0).asMap()).containsEntry("accessFlags", "4");
     assertThat(nodes.get(0).asMap()).containsEntry("deprecated", false);
     assertThat(nodes.get(0).asMap()).containsEntry("final", false);
-    assertThat(nodes.get(0).asMap()).containsEntry("fqn", "java.io.Serializable _serializable");
+    assertThat(nodes.get(0).asMap()).containsEntry("fqn",
+        "java.io.Serializable org.slizaa.scanner.jtype.itest.examplecode.SimpleClassWithOneField._serializable");
     assertThat(nodes.get(0).asMap()).containsEntry("name", "_serializable");
   }
 
@@ -223,7 +220,7 @@ public class ExampleCodeTest {
   public void testField_2() {
 
     //
-    StatementResult statementResult = _client.getSession().run(
+    StatementResult statementResult = this._client.getSession().run(
         "Match (t:Type {fqn: $name})-[:CONTAINS]->(f:Field) return f",
         Collections.singletonMap("name", ExampleClass.class.getName()));
     List<Node> nodes = statementResult.list(rec -> rec.get(0).asNode());
@@ -236,46 +233,64 @@ public class ExampleCodeTest {
     assertThat(nodes.get(0).asMap()).containsEntry("accessFlags", "2");
     assertThat(nodes.get(0).asMap()).containsEntry("deprecated", false);
     assertThat(nodes.get(0).asMap()).containsEntry("final", false);
-    assertThat(nodes.get(0).asMap()).containsEntry("fqn", "java.io.Serializable _serializable");
+    assertThat(nodes.get(0).asMap()).containsEntry("fqn",
+        "java.io.Serializable org.slizaa.scanner.jtype.itest.examplecode.ExampleClass._serializable");
     assertThat(nodes.get(0).asMap()).containsEntry("name", "_serializable");
   }
 
   @Test
+  public void testMethodReference_1() {
+
+    //
+    StatementResult statementResult = this._client.getSession()
+        .run("MATCH (m:Method {name: 'exampleInvokesMethod'})-[:INVOKES]->(mref:MethodReference) return mref");
+
+    List<Node> nodes = statementResult.list(rec -> rec.get(0).asNode());
+
+    //
+    for (Node node : nodes) {
+      System.out.println(node.asMap());
+    }
+
+    // assertThat(nodes).hasSize(1);
+    // assertThat(nodes.get(0).labels()).containsExactly("FieldReference");
+    // assertThat(nodes.get(0).asMap()).containsOnlyKeys("name", "type", "ownerTypeFqn", "static");
+    // assertThat(nodes.get(0).asMap()).containsEntry("name", "_serializable");
+    // assertThat(nodes.get(0).asMap()).containsEntry("type", "java.io.Serializable");
+    // assertThat(nodes.get(0).asMap()).containsEntry("ownerTypeFqn",
+    // "org.slizaa.scanner.jtype.itest.examplecode.SimpleClassWithOneField");
+    // assertThat(nodes.get(0).asMap()).containsEntry("static", false);
+  }
+
+  /**
+   * <p>
+   * </p>
+   */
+  @Test
   public void testFieldReference_1() {
 
     //
-    StatementResult statementResult = _client.getSession().run(
-        "Match (m:Method {name: $name})-[rel]->(fref) return rel",
+    StatementResult statementResult = this._client.getSession().run(
+        "Match (m:Method {name: $name})-[:READS]->(fref:FieldReference) return fref",
         Collections.singletonMap("name", "fieldRef"));
-    
-//  StatementResult statementResult = _client.getSession().run(
-//  "Match (m:Method) return m");
-//    
+
+    List<Node> nodes = statementResult.list(rec -> rec.get(0).asNode());
+
     //
-    for (Relationship relationship : statementResult.list(rec -> rec.get(0).asRelationship())) {
-      System.out.println(relationship.type());
+    for (Node node : nodes) {
+      System.out.println(node.asMap());
     }
-    
-//    INVOKES
-//    REFERENCES
-//    READ
-//    USES
-    
-    
-//    for (Node node : statementResult.list(rec -> rec.get(0).asNode())) {
-//      System.out.println(node.asMap());
-//    }
-//    
-    //
-//    assertThat(nodes).hasSize(1);
-//    assertThat(nodes.get(0).labels()).containsExactly("Field");
-//    assertThat(nodes.get(0).asMap()).containsOnlyKeys("accessFlags", "deprecated", "final", "fqn", "name", "static",
-//        "transient", "visibility", "volatile");
-//    assertThat(nodes.get(0).asMap()).containsEntry("accessFlags", "2");
-//    assertThat(nodes.get(0).asMap()).containsEntry("deprecated", false);
-//    assertThat(nodes.get(0).asMap()).containsEntry("final", false);
-//    assertThat(nodes.get(0).asMap()).containsEntry("fqn", "java.io.Serializable _serializable");
-//    assertThat(nodes.get(0).asMap()).containsEntry("name", "_serializable");
+
+    assertThat(nodes).hasSize(1);
+    assertThat(nodes.get(0).labels()).containsExactly("FieldReference");
+    assertThat(nodes.get(0).asMap()).containsOnlyKeys("fqn", "name", "type", "ownerTypeFqn", "static");
+    assertThat(nodes.get(0).asMap()).containsEntry("name", "_serializable");
+    assertThat(nodes.get(0).asMap()).containsEntry("type", "java.io.Serializable");
+    assertThat(nodes.get(0).asMap()).containsEntry("ownerTypeFqn",
+        "org.slizaa.scanner.jtype.itest.examplecode.SimpleClassWithOneField");
+    assertThat(nodes.get(0).asMap()).containsEntry("static", false);
+    assertThat(nodes.get(0).asMap()).containsEntry("fqn",
+        "java.io.Serializable org.slizaa.scanner.jtype.itest.examplecode.SimpleClassWithOneField._serializable");
   }
 
   //
