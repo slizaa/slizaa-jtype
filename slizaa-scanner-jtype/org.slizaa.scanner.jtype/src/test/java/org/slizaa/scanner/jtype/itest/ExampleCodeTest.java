@@ -7,6 +7,7 @@
  ******************************************************************************/
 package org.slizaa.scanner.jtype.itest;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.slizaa.scanner.neo4j.testfwk.ContentDefinitionsUtils.simpleBinaryFile;
 
@@ -19,7 +20,9 @@ import org.junit.Test;
 import org.neo4j.driver.v1.StatementResult;
 import org.neo4j.driver.v1.types.Node;
 import org.slizaa.scanner.jtype.itest.examplecode.AbstractExampleClass;
+import org.slizaa.scanner.jtype.itest.examplecode.ExampleAnnotation;
 import org.slizaa.scanner.jtype.itest.examplecode.ExampleClass;
+import org.slizaa.scanner.jtype.itest.examplecode.ExampleEnum;
 import org.slizaa.scanner.jtype.itest.examplecode.ExampleInterface;
 import org.slizaa.scanner.jtype.itest.examplecode.SimpleClassWithOneField;
 import org.slizaa.scanner.jtype.itest.examplecode.SuperClass;
@@ -42,39 +45,88 @@ public class ExampleCodeTest {
    * </p>
    */
   @Test
-  public void testTypeType() {
+  public void test_Interface() {
 
-    //
-    StatementResult statementResult = this._client.getSession().run("Match (t:Type {fqn: $name }) return t",
-        Collections.singletonMap("name", ExampleInterface.class.getName()));
-    Node node = statementResult.single().get(0).asNode();
+    // get the type node
+    Node node = getTypeNode(ExampleInterface.class);
 
     // asserts
-    assertThat(node.labels()).containsOnly("Type", "Interface");
+    assertThat(node.labels()).containsExactly("Type", "Interface");
+    assertThat(node.asMap()).containsOnlyKeys(ITypeNode.CLASS_VERSION, ITypeNode.ABSTRACT, ITypeNode.SOURCE_FILE_NAME,
+        ITypeNode.DEPRECATED, ITypeNode.FINAL, ITypeNode.FQN, ITypeNode.NAME, ITypeNode.STATIC, ITypeNode.VISIBILITY);
+
     assertThat(node.asMap()).containsEntry(ITypeNode.FQN, ExampleInterface.class.getName());
     assertThat(node.asMap()).containsEntry(ITypeNode.NAME, ExampleInterface.class.getSimpleName());
     assertThat(node.asMap()).containsEntry(ITypeNode.VISIBILITY, "public");
     assertThat(node.asMap()).containsEntry(ITypeNode.SOURCE_FILE_NAME, "ExampleInterface.java");
-    assertThat(node.asMap()).containsEntry(ITypeNode.CLASS_VERSION, "52");
     assertThat(node.asMap()).containsEntry(ITypeNode.ABSTRACT, true);
+  }
 
-    // Node node = getSingleNode(executeStatement("Match (t:Type {fqn: $name}) return t",
-    // Collections.singletonMap("name", ExampleClass.class.getName())));
-    // assertThat(node.hasLabel(convert(JTypeLabel.Type))).isTrue();
-    // assertThat(node.hasLabel(convert(JTypeLabel.CLASS))).isTrue();
-    // assertThat(node.getProperty(IMethodNode.VISIBILITY)).isEqualTo("public");
+  /**
+   * <p>
+   * </p>
+   */
+  @Test
+  public void test_Class() {
 
-    // node = getTypeNode(ExampleInterface.class.getName());
-    // assertThat(node.hasLabel(convert(JTypeLabel.Type)), is(true));
-    // assertThat(node.hasLabel(convert(JTypeLabel.Interface)), is(true));
-    //
-    // node = getTypeNode(ExampleEnum.class.getName());
-    // assertThat(node.hasLabel(convert(JTypeLabel.Type)), is(true));
-    // assertThat(node.hasLabel(convert(JTypeLabel.ENUM)), is(true));
-    //
-    // node = getTypeNode(ExampleAnnotation.class.getName());
-    // assertThat(node.hasLabel(convert(JTypeLabel.Type)), is(true));
-    // assertThat(node.hasLabel(convert(JTypeLabel.ANNOTATION)), is(true));
+    // get the type node
+    Node node = getTypeNode(ExampleClass.class);
+
+    // asserts
+    assertThat(node.labels()).containsExactly("Type", "Class");
+    assertThat(node.asMap()).containsOnlyKeys(ITypeNode.CLASS_VERSION, ITypeNode.ABSTRACT, ITypeNode.SOURCE_FILE_NAME,
+        ITypeNode.DEPRECATED, ITypeNode.FINAL, ITypeNode.FQN, ITypeNode.NAME, ITypeNode.STATIC, ITypeNode.VISIBILITY);
+
+    assertThat(node.asMap()).containsEntry(ITypeNode.FQN, ExampleClass.class.getName());
+    assertThat(node.asMap()).containsEntry(ITypeNode.NAME, ExampleClass.class.getSimpleName());
+    assertThat(node.asMap()).containsEntry(ITypeNode.VISIBILITY, "public");
+    assertThat(node.asMap()).containsEntry(ITypeNode.SOURCE_FILE_NAME, "ExampleClass.java");
+    assertThat(node.asMap()).containsEntry(ITypeNode.ABSTRACT, false);
+  }
+
+  /**
+   * <p>
+   * </p>
+   */
+  @Test
+  public void test_Enum() {
+
+    // get the type node
+    Node node = getTypeNode(ExampleEnum.class);
+
+    // asserts
+    assertThat(node.labels()).containsExactly("Type", "Enum");
+    assertThat(node.asMap()).containsOnlyKeys(ITypeNode.CLASS_VERSION, ITypeNode.ABSTRACT, ITypeNode.SOURCE_FILE_NAME,
+        ITypeNode.DEPRECATED, ITypeNode.FINAL, ITypeNode.FQN, ITypeNode.NAME, ITypeNode.STATIC, ITypeNode.VISIBILITY,
+        ITypeNode.SIGNATURE);
+
+    assertThat(node.asMap()).containsEntry(ITypeNode.FQN, ExampleEnum.class.getName());
+    assertThat(node.asMap()).containsEntry(ITypeNode.NAME, ExampleEnum.class.getSimpleName());
+    assertThat(node.asMap()).containsEntry(ITypeNode.VISIBILITY, "public");
+    assertThat(node.asMap()).containsEntry(ITypeNode.SOURCE_FILE_NAME, "ExampleEnum.java");
+    assertThat(node.asMap()).containsEntry(ITypeNode.ABSTRACT, false);
+  }
+
+  /**
+   * <p>
+   * </p>
+   */
+  @Test
+  public void test_Annotation() {
+
+    // get the type node
+    Node node = getTypeNode(ExampleAnnotation.class);
+
+    // asserts
+    assertThat(node.labels()).containsExactly("Type", "Annotation");
+    assertThat(node.asMap()).containsOnlyKeys(ITypeNode.CLASS_VERSION, ITypeNode.ABSTRACT, ITypeNode.SOURCE_FILE_NAME,
+        ITypeNode.DEPRECATED, ITypeNode.FINAL, ITypeNode.FQN, ITypeNode.NAME, ITypeNode.STATIC, ITypeNode.VISIBILITY);
+
+    assertThat(node.asMap()).containsEntry(ITypeNode.FQN, ExampleAnnotation.class.getName());
+    assertThat(node.asMap()).containsEntry(ITypeNode.NAME, ExampleAnnotation.class.getSimpleName());
+    assertThat(node.asMap()).containsEntry(ITypeNode.VISIBILITY, "public");
+    assertThat(node.asMap()).containsEntry(ITypeNode.SOURCE_FILE_NAME, "ExampleAnnotation.java");
+    assertThat(node.asMap()).containsEntry(ITypeNode.ABSTRACT, true);
   }
 
   /**
@@ -198,14 +250,12 @@ public class ExampleCodeTest {
   public void testField_1() {
 
     //
-    StatementResult statementResult = this._client.getSession().run(
-        "Match (t:Type {fqn: $name})-[:CONTAINS]->(f:Field) return f",
-        Collections.singletonMap("name", SimpleClassWithOneField.class.getName()));
-    List<Node> nodes = statementResult.list(rec -> rec.get(0).asNode());
+    List<Node> nodes = getFieldNodes(SimpleClassWithOneField.class);
 
     //
     assertThat(nodes).hasSize(1);
     assertThat(nodes.get(0).labels()).containsExactly("Field");
+
     assertThat(nodes.get(0).asMap()).containsOnlyKeys("accessFlags", "deprecated", "final", "fqn", "name", "static",
         "transient", "visibility", "volatile");
     assertThat(nodes.get(0).asMap()).containsEntry("accessFlags", "4");
@@ -216,14 +266,15 @@ public class ExampleCodeTest {
     assertThat(nodes.get(0).asMap()).containsEntry("name", "_serializable");
   }
 
+  /**
+   * <p>
+   * </p>
+   */
   @Test
   public void testField_2() {
 
     //
-    StatementResult statementResult = this._client.getSession().run(
-        "Match (t:Type {fqn: $name})-[:CONTAINS]->(f:Field) return f",
-        Collections.singletonMap("name", ExampleClass.class.getName()));
-    List<Node> nodes = statementResult.list(rec -> rec.get(0).asNode());
+    List<Node> nodes = getFieldNodes(ExampleClass.class);
 
     //
     assertThat(nodes).hasSize(1);
@@ -330,4 +381,39 @@ public class ExampleCodeTest {
   // " - " + methodNode.getSingleRelationship(convert(JTypeModelRelationshipType.RETURNS), Direction.OUTGOING));
   // }
   // }
+
+  /**
+   * <p>
+   * </p>
+   *
+   * @param clazz
+   * @return
+   */
+  private Node getTypeNode(Class<?> clazz) {
+
+    //
+    StatementResult statementResult = this._client.getSession().run("Match (t:Type {fqn: $name }) return t",
+        Collections.singletonMap("name", checkNotNull(clazz).getName()));
+
+    //
+    return statementResult.single().get(0).asNode();
+  }
+
+  /**
+   * <p>
+   * </p>
+   *
+   * @param clazz
+   * @return
+   */
+  private List<Node> getFieldNodes(Class<?> clazz) {
+
+    //
+    StatementResult statementResult = this._client.getSession().run(
+        "Match (t:Type {fqn: $name})-[:CONTAINS]->(f:Field) return f",
+        Collections.singletonMap("name", checkNotNull(clazz).getName()));
+
+    //
+    return statementResult.list(rec -> rec.get(0).asNode());
+  }
 }

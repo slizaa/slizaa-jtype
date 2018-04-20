@@ -106,27 +106,19 @@ public class JTypeClassVisitor extends ClassVisitor {
     this._typeBean.putProperty(ITypeNode.CLASS_VERSION, Integer.toString(version));
 
     // deprecated
-    if ((access & Opcodes.ACC_DEPRECATED) == Opcodes.ACC_DEPRECATED) {
-      this._typeBean.putProperty(ITypeNode.DEPRECATED, true);
-    }
+    this._typeBean.putProperty(ITypeNode.DEPRECATED, (access & Opcodes.ACC_DEPRECATED) == Opcodes.ACC_DEPRECATED);
 
     // // access flags
     // _typeBean.putProperty(ITypeNode.ACCESS_FLAGS, Integer.toHexString(access).toUpperCase());
 
     //
-    if ((access & Opcodes.ACC_ABSTRACT) == Opcodes.ACC_ABSTRACT) {
-      this._typeBean.putProperty(ITypeNode.ABSTRACT, true);
-    }
+      this._typeBean.putProperty(ITypeNode.ABSTRACT, (access & Opcodes.ACC_ABSTRACT) == Opcodes.ACC_ABSTRACT);
 
     //
-    if ((access & Opcodes.ACC_STATIC) == Opcodes.ACC_STATIC) {
-      this._typeBean.putProperty(ITypeNode.STATIC, true);
-    }
+      this._typeBean.putProperty(ITypeNode.STATIC, (access & Opcodes.ACC_STATIC) == Opcodes.ACC_STATIC);
 
     //
-    if ((access & Opcodes.ACC_FINAL) == Opcodes.ACC_FINAL) {
-      this._typeBean.putProperty(ITypeNode.FINAL, true);
-    }
+      this._typeBean.putProperty(ITypeNode.FINAL, (access & Opcodes.ACC_FINAL) == Opcodes.ACC_FINAL);
 
     //
     if ((access & Opcodes.ACC_PUBLIC) == Opcodes.ACC_PUBLIC) {

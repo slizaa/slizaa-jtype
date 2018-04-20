@@ -16,7 +16,7 @@ public class TypeTest extends AbstractByteBuddyBytecodeTest {
 
     INode node = parse(() -> new ByteBuddy().subclass(Object.class).modifiers(Visibility.PUBLIC));
 
-    assertThat(node.getProperties()).hasSize(4);
+    assertThat(node.getProperties()).hasSize(8);
     assertThat(node.getProperty("name")).isEqualTo("Type");
     assertThat(node.getProperty("fqn")).isEqualTo("example.Type");
     assertThat(node.getProperty("classVersion")).isEqualTo("52");
@@ -30,7 +30,7 @@ public class TypeTest extends AbstractByteBuddyBytecodeTest {
 
     INode node = parse(() -> new ByteBuddy().makeInterface());
 
-    assertThat(node.getProperties()).hasSize(5);
+    assertThat(node.getProperties()).hasSize(8);
     assertThat(node.getProperty("abstract")).isEqualTo(true);
     assertThat(node.getProperty("name")).isEqualTo("Type");
     assertThat(node.getProperty("fqn")).isEqualTo("example.Type");
@@ -45,7 +45,7 @@ public class TypeTest extends AbstractByteBuddyBytecodeTest {
 
     INode node = parse(() -> new ByteBuddy().makeEnumeration("hurz", "purz"));
 
-    assertThat(node.getProperties()).hasSize(6);
+    assertThat(node.getProperties()).hasSize(9);
     assertThat(node.getProperty("final")).isEqualTo(true);
     assertThat(node.getProperty("name")).isEqualTo("Type");
     assertThat(node.getProperty("fqn")).isEqualTo("example.Type");
@@ -61,7 +61,7 @@ public class TypeTest extends AbstractByteBuddyBytecodeTest {
 
     INode node = parse(() -> new ByteBuddy().makeAnnotation());
 
-    assertThat(node.getProperties()).hasSize(5);
+    assertThat(node.getProperties()).hasSize(8);
     assertThat(node.getProperty("abstract")).isEqualTo(true);
     assertThat(node.getProperty("name")).isEqualTo("Type");
     assertThat(node.getProperty("fqn")).isEqualTo("example.Type");
@@ -76,7 +76,7 @@ public class TypeTest extends AbstractByteBuddyBytecodeTest {
 
     INode node = parse(() -> new ByteBuddy().subclass(Object.class).modifiers(Visibility.PACKAGE_PRIVATE));
 
-    assertThat(node.getProperties()).hasSize(4);
+    assertThat(node.getProperties()).hasSize(8);
     assertThat(node.getProperty("name")).isEqualTo("Type");
     assertThat(node.getProperty("fqn")).isEqualTo("example.Type");
     assertThat(node.getProperty("classVersion")).isEqualTo("52");

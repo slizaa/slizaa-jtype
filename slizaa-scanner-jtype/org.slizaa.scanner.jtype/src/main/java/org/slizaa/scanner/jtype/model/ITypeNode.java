@@ -20,7 +20,7 @@ public interface ITypeNode extends INode {
 
   public static final String DEPRECATED               = "deprecated";
 
-  public static final String ACCESS_FLAGS             = "accessFlags";
+  // public static final String ACCESS_FLAGS = "accessFlags";
 
   public static final String SIGNATURE                = "signature";
 
