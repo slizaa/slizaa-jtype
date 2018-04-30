@@ -7,8 +7,7 @@ env:
   - secure: GcWvdFk9IonIrzS9YF7EaIFZe6NMu4x5EC77p0PDkG26VuHJ0dfI/7cm9BaD8w2Zzk5oW4/5/fEqPU3M0sFwDT/NrLifQSMLGBC+8Z8LHlR5MbAxjyWsU1c5FZvD7qEFgBS/1qq+vfPqxJi3b4fw724KtJf+NAsjGvk2il4ryjVFoib7vlc3wb9iXOHPojyFKk2u1Rks+YxA0fvblNedDbMNT+f+ze51eWnvDjFCEb3VheUzVVdz6o6pJbrU2cVe+Prp6s5Cam+1S7ymz+40+TQ383EoM4GQFsYQB3cALKy01Ex2S033vy7PxA7LXWMjKksmfJKuc43ZPFXNoLwVBy+GomKT8B/wE+IG8ndnbivxNWhLkKG+NgDJP57ZVPHsu+xgXh3FVsntwcM/svZsN5/uqzMxq8IX234fLeoP0Fhy5UCC+j/RGRMUZ8/FgIUa4FtZs8cvd6ky2QbNOY+bsWz4VNdWRytO86om7dR+nLztcSzgqG5tp7+O+8mK73fW2h7iXQUN9F5Z6nM3F04B6vijZO3jdzvEKM//4Lj9PiCYi367bdr3hDwzaqsz2AoIhqYZxFN43Gp0tk4ewW4nWZgtIemp89Tv5MHDp7WKz/PfhZvm1D1dHy9XEKi+mOugWMWmwray1W+naYdQwCIsensM5aPRAPDk55xS0qVOZV4=
   - secure: TR8fVSsfl+3e8uXNTRAhtQraff+EUjjO9EHqwVqjGGocgdxPcSeY2tUc9H5Vgs3sJozrT85LF/3yr4Vh/MJ936WqgjYQ3yBZxGiObQ1KiINF/1vGoWi9paLlJ8YM4NLx5aYjf0sUOi4zGL96daolpAOChryYYf4PwG9AVLMuvxLatWFfAwgpGcNL+nN/eWaMLVlLt5nxcOFzkiVFCaMiwfQCI7/EoCFLbOKSUEv1tfdcHP7R6AlZsBzWluHmQORH4YywDTirkkljr24/WmKefDpRnnvoM2N3I7VrUHl9Ynh4ji3ED8m7FcqBYG2f10i+f/38KEo+2A2CL6veczh7wGUyzjssrok8BLs9efG9EDOYc8r9ktNs6khrDMp+l6WPc7MTCVQYGMUtiLpmQzfSiV2O/4UzqWpQ4eFkoFQYvqFeB+GmW2ULfii6l7vEclktHN/iF6UVST5s8yv3rhDiy5Wy37rzBp1KQXfL6hlb7/QDjptHJmn+jVcEA4K+t2s4ifeqrgqedhNBOiScI+WRHqGu1UhgBzRi+4fp9U30wKzWsrK5pqMITFCDNlm4KLt0jW/s8aRR9l+JeZYH9609bUom4wbIV8H6vS93jSrk2jSxyISIEruu0foxXkLKezG6t/YvkFo8FiOdodLeWmo/VUGfXz8NL4DTkNpjy8xHx5o=
 script:
-- mvn clean deploy -s .travis/travis-maven-settings.xml -f slizaa-scanner-jtype/pom.xml
-- mvn clean install -f slizaa-scanner-jtype-eclipse/pom.xml
+- mvn clean deploy -s .travis/travis-maven-settings.xml -f pom.xml
 after_success:
 - chmod +x ./.travis/artifact-delete.sh
 - chmod +x ./.travis/artifact-upload.sh
