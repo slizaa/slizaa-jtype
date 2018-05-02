@@ -19,25 +19,18 @@ public class JTypeProcedures {
   @Context
   public GraphDatabaseService db;
 
-  // This gives us a log instance that outputs messages to the
-  // standard log, `neo4j.log`
+  /** log instance to the standard log, `neo4j.log` */
   @Context
   public Log                  log;
 
   @UserFunction(name = "slizaa.currentTimestamp")
-  @Description("apoc.date.currentTimestamp() - returns System.currentTimeMillis()")
+  @Description("slizaa.currentTimestamp() - returns System.currentTimeMillis()")
   public long currentTimestamp() {
     return System.currentTimeMillis();
   }
 
-  @UserFunction
-  @Description("hurz() - returns hurz()")
-  public String hurz() {
-    return "hurz";
-  }
-
   @Procedure(name = "slizaa.createNewModule", mode = Mode.WRITE)
-  public Stream<Output> index(@Name("nodeId") String modulePath) {
+  public Stream<Output> createNewModule(@Name("path") String modulePath) {
 
     //
     List<Output> result = new LinkedList<>();
@@ -51,6 +44,30 @@ public class JTypeProcedures {
     Output output = new Output();
     output.out = node;
     result.add(output);
+
+    //
+    return result.stream();
+  }
+
+  @Procedure(name = "slizaa.createNewModules", mode = Mode.WRITE)
+  public Stream<Output> createNewModules(@Name("path") List<String> modulePathes) {
+
+    //
+    List<Output> result = new LinkedList<>();
+
+    //
+    for (String modulePath : modulePathes) {
+
+      //
+      Node node = db.createNode();
+      node.setProperty("path", modulePath);
+      node.setProperty("hurz", "purz");
+      node.setProperty("schnotz", "dotz");
+
+      Output output = new Output();
+      output.out = node;
+      result.add(output);
+    }
 
     //
     return result.stream();
