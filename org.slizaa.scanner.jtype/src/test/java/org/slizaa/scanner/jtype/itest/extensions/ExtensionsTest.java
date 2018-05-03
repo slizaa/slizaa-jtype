@@ -7,7 +7,6 @@
  ******************************************************************************/
 package org.slizaa.scanner.jtype.itest.extensions;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.slizaa.scanner.neo4j.testfwk.ContentDefinitionsUtils.simpleBinaryFile;
 
 import org.junit.ClassRule;
@@ -30,23 +29,26 @@ public class ExtensionsTest {
   @Rule
   public SlizaaClientRule            _client = new SlizaaClientRule();
 
-  /**
-   * <p>
-   * </p>
-   */
   @Test
-  public void test_Function() {
-    StatementResult statementResult = this._client.getSession().run("return slizaa.currentTimestamp()");
-    assertThat(statementResult.single().asMap().containsKey("slizaa.currentTimestamp()"));
+  public void test_createGroup_1() {
+    
+    // create
+    StatementResult statementResult = this._client.getSession().run("CALL slizaa.createGroup('spunk/dunk')");
+    System.out.println(statementResult.single().asMap());
+    
+    // test
+    statementResult = this._client.getSession().run("MATCH p=(g1:Group {name:'spunk'})-[:CONTAINS]->(g2:Group {name:'dunk'}) RETURN p");
+    System.out.println(statementResult.single().asMap());
   }
-
+  
+  
   /**
    * <p>
    * </p>
    */
   @Test
   public void test_Procedure_1() {
-    StatementResult statementResult = this._client.getSession().run("CALL slizaa.createNewModule('spunk/dunk')");
+    StatementResult statementResult = this._client.getSession().run("CALL slizaa.createModule( {fqn: 'spunk/dunk'} )");
     System.out.println(statementResult.single().asMap());
     // assertThat(statementResult.single().asMap().containsKey("slizaa.currentTimestamp()"));
   }
@@ -57,7 +59,7 @@ public class ExtensionsTest {
    */
   @Test
   public void test_Procedure_2() {
-    StatementResult statementResult = this._client.getSession().run("CALL slizaa.createNewModules(['spunk/dunk', 'flunk/punk'])");
+    StatementResult statementResult = this._client.getSession().run("CALL slizaa.createModules(['spunk/dunk', 'flunk/punk'])");
     System.out.println(statementResult.list(o -> o.get("out")));
     // assertThat(statementResult.single().asMap().containsKey("slizaa.currentTimestamp()"));
   }

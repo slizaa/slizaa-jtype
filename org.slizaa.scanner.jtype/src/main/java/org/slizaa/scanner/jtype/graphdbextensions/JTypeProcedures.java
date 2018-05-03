@@ -2,6 +2,7 @@ package org.slizaa.scanner.jtype.graphdbextensions;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import org.neo4j.graphdb.GraphDatabaseService;
@@ -29,45 +30,49 @@ public class JTypeProcedures {
     return System.currentTimeMillis();
   }
 
-  @Procedure(name = "slizaa.createNewModule", mode = Mode.WRITE)
-  public Stream<Output> createNewModule(@Name("path") String modulePath) {
+  /**
+   * <p>
+   * </p>
+   *
+   * @param module
+   * @return
+   */
+  @Procedure(name = "slizaa.createModule", mode = Mode.WRITE)
+  public Stream<Output> createModule(@Name("module") Map<String, String> module) {
 
     //
     List<Output> result = new LinkedList<>();
 
     //
-    Node node = db.createNode();
-    node.setProperty("path", modulePath);
-    node.setProperty("hurz", "purz");
-    node.setProperty("schnotz", "dotz");
-
-    Output output = new Output();
-    output.out = node;
-    result.add(output);
+    result.add(new Output(CreatorHelper.createModule(db, module)));
 
     //
     return result.stream();
   }
 
   @Procedure(name = "slizaa.createNewModules", mode = Mode.WRITE)
-  public Stream<Output> createNewModules(@Name("path") List<String> modulePathes) {
+  public Stream<Output> createNewModules(@Name("moduleList") List<Map<String, String>> modules) {
 
     //
     List<Output> result = new LinkedList<>();
 
     //
-    for (String modulePath : modulePathes) {
-
-      //
-      Node node = db.createNode();
-      node.setProperty("path", modulePath);
-      node.setProperty("hurz", "purz");
-      node.setProperty("schnotz", "dotz");
-
-      Output output = new Output();
-      output.out = node;
-      result.add(output);
+    for (Map<String, String> module : modules) {
+      result.add(new Output(CreatorHelper.createModule(db, module)));
     }
+
+    //
+    return result.stream();
+  }
+
+  @Procedure(name = "slizaa.createGroup", mode = Mode.WRITE)
+  public Stream<Output> createGroup(@Name("groupFqn") String groupFqn) {
+
+    //
+    List<Output> result = new LinkedList<>();
+
+    //
+    result.add(new Output(CreatorHelper.createGroup(db, new FullyQualifiedName(groupFqn))));
 
     //
     return result.stream();
@@ -82,7 +87,11 @@ public class JTypeProcedures {
   }
 
   public class Output {
-    public Node out;
+    public Node node;
+
+    public Output(Node node) {
+      this.node = node;
+    }
   }
 
 }
