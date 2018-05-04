@@ -7,12 +7,15 @@
  ******************************************************************************/
 package org.slizaa.scanner.jtype.itest.extensions;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.slizaa.scanner.neo4j.testfwk.ContentDefinitionsUtils.simpleBinaryFile;
+
+import java.util.List;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.neo4j.driver.v1.StatementResult;
+import org.neo4j.driver.v1.Record;
 import org.slizaa.scanner.jtype.graphdbextensions.JTypeProcedures;
 import org.slizaa.scanner.neo4j.testfwk.SlizaaClientRule;
 import org.slizaa.scanner.neo4j.testfwk.SlizaaTestServerRule;
@@ -33,12 +36,12 @@ public class ExtensionsTest {
   public void test_createGroup_1() {
     
     // create
-    StatementResult statementResult = this._client.getSession().run("CALL slizaa.createGroup('spunk/dunk')");
-    System.out.println(statementResult.single().asMap());
+    List<Record> records = this._client.getSession().run("CALL slizaa.createGroup('spunk/dunk')").list();
+    assertThat(records).hasSize(1);
     
     // test
-    statementResult = this._client.getSession().run("MATCH p=(g1:Group {name:'spunk'})-[:CONTAINS]->(g2:Group {name:'dunk'}) RETURN p");
-    System.out.println(statementResult.single().asMap());
+    records = this._client.getSession().run("MATCH p=(g1:Group {name:'spunk'})-[:CONTAINS]->(g2:Group {name:'dunk'}) RETURN p").list();
+    assertThat(records).hasSize(1);
   }
   
   
@@ -48,19 +51,12 @@ public class ExtensionsTest {
    */
   @Test
   public void test_Procedure_1() {
-    StatementResult statementResult = this._client.getSession().run("CALL slizaa.createModule( {fqn: 'spunk/dunk'} )");
-    System.out.println(statementResult.single().asMap());
-    // assertThat(statementResult.single().asMap().containsKey("slizaa.currentTimestamp()"));
-  }
-  
-  /**
-   * <p>
-   * </p>
-   */
-  @Test
-  public void test_Procedure_2() {
-    StatementResult statementResult = this._client.getSession().run("CALL slizaa.createModules(['spunk/dunk', 'flunk/punk'])");
-    System.out.println(statementResult.list(o -> o.get("out")));
-    // assertThat(statementResult.single().asMap().containsKey("slizaa.currentTimestamp()"));
+    
+    List<Record> records = this._client.getSession().run("CALL slizaa.createModule('spunk/module_1', '1.0.0' )").list();
+    assertThat(records).hasSize(1);
+
+    // test
+    records = this._client.getSession().run("MATCH p=(g:Group {name:'spunk'})-[:CONTAINS]->(m:Module {name:'module_1'}) RETURN p").list();
+    assertThat(records).hasSize(1);
   }
 }
