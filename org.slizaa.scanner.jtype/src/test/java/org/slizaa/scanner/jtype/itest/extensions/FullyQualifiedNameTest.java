@@ -3,7 +3,7 @@ package org.slizaa.scanner.jtype.itest.extensions;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
-import org.slizaa.scanner.jtype.graphdbextensions.FullyQualifiedName;
+import org.slizaa.scanner.jtype.graphdbextensions.arch.FullyQualifiedName;
 
 /**
  * <p>

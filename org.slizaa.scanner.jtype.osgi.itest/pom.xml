@@ -17,17 +17,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.slizaa.scanner.neo4j</groupId>
-			<artifactId>org.slizaa.scanner.neo4j.osgi.itest</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slizaa.scanner.jtype</groupId>
-			<artifactId>org.slizaa.scanner.jtype</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
-		</dependency>
-		
-		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty-transport</artifactId>
 			<version>4.1.21.Final</version>
@@ -56,8 +45,19 @@
 			<groupId>io.netty</groupId>
 			<artifactId>netty-handler</artifactId>
 			<version>4.1.21.Final</version>
-		</dependency>		
-		
+		</dependency>
+
+		<dependency>
+			<groupId>org.slizaa.scanner.neo4j</groupId>
+			<artifactId>org.slizaa.scanner.neo4j.osgi.itest</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slizaa.scanner.jtype</groupId>
+			<artifactId>org.slizaa.scanner.jtype</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

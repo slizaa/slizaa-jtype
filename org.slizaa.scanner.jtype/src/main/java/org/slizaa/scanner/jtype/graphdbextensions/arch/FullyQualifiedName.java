@@ -1,4 +1,4 @@
-package org.slizaa.scanner.jtype.graphdbextensions;
+package org.slizaa.scanner.jtype.graphdbextensions.arch;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
