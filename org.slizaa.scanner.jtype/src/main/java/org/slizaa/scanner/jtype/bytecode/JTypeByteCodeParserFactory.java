@@ -62,10 +62,12 @@ public class JTypeByteCodeParserFactory extends IParserFactory.Adapter implement
 
     //
     try (Transaction transaction = graphDatabaseService.beginTx()) {
-      ((GraphDatabaseService) graphDatabase).execute("create index on :TYPE(fqn)");
-      ((GraphDatabaseService) graphDatabase).execute("create index on :TYPE_REFERENCE(fqn)");
-      ((GraphDatabaseService) graphDatabase).execute("create index on :METHOD(fqn)");
-      ((GraphDatabaseService) graphDatabase).execute("create index on :METHOD_REFERENCE(fqn)");
+      ((GraphDatabaseService) graphDatabase).execute("create index on :Type(fqn)");
+      ((GraphDatabaseService) graphDatabase).execute("create index on :TypeReference(fqn)");
+      ((GraphDatabaseService) graphDatabase).execute("create index on :Field(fqn)");
+      ((GraphDatabaseService) graphDatabase).execute("create index on :FieldReference(fqn)");
+      ((GraphDatabaseService) graphDatabase).execute("create index on :Method(fqn)");
+      ((GraphDatabaseService) graphDatabase).execute("create index on :MethodReference(fqn)");
     }
   }
 
