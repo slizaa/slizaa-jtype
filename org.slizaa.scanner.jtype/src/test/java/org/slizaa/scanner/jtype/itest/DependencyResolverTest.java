@@ -34,10 +34,29 @@ public class DependencyResolverTest {
   @Test
   public void testDependencyResolver() {
 
-    //
+    // check types
     StatementResult statementResult = this._client.getSession()
-        .run("MATCH (fref:FieldReference)-[rel:BOUND_TO {derived:true}]->(f:Field) RETURN count(rel)");
-    assertThat(statementResult.single().get("count(rel)").asInt()).isEqualTo(1492);
+        .run("MATCH (tref:TypeReference)-[rel:BOUND_TO {derived:true}]->(t:Type) RETURN count(rel)");
+    assertThat(statementResult.single().get("count(rel)").asInt()).isEqualTo(2403);
+
+    statementResult = this._client.getSession()
+        .run("MATCH (t1:Type)-[rel:DEPENDS_ON {derived:true}]->(t2:Type) RETURN count(rel)");
+    assertThat(statementResult.single().get("count(rel)").asInt()).isEqualTo(2061);
+
+    // //
+    // statementResult = this._client.getSession()
+    // .run("MATCH (mref:MethodReference)-[rel:BOUND_TO {derived:true}]->(m:Method) RETURN count(rel)");
+    // assertThat(statementResult.single().get("count(rel)").asInt()).isEqualTo(2540);
+    //
+    // statementResult = this._client.getSession()
+    // .run("MATCH p=(sourceNode)-[rel]->(mref:MethodReference)-[:BOUND_TO]->(method:Method) RETURN count(p)");
+    // System.out.println("result: " + statementResult.single().get("count(p)").asInt());
+    // assertThat(statementResult.single().get("count(p)").asInt()).isEqualTo(2540);
+    //
+    // //
+    // statementResult = this._client.getSession()
+    // .run("MATCH (fref:FieldReference)-[rel:BOUND_TO {derived:true}]->(f:Field) RETURN count(rel)");
+    // assertThat(statementResult.single().get("count(rel)").asInt()).isEqualTo(1492);
 
     // //
     // statementResult = this._client.getSession()
@@ -45,14 +64,5 @@ public class DependencyResolverTest {
     // System.out.println(statementResult.single().get("count(fref)").asInt());
     // assertThat(statementResult.single().get("count(fref)").asInt()).isEqualTo(1492);
 
-    //
-    statementResult = this._client.getSession()
-        .run("MATCH (mref:MethodReference)-[rel:BOUND_TO {derived:true}]->(m:Method) RETURN count(rel)");
-    assertThat(statementResult.single().get("count(rel)").asInt()).isEqualTo(2540);
-
-    //
-    statementResult = this._client.getSession()
-        .run("MATCH (tref:TypeReference)-[rel:BOUND_TO {derived:true}]->(t:Type) RETURN count(rel)");
-    assertThat(statementResult.single().get("count(rel)").asInt()).isEqualTo(2403);
   }
 }
