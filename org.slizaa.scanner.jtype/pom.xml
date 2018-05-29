@@ -55,6 +55,12 @@
 			<artifactId>asm</artifactId>
 			<version>6.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.neo4j.procedure</groupId>
+			<artifactId>apoc</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
