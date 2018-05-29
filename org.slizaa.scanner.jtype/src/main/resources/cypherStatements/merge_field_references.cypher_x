@@ -1,7 +1,0 @@
-/**
- * @slizaa.groupId            org.slizaa.jtype.core
- * @slizaa.statementId        mergeFieldReferences
- * @slizaa.requiredStatements bindFieldReferences
- */
- DYNAMISCHER RELATIONSHIP TYPE
-MATCH (sourceNode)-[rel]->(fref:FieldReference)-[:BOUND_TO]->(field:Field) WHERE NOT (tref)-[:BOUND_TO]->(t) MERGE (sourceNode)-[type(rel) { derived: true }]->(field)
