@@ -14,7 +14,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.neo4j.driver.v1.StatementResult;
-import org.slizaa.scanner.jtype.graphdbextensions.CreateDerived;
 import org.slizaa.scanner.neo4j.testfwk.SlizaaClientRule;
 import org.slizaa.scanner.neo4j.testfwk.SlizaaTestServerRule;
 
@@ -23,7 +22,7 @@ public class DumpProceduresTest {
   @ClassRule
   public static SlizaaTestServerRule _server = new SlizaaTestServerRule(
       multipleBinaryMvnArtifacts(new String[] { "com.netflix.eureka", "eureka-core", "1.8.2" },
-          new String[] { "com.netflix.eureka", "eureka-client", "1.8.2" })).withExtensionClass(CreateDerived.class);
+          new String[] { "com.netflix.eureka", "eureka-client", "1.8.2" }));
 
   @Rule
   public SlizaaClientRule            _client = new SlizaaClientRule();
@@ -35,16 +34,16 @@ public class DumpProceduresTest {
   @Test
   public void testDependencyResolver() {
 
-//    StatementResult res = this._client.getSession()
-//        .run("CALL dbms.procedures() YIELD name, signature WITH * WHERE name STARTS WITH 'slizaa.derivedRelationship' RETURN name, signature");
-//    System.out.println(res.single().asMap());
-    
-    
+    // StatementResult res = this._client.getSession()
+    // .run("CALL dbms.procedures() YIELD name, signature WITH * WHERE name STARTS WITH 'slizaa.derivedRelationship'
+    // RETURN name, signature");
+    // System.out.println(res.single().asMap());
+
     // check types
     StatementResult statementResult = this._client.getSession()
         .run("MATCH (tref:TypeReference)-[rel:BOUND_TO {derived:true}]->(t:Type) RETURN count(rel)");
     assertThat(statementResult.single().get("count(rel)").asInt()).isEqualTo(2403);
-    
+
     statementResult = this._client.getSession()
         .run("MATCH (t1:Type)-[rel:DEPENDS_ON {derived:true}]->(t2:Type) RETURN count(rel)");
     assertThat(statementResult.single().get("count(rel)").asInt()).isEqualTo(2061);

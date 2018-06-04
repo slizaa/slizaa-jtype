@@ -1,12 +1,9 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 Slizaa project team.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- *    Slizaa project team - initial API and implementation
+ * Copyright (c) 2011-2015 Slizaa project team. All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is
+ * available at http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: Slizaa project team - initial API and implementation
  ******************************************************************************/
 package org.slizaa.scanner.jtype.itest;
 
@@ -38,7 +35,7 @@ public class SimpleJTypeMapStructTest {
   /**
    * <p>
    * </p>
-   * 
+   *
    * @throws KernelException
    * @throws IOException
    */
@@ -46,7 +43,7 @@ public class SimpleJTypeMapStructTest {
   public void test() throws KernelException, IOException {
 
     //
-    StatementResult statementResult = _client.getSession().run("Match (t:Type) return count(t)");
+    StatementResult statementResult = this._client.getSession().run("Match (t:Type) return count(t)");
     assertThat(statementResult.single().get(0).asInt()).isEqualTo(148);
   }
 }

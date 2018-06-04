@@ -16,7 +16,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.neo4j.driver.v1.Record;
-import org.slizaa.scanner.jtype.graphdbextensions.arch.SlizaaArchProcedures;
 import org.slizaa.scanner.neo4j.testfwk.SlizaaClientRule;
 import org.slizaa.scanner.neo4j.testfwk.SlizaaTestServerRule;
 
@@ -25,8 +24,7 @@ public class ExtensionsTest {
   /** - */
   @ClassRule
   public static SlizaaTestServerRule _server = new SlizaaTestServerRule(simpleBinaryFile("jtype", "1.2.3",
-      ExtensionsTest.class.getProtectionDomain().getCodeSource().getLocation().getFile()))
-          .withExtensionClass(SlizaaArchProcedures.class);
+      ExtensionsTest.class.getProtectionDomain().getCodeSource().getLocation().getFile()));
 
   /** - */
   @Rule
@@ -34,29 +32,31 @@ public class ExtensionsTest {
 
   @Test
   public void test_createGroup_1() {
-    
+
     // create
     List<Record> records = this._client.getSession().run("CALL slizaa.arch.createGroup('spunk/dunk')").list();
     assertThat(records).hasSize(1);
-    
+
     // test
-    records = this._client.getSession().run("MATCH p=(g1:Group {name:'spunk'})-[:CONTAINS]->(g2:Group {name:'dunk'}) RETURN p").list();
+    records = this._client.getSession()
+        .run("MATCH p=(g1:Group {name:'spunk'})-[:CONTAINS]->(g2:Group {name:'dunk'}) RETURN p").list();
     assertThat(records).hasSize(1);
   }
-  
-  
+
   /**
    * <p>
    * </p>
    */
   @Test
   public void test_Procedure_1() {
-    
-    List<Record> records = this._client.getSession().run("CALL slizaa.arch.createModule('spunk/module_1', '1.0.0' )").list();
+
+    List<Record> records = this._client.getSession().run("CALL slizaa.arch.createModule('spunk/module_1', '1.0.0' )")
+        .list();
     assertThat(records).hasSize(1);
 
     // test
-    records = this._client.getSession().run("MATCH p=(g:Group {name:'spunk'})-[:CONTAINS]->(m:Module {name:'module_1'}) RETURN p").list();
+    records = this._client.getSession()
+        .run("MATCH p=(g:Group {name:'spunk'})-[:CONTAINS]->(m:Module {name:'module_1'}) RETURN p").list();
     assertThat(records).hasSize(1);
   }
 }

@@ -44,7 +44,7 @@ public abstract class AbstractJTypeTest {
    * @return
    */
   public BundleContext bundleContext() {
-    return bundleContext;
+    return this.bundleContext;
   }
 
   /**
@@ -89,11 +89,11 @@ public abstract class AbstractJTypeTest {
         wrappedBundle(mavenBundle("io.netty", "netty-codec").versionAsInProject()),
         wrappedBundle(mavenBundle("io.netty", "netty-handler").versionAsInProject()),
 
-
         //
         mavenBundle("org.slizaa.scanner.core", "org.slizaa.scanner.core.spi-api").versionAsInProject(),
         mavenBundle("org.slizaa.scanner.core", "org.slizaa.scanner.core.contentdefinition").versionAsInProject(),
         mavenBundle("org.slizaa.scanner.core", "org.slizaa.scanner.core.classpathscanner").versionAsInProject(),
+        mavenBundle("org.slizaa.scanner.core", "org.slizaa.scanner.core.cypherregistry").versionAsInProject().start(),
         mavenBundle("org.slizaa.scanner.neo4j", "org.slizaa.scanner.neo4j.osgi").versionAsInProject().start(),
         bundle("reference:" + jtypeFile.toURI().toString()).start());
   }
@@ -101,11 +101,12 @@ public abstract class AbstractJTypeTest {
   /**
    * <p>
    * </p>
-   * 
+   *
    * @throws BundleException
    */
   protected void startAllBundles() throws BundleException {
-    for (Bundle bundle : bundleContext.getBundles()) {
+    for (Bundle bundle : this.bundleContext.getBundles()) {
+      System.out.println("Starting " + bundle.getSymbolicName() + " : " + bundle.getLocation());
       bundle.start();
     }
   }

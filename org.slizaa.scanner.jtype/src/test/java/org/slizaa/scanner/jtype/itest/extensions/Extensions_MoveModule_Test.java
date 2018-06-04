@@ -16,7 +16,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.neo4j.driver.v1.Record;
-import org.slizaa.scanner.jtype.graphdbextensions.arch.SlizaaArchProcedures;
 import org.slizaa.scanner.neo4j.testfwk.SlizaaClientRule;
 import org.slizaa.scanner.neo4j.testfwk.SlizaaTestServerRule;
 
@@ -25,8 +24,7 @@ public class Extensions_MoveModule_Test {
   /** - */
   @ClassRule
   public static SlizaaTestServerRule _server = new SlizaaTestServerRule(simpleBinaryFile("jtype", "1.2.3",
-      Extensions_MoveModule_Test.class.getProtectionDomain().getCodeSource().getLocation().getFile()))
-          .withExtensionClass(SlizaaArchProcedures.class);
+      Extensions_MoveModule_Test.class.getProtectionDomain().getCodeSource().getLocation().getFile()));
 
   /** - */
   @Rule

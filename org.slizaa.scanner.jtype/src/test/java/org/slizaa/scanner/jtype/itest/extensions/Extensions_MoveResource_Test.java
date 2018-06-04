@@ -7,7 +7,6 @@
  ******************************************************************************/
 package org.slizaa.scanner.jtype.itest.extensions;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.slizaa.scanner.neo4j.testfwk.ContentDefinitionsUtils.simpleBinaryFile;
 
 import java.util.List;
@@ -16,7 +15,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.neo4j.driver.v1.Record;
-import org.slizaa.scanner.jtype.graphdbextensions.arch.SlizaaArchProcedures;
 import org.slizaa.scanner.neo4j.testfwk.SlizaaClientRule;
 import org.slizaa.scanner.neo4j.testfwk.SlizaaTestServerRule;
 
@@ -25,8 +23,7 @@ public class Extensions_MoveResource_Test {
   /** - */
   @ClassRule
   public static SlizaaTestServerRule _server = new SlizaaTestServerRule(simpleBinaryFile("jtype", "1.2.3",
-      Extensions_MoveResource_Test.class.getProtectionDomain().getCodeSource().getLocation().getFile()))
-          .withExtensionClass(SlizaaArchProcedures.class);
+      Extensions_MoveResource_Test.class.getProtectionDomain().getCodeSource().getLocation().getFile()));
 
   /** - */
   @Rule
@@ -45,10 +42,10 @@ public class Extensions_MoveResource_Test {
     records = this._client.getSession().run(
         "MATCH (r:Resource {fqn: 'org/mapstruct/ap/shaded/freemarker/core/RangeModel.class'}) MATCH (m:Module {name: 'hurz', version: '1.0.0'}) CALL slizaa.arch.moveResource(r, m) RETURN r,m")
         .list();
-    
+
     //
     records.forEach(r -> System.out.println(r.get("r").asMap()));
-    
-   // assertThat(records).hasSize(1);
+
+    // assertThat(records).hasSize(1);
   }
 }
