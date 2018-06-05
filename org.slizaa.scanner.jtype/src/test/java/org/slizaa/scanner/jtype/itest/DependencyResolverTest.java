@@ -42,6 +42,14 @@ public class DependencyResolverTest {
     statementResult = this._client.getSession()
         .run("MATCH (t1:Type)-[rel:DEPENDS_ON {derived:true}]->(t2:Type) RETURN count(rel)");
     assertThat(statementResult.single().get("count(rel)").asInt()).isEqualTo(2061);
+    
+    statementResult = this._client.getSession()
+        .run("MATCH p=(sourceNode)-[rel]->(tref:TypeReference)-[:BOUND_TO]->(t:Type) RETURN count(p)");
+    assertThat(statementResult.single().get("count(p)").asInt()).isEqualTo(15549);
+
+    statementResult = this._client.getSession().run(
+        "MATCH p=(sourceNode)-[rel {derived:true}]->(t:Type) where type(rel)<>\"BOUND_TO\" RETURN count(p)");
+    assertThat(statementResult.single().get("count(p)").asInt()).isEqualTo(15549);
 
     // check method references
     statementResult = this._client.getSession()
