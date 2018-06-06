@@ -16,7 +16,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.neo4j.driver.v1.StatementResult;
-import org.neo4j.kernel.api.exceptions.KernelException;
 import org.slizaa.scanner.neo4j.testfwk.SlizaaClientRule;
 import org.slizaa.scanner.neo4j.testfwk.SlizaaTestServerRule;
 
@@ -40,7 +39,7 @@ public class SimpleJTypeMapStructTest {
    * @throws IOException
    */
   @Test
-  public void test() throws KernelException, IOException {
+  public void test() throws Exception {
 
     //
     StatementResult statementResult = this._client.getSession().run("Match (t:Type) return count(t)");
