@@ -46,20 +46,21 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.neo4j</groupId>
-			<artifactId>server-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.ow2.asm</groupId>
 			<artifactId>asm</artifactId>
 			<version>6.2</version>
 		</dependency>
-		<dependency>
+<!-- 		<dependency>
+			<groupId>org.neo4j</groupId>
+			<artifactId>server-api</artifactId>
+			<scope>provided</scope>
+		</dependency> -->
+
+<!-- 		<dependency>
 			<groupId>org.neo4j.procedure</groupId>
 			<artifactId>apoc</artifactId>
 			<scope>provided</scope>
-		</dependency>
+		</dependency> -->
 
 
 		<dependency>

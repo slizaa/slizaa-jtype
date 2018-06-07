@@ -8,10 +8,9 @@
 package org.slizaa.scanner.jtype.bytecode;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.graphdb.Transaction;
 import org.slizaa.scanner.core.spi.annotations.ParserFactory;
 import org.slizaa.scanner.core.spi.contentdefinition.IContentDefinitionProvider;
+import org.slizaa.scanner.core.spi.parser.ICypherStatementExecutor;
 import org.slizaa.scanner.core.spi.parser.IParser;
 import org.slizaa.scanner.core.spi.parser.IParserFactory;
 import org.slizaa.scanner.jtype.bytecode.internal.PrimitiveDatatypeNodeProvider;
@@ -51,31 +50,25 @@ public class JTypeByteCodeParserFactory extends IParserFactory.Adapter implement
    * {@inheritDoc}
    */
   @Override
-  public void batchParseStart(IContentDefinitionProvider contentDefinitions, Object graphDatabase,
+  public void batchParseStart(IContentDefinitionProvider contentDefinitions, ICypherStatementExecutor cypherStatementExecutor,
       IProgressMonitor subMonitor) throws Exception {
 
-    GraphDatabaseService graphDatabaseService = (GraphDatabaseService) graphDatabase;
-
-    try (Transaction transaction = graphDatabaseService.beginTx()) {
-      this._datatypeNodeProvider = new PrimitiveDatatypeNodeProvider((GraphDatabaseService) graphDatabase);
-    }
+      this._datatypeNodeProvider = new PrimitiveDatatypeNodeProvider(cypherStatementExecutor);
 
     //
-    try (Transaction transaction = graphDatabaseService.beginTx()) {
-      ((GraphDatabaseService) graphDatabase).execute("create index on :Type(fqn)");
-      ((GraphDatabaseService) graphDatabase).execute("create index on :TypeReference(fqn)");
-      ((GraphDatabaseService) graphDatabase).execute("create index on :Field(fqn)");
-      ((GraphDatabaseService) graphDatabase).execute("create index on :FieldReference(fqn)");
-      ((GraphDatabaseService) graphDatabase).execute("create index on :Method(fqn)");
-      ((GraphDatabaseService) graphDatabase).execute("create index on :MethodReference(fqn)");
-    }
+      cypherStatementExecutor.executeCypherStatement("create index on :Type(fqn)");
+      cypherStatementExecutor.executeCypherStatement("create index on :TypeReference(fqn)");
+      cypherStatementExecutor.executeCypherStatement("create index on :Field(fqn)");
+      cypherStatementExecutor.executeCypherStatement("create index on :FieldReference(fqn)");
+      cypherStatementExecutor.executeCypherStatement("create index on :Method(fqn)");
+      cypherStatementExecutor.executeCypherStatement("create index on :MethodReference(fqn)");
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void batchParseStop(IContentDefinitionProvider contentDefinition, Object graphDatabase,
+  public void batchParseStop(IContentDefinitionProvider contentDefinition, ICypherStatementExecutor cypherStatementExecutor,
       IProgressMonitor subMonitor) {
 
     //

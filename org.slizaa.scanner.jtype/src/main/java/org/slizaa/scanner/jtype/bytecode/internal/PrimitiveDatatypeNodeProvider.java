@@ -10,10 +10,8 @@
  ******************************************************************************/
 package org.slizaa.scanner.jtype.bytecode.internal;
 
-import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.graphdb.Label;
-import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.ResourceIterator;
+import org.slizaa.scanner.core.spi.parser.ICypherStatementExecutor;
+import org.slizaa.scanner.core.spi.parser.ICypherStatementExecutor.IResult;
 import org.slizaa.scanner.core.spi.parser.model.INode;
 import org.slizaa.scanner.core.spi.parser.model.NodeFactory;
 import org.slizaa.scanner.jtype.bytecode.IPrimitiveDatatypeNodeProvider;
@@ -117,64 +115,52 @@ public class PrimitiveDatatypeNodeProvider implements IPrimitiveDatatypeNodeProv
    * Creates a new instance of type {@link PrimitiveDatatypeNodeProvider}.
    * </p>
    * 
-   * @param graphDatabase
+   * @param cypherStatementExecutor
    */
-  public PrimitiveDatatypeNodeProvider(GraphDatabaseService graphDatabase) {
+  public PrimitiveDatatypeNodeProvider(ICypherStatementExecutor cypherStatementExecutor) {
 
     // we have to create nodes for the primitive data types (byte, short, int etc.) if they don't already exist
-    _primitiveDatatypeByte = createPrimitveDataTypeIfNotExists(graphDatabase, "byte",
+    _primitiveDatatypeByte = createPrimitveDataTypeIfNotExists(cypherStatementExecutor, "byte",
         JTypeLabel.PrimitiveDataType);
-    _primitiveDatatypeShort = createPrimitveDataTypeIfNotExists(graphDatabase, "short",
+    _primitiveDatatypeShort = createPrimitveDataTypeIfNotExists(cypherStatementExecutor, "short",
         JTypeLabel.PrimitiveDataType);
-    _primitiveDatatypeInt = createPrimitveDataTypeIfNotExists(graphDatabase, "int",
+    _primitiveDatatypeInt = createPrimitveDataTypeIfNotExists(cypherStatementExecutor, "int",
         JTypeLabel.PrimitiveDataType);
-    _primitiveDatatypeLong = createPrimitveDataTypeIfNotExists(graphDatabase, "long",
+    _primitiveDatatypeLong = createPrimitveDataTypeIfNotExists(cypherStatementExecutor, "long",
         JTypeLabel.PrimitiveDataType);
-    _primitiveDatatypeFloat = createPrimitveDataTypeIfNotExists(graphDatabase, "float",
+    _primitiveDatatypeFloat = createPrimitveDataTypeIfNotExists(cypherStatementExecutor, "float",
         JTypeLabel.PrimitiveDataType);
-    _primitiveDatatypeDouble = createPrimitveDataTypeIfNotExists(graphDatabase, "double",
+    _primitiveDatatypeDouble = createPrimitveDataTypeIfNotExists(cypherStatementExecutor, "double",
         JTypeLabel.PrimitiveDataType);
-    _primitiveDatatypeChar = createPrimitveDataTypeIfNotExists(graphDatabase, "char",
+    _primitiveDatatypeChar = createPrimitveDataTypeIfNotExists(cypherStatementExecutor, "char",
         JTypeLabel.PrimitiveDataType);
-    _primitiveDatatypeBoolean = createPrimitveDataTypeIfNotExists(graphDatabase, "boolean",
+    _primitiveDatatypeBoolean = createPrimitveDataTypeIfNotExists(cypherStatementExecutor, "boolean",
         JTypeLabel.PrimitiveDataType);
 
     // void
-    _void = createPrimitveDataTypeIfNotExists(graphDatabase, "void", JTypeLabel.Void);
+    _void = createPrimitveDataTypeIfNotExists(cypherStatementExecutor, "void", JTypeLabel.Void);
   }
 
   /**
    * <p>
-   * Tests if the database contains a node with the label {@link JTypeLabel#PRIMITIVE_DATA_TYPE} that
-   * represents the specified primitive data type). If the node does not exist, a new node will be created.
+   * Tests if the database contains a node with the label {@link JTypeLabel#PRIMITIVE_DATA_TYPE} that represents the
+   * specified primitive data type). If the node does not exist, a new node will be created.
    * </p>
    * 
    * @param graphDatabase
    * @param primtiveDataType
    * @return
    */
-  private INode createPrimitveDataTypeIfNotExists(GraphDatabaseService graphDatabase, String primtiveDataType,
-      JTypeLabel typeType) {
+  private INode createPrimitveDataTypeIfNotExists(ICypherStatementExecutor cypherStatementExecutor,
+      String primtiveDataType, JTypeLabel typeType) {
 
     //
-    Label label = Label.label(typeType.name());
+    IResult result = cypherStatementExecutor.executeCypherStatement(
+        String.format("MERGE (n:%s {fqn: '%s'}) RETURN id(n)", typeType.name(), primtiveDataType));
 
     //
-    ResourceIterator<Node> nodes = graphDatabase.findNodes(label, "fqn", primtiveDataType);
-
-    //
-    Node node = null;
-
-    //
-    if (!nodes.hasNext()) {
-      node = graphDatabase.createNode(label);
-      node.setProperty("fqn", primtiveDataType);
-    } else {
-      node = nodes.next();
-    }
-
-    //
-    INode nodeBean = NodeFactory.createNode(node.getId());
+    long nodeid = (long) result.single().get("id(n)");
+    INode nodeBean = NodeFactory.createNode(nodeid);
     nodeBean.addLabel(typeType);
     nodeBean.putProperty("fqn", primtiveDataType);
 
