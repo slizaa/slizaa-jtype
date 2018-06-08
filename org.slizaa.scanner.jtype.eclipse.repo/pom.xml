@@ -231,6 +231,11 @@ END OF TERMS AND CONDITIONS									</license>
 											<transitive>false</transitive>
 											<source>true</source>
 										</artifact>
+										<artifact>
+											<id>org.slizaa.scanner.jtype:org.slizaa.scanner.jtype.apoc:${project.version}</id>
+											<transitive>false</transitive>
+											<source>true</source>
+										</artifact>
 									</artifacts>
 								</feature>
 							</featureDefinitions>

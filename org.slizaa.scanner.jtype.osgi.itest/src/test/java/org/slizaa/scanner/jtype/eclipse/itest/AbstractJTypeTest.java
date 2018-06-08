@@ -63,6 +63,9 @@ public abstract class AbstractJTypeTest {
     // resolve the jtype artifact
     File jtypeFile = MavenResolvers.createMavenResolver(null, null).resolve("org.slizaa.scanner.jtype",
         "org.slizaa.scanner.jtype", null, null, jtypeVersion);
+    
+    File jtypeFileApoc = MavenResolvers.createMavenResolver(null, null).resolve("org.slizaa.scanner.jtype",
+        "org.slizaa.scanner.jtype.apoc", null, null, jtypeVersion);
 
     //
     return options(
@@ -95,7 +98,8 @@ public abstract class AbstractJTypeTest {
         mavenBundle("org.slizaa.scanner.core", "org.slizaa.scanner.core.classpathscanner").versionAsInProject(),
         mavenBundle("org.slizaa.scanner.core", "org.slizaa.scanner.core.cypherregistry").versionAsInProject().start(),
         mavenBundle("org.slizaa.scanner.neo4j", "org.slizaa.scanner.neo4j.osgi").versionAsInProject().start(),
-        bundle("reference:" + jtypeFile.toURI().toString()).start());
+        bundle("reference:" + jtypeFile.toURI().toString()).start(),
+        bundle("reference:" + jtypeFileApoc.toURI().toString()).start());
   }
 
   /**
