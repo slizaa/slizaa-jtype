@@ -245,7 +245,7 @@ public class JTypeClassVisitor extends ClassVisitor {
 
     // arguments
     Type[] types = Type.getArgumentTypes(desc);
-    methodBean.putProperty(IMethodNode.PARAMETER_COUNT, types.length);
+    methodBean.putProperty(IMethodNode.PARAMETER_COUNT, types.length + 1);
     for (int i = 0; i < types.length; i++) {
       IRelationship relationship = addReference(methodBean, types[i], JTypeModelRelationshipType.HAS_PARAMETER);
       relationship.putRelationshipProperty(IMethodNode.PARAMETER_INDEX, i);

@@ -26,7 +26,7 @@ public interface IMethodNode {
   public static final String SYNTHETIC       = "synthetic";
 
   // TODO Relationship
-  public static final String PARAMETER_INDEX = "parameter_index";
+  public static final String PARAMETER_INDEX = "parameterIndex";
 
-  public static final String PARAMETER_COUNT = "parameter_count";
+  public static final String PARAMETER_COUNT = "parameterCount";
 }
