@@ -30,9 +30,7 @@ public class AnnotatedTypeTest extends AbstractByteBuddyBytecodeTest {
     //
     INode annotationNode = node.getRelationships(JTypeModelRelationshipType.ANNOTATED_BY).get(0).getTargetBean();
 
-    System.out.println(annotationNode);
-
-    assertThat(annotationNode.getLabels()).containsOnly(JTypeLabel.AnnotationInstance);
-    // assertThat(fieldNode.getProperty("name")).isEqualTo("hurz");
+    //
+    assertThat(annotationNode.getLabels()).contains(JTypeLabel.TypeReference);
   }
 }

@@ -1,12 +1,9 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 Slizaa project team.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- *    Slizaa project team - initial API and implementation
+ * Copyright (c) 2011-2015 Slizaa project team. All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is
+ * available at http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: Slizaa project team - initial API and implementation
  ******************************************************************************/
 package org.slizaa.scanner.jtype.bytecode.internal;
 
@@ -26,7 +23,7 @@ import org.slizaa.scanner.jtype.model.JTypeModelRelationshipType;
 /**
  * <p>
  * </p>
- * 
+ *
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class JTypeMethodVisitor extends MethodVisitor {
@@ -35,22 +32,21 @@ public class JTypeMethodVisitor extends MethodVisitor {
   private TypeLocalReferenceCache _typeLocalReferenceCache;
 
   /** - */
-  private INode         _typeBean;
+  private INode                   _typeBean;
 
   /** - */
-  private INode         _methodNodeBean;
+  private INode                   _methodNodeBean;
 
   /**
    * <p>
    * </p>
-   * 
+   *
    * @param methodBean
-   * 
+   *
    * @param recorder
    * @param type
    */
-  public JTypeMethodVisitor(INode typeBean, INode methodNodeBean,
-      TypeLocalReferenceCache typeReferenceHolder) {
+  public JTypeMethodVisitor(INode typeBean, INode methodNodeBean, TypeLocalReferenceCache typeReferenceHolder) {
     super(Opcodes.ASM6);
 
     //
@@ -73,7 +69,8 @@ public class JTypeMethodVisitor extends MethodVisitor {
     //
     for (int i = 0; i < nStack; i++) {
       if (stack[i] instanceof String) {
-        addTypeReference(_methodNodeBean, Type.getObjectType((String) stack[i]), JTypeModelRelationshipType.REFERENCES);
+        addTypeReference(this._methodNodeBean, Type.getObjectType((String) stack[i]),
+            JTypeModelRelationshipType.REFERENCES);
       }
     }
 
@@ -84,14 +81,16 @@ public class JTypeMethodVisitor extends MethodVisitor {
   /**
    * <p>
    * </p>
-   * 
+   *
    * @inheritDoc
    */
+  @Override
   public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
 
+    // class annotation
     // TODO: filter visible?
     if (visible) {
-      addTypeReference(_methodNodeBean, Type.getType(desc), JTypeModelRelationshipType.REFERENCES);
+      addTypeReference(this._methodNodeBean, Type.getType(desc), JTypeModelRelationshipType.ANNOTATED_BY);
     }
 
     //
@@ -101,6 +100,7 @@ public class JTypeMethodVisitor extends MethodVisitor {
   /**
    * @inheritDoc
    */
+  @Override
   public void visitFieldInsn(int opcode, String owner, String name, String desc) {
 
     //
@@ -141,7 +141,7 @@ public class JTypeMethodVisitor extends MethodVisitor {
         : JTypeModelRelationshipType.WRITES;
 
     //
-    _typeLocalReferenceCache.addFieldReference(_methodNodeBean, fieldDescriptor, relationshipType);
+    this._typeLocalReferenceCache.addFieldReference(this._methodNodeBean, fieldDescriptor, relationshipType);
   }
 
   /**
@@ -150,8 +150,8 @@ public class JTypeMethodVisitor extends MethodVisitor {
   @Override
   public void visitLocalVariable(String name, String desc, String signature, Label start, Label end, int index) {
     Type type = Type.getType(desc);
-    if (!_typeBean.getFullyQualifiedName().equals(type.getClassName())) {
-      addTypeReference(_methodNodeBean, type, JTypeModelRelationshipType.USES);
+    if (!this._typeBean.getFullyQualifiedName().equals(type.getClassName())) {
+      addTypeReference(this._methodNodeBean, type, JTypeModelRelationshipType.USES);
     }
   }
 
@@ -159,20 +159,20 @@ public class JTypeMethodVisitor extends MethodVisitor {
   public void visitInvokeDynamicInsn(String name, String rawSignature, Handle bsm, Object... bsmArgs) {
 
     // TODO!!!!!
-    _typeLocalReferenceCache.addTypeReference(_methodNodeBean, Type.getObjectType(bsm.getOwner()),
+    this._typeLocalReferenceCache.addTypeReference(this._methodNodeBean, Type.getObjectType(bsm.getOwner()),
         JTypeModelRelationshipType.REFERENCES);
 
     // return type
     Type returnType = org.objectweb.asm.Type.getReturnType(bsm.getDesc());
     if (!Utils.isVoidOrPrimitive(returnType)) {
-      addTypeReference(_methodNodeBean, returnType, JTypeModelRelationshipType.REFERENCES);
+      addTypeReference(this._methodNodeBean, returnType, JTypeModelRelationshipType.REFERENCES);
     }
 
     // arg types type
     org.objectweb.asm.Type[] types = org.objectweb.asm.Type.getArgumentTypes(bsm.getDesc());
     for (int i = 0; i < types.length; i++) {
       if (!Utils.isVoidOrPrimitive(types[i])) {
-        addTypeReference(_methodNodeBean, types[i], JTypeModelRelationshipType.REFERENCES);
+        addTypeReference(this._methodNodeBean, types[i], JTypeModelRelationshipType.REFERENCES);
       }
     }
   }
@@ -189,11 +189,11 @@ public class JTypeMethodVisitor extends MethodVisitor {
   public void visitMethodInsn(int opcode, String owner, String name, String rawSignature, boolean itf) {
 
     //
-    IRelationship methodReferenceRelationship = _typeLocalReferenceCache.addMethodReference(_methodNodeBean,
+    IRelationship methodReferenceRelationship = this._typeLocalReferenceCache.addMethodReference(this._methodNodeBean,
         new MethodReferenceDescriptor(owner, name, rawSignature, itf), JTypeModelRelationshipType.INVOKES);
 
     //
-    INode methodReference = (INode) methodReferenceRelationship.getTargetBean();
+    INode methodReference = methodReferenceRelationship.getTargetBean();
 
     // owner
     addTypeReference(methodReference, Type.getObjectType(owner), JTypeModelRelationshipType.IS_DEFINED_BY);
@@ -210,20 +210,22 @@ public class JTypeMethodVisitor extends MethodVisitor {
   /**
    * @inheritDoc
    */
+  @Override
   public void visitMultiANewArrayInsn(String desc, int dims) {
 
     //
-    addTypeReference(_methodNodeBean, Type.getType(desc), JTypeModelRelationshipType.USES);
+    addTypeReference(this._methodNodeBean, Type.getType(desc), JTypeModelRelationshipType.USES);
   }
 
   /**
    * @inheritDoc
    */
+  @Override
   public AnnotationVisitor visitParameterAnnotation(int parameter, String desc, boolean visible) {
 
     //
     if (visible) {
-      addTypeReference(_methodNodeBean, Type.getType(desc), JTypeModelRelationshipType.REFERENCES);
+      addTypeReference(this._methodNodeBean, Type.getType(desc), JTypeModelRelationshipType.REFERENCES);
     }
 
     //
@@ -233,18 +235,20 @@ public class JTypeMethodVisitor extends MethodVisitor {
   /**
    * @inheritDoc
    */
+  @Override
   public void visitTryCatchBlock(Label start, Label end, Label handler, String type) {
 
     if (type != null) {
 
       //
-      addTypeReference(_methodNodeBean, Type.getObjectType(type), JTypeModelRelationshipType.REFERENCES);
+      addTypeReference(this._methodNodeBean, Type.getObjectType(type), JTypeModelRelationshipType.REFERENCES);
     }
   }
 
   /**
    * @inheritDoc
    */
+  @Override
   public void visitTypeInsn(int opcode, String type) {
 
     if (opcode != Opcodes.CHECKCAST && opcode != Opcodes.NEW && opcode != Opcodes.INSTANCEOF
@@ -253,19 +257,20 @@ public class JTypeMethodVisitor extends MethodVisitor {
     }
 
     //
-    addTypeReference(_methodNodeBean, Type.getObjectType(type), JTypeModelRelationshipType.REFERENCES);
+    addTypeReference(this._methodNodeBean, Type.getObjectType(type), JTypeModelRelationshipType.REFERENCES);
   }
 
   /**
    * {@inheritDoc}
    */
+  @Override
   public void visitLdcInsn(Object cst) {
 
     // TODO
     if (cst instanceof Type) {
 
       //
-      addTypeReference(_methodNodeBean, (Type) cst, JTypeModelRelationshipType.REFERENCES);
+      addTypeReference(this._methodNodeBean, (Type) cst, JTypeModelRelationshipType.REFERENCES);
     }
   }
 
@@ -283,7 +288,7 @@ public class JTypeMethodVisitor extends MethodVisitor {
     if (targetType != null && !Utils.isVoidOrPrimitive(targetType)) {
 
       //
-      _typeLocalReferenceCache.addTypeReference(startNode, Utils.resolveArrayType(targetType), relationshipType);
+      this._typeLocalReferenceCache.addTypeReference(startNode, Utils.resolveArrayType(targetType), relationshipType);
     }
   }
 }

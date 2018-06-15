@@ -84,6 +84,29 @@ public class ExampleCodeTest {
     assertThat(node.asMap()).containsEntry(ITypeNode.ABSTRACT, false);
   }
 
+  @Test
+  public void test_Method() {
+
+    // get the type node
+    List<Node> nodes = getMethodNodes(ExampleClass.class);
+
+    for (Node node : nodes) {
+      System.out.println(node.labels());
+    }
+
+    // // asserts
+    // assertThat(node.labels()).containsExactly("Type", "Class");
+    // assertThat(node.asMap()).containsOnlyKeys(ITypeNode.CLASS_VERSION, ITypeNode.ABSTRACT,
+    // ITypeNode.SOURCE_FILE_NAME,
+    // ITypeNode.DEPRECATED, ITypeNode.FINAL, ITypeNode.FQN, ITypeNode.NAME, ITypeNode.STATIC, ITypeNode.VISIBILITY);
+    //
+    // assertThat(node.asMap()).containsEntry(ITypeNode.FQN, ExampleClass.class.getName());
+    // assertThat(node.asMap()).containsEntry(ITypeNode.NAME, ExampleClass.class.getSimpleName());
+    // assertThat(node.asMap()).containsEntry(ITypeNode.VISIBILITY, "public");
+    // assertThat(node.asMap()).containsEntry(ITypeNode.SOURCE_FILE_NAME, "ExampleClass.java");
+    // assertThat(node.asMap()).containsEntry(ITypeNode.ABSTRACT, false);
+  }
+
   /**
    * <p>
    * </p>
@@ -411,6 +434,24 @@ public class ExampleCodeTest {
     //
     StatementResult statementResult = this._client.getSession().run(
         "Match (t:Type {fqn: $name})-[:CONTAINS]->(f:Field) return f",
+        Collections.singletonMap("name", checkNotNull(clazz).getName()));
+
+    //
+    return statementResult.list(rec -> rec.get(0).asNode());
+  }
+
+  /**
+   * <p>
+   * </p>
+   *
+   * @param clazz
+   * @return
+   */
+  private List<Node> getMethodNodes(Class<?> clazz) {
+
+    //
+    StatementResult statementResult = this._client.getSession().run(
+        "Match (t:Type {fqn: $name})-[:CONTAINS]->(m:Method) return m",
         Collections.singletonMap("name", checkNotNull(clazz).getName()));
 
     //

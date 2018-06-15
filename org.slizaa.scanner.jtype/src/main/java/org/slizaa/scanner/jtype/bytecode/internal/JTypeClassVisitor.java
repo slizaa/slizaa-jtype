@@ -112,13 +112,13 @@ public class JTypeClassVisitor extends ClassVisitor {
     // _typeBean.putProperty(ITypeNode.ACCESS_FLAGS, Integer.toHexString(access).toUpperCase());
 
     //
-      this._typeBean.putProperty(ITypeNode.ABSTRACT, (access & Opcodes.ACC_ABSTRACT) == Opcodes.ACC_ABSTRACT);
+    this._typeBean.putProperty(ITypeNode.ABSTRACT, (access & Opcodes.ACC_ABSTRACT) == Opcodes.ACC_ABSTRACT);
 
     //
-      this._typeBean.putProperty(ITypeNode.STATIC, (access & Opcodes.ACC_STATIC) == Opcodes.ACC_STATIC);
+    this._typeBean.putProperty(ITypeNode.STATIC, (access & Opcodes.ACC_STATIC) == Opcodes.ACC_STATIC);
 
     //
-      this._typeBean.putProperty(ITypeNode.FINAL, (access & Opcodes.ACC_FINAL) == Opcodes.ACC_FINAL);
+    this._typeBean.putProperty(ITypeNode.FINAL, (access & Opcodes.ACC_FINAL) == Opcodes.ACC_FINAL);
 
     //
     if ((access & Opcodes.ACC_PUBLIC) == Opcodes.ACC_PUBLIC) {
@@ -178,16 +178,9 @@ public class JTypeClassVisitor extends ClassVisitor {
   @Override
   public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
 
-    // create and add new method bean
-    INode annotationInstanceBean = NodeFactory.createNode();
-    this._typeBean.addRelationship(annotationInstanceBean, JTypeModelRelationshipType.ANNOTATED_BY);
-
-    // set labels
-    annotationInstanceBean.addLabel(JTypeLabel.AnnotationInstance);
-
     // class annotation
-    this._classLocalTypeReferenceCache.addTypeReference(annotationInstanceBean, Type.getType(desc),
-        JTypeModelRelationshipType.IS_OF_TYPE);
+    this._classLocalTypeReferenceCache.addTypeReference(this._typeBean, Type.getType(desc),
+        JTypeModelRelationshipType.ANNOTATED_BY);
 
     //
     return new JTypeAnnotationVisitor();
@@ -252,6 +245,7 @@ public class JTypeClassVisitor extends ClassVisitor {
 
     // arguments
     Type[] types = Type.getArgumentTypes(desc);
+    methodBean.putProperty(IMethodNode.PARAMETER_COUNT, types.length);
     for (int i = 0; i < types.length; i++) {
       IRelationship relationship = addReference(methodBean, types[i], JTypeModelRelationshipType.HAS_PARAMETER);
       relationship.putRelationshipProperty(IMethodNode.PARAMETER_INDEX, i);
