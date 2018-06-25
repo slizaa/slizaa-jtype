@@ -93,9 +93,11 @@ public abstract class AbstractJTypeTest {
         wrappedBundle(mavenBundle("io.netty", "netty-handler").versionAsInProject()),
 
         //
+        mavenBundle("org.slizaa.core", "org.slizaa.core.classpathscanner").versionAsInProject(),
+
+        //
         mavenBundle("org.slizaa.scanner.core", "org.slizaa.scanner.core.spi-api").versionAsInProject(),
         mavenBundle("org.slizaa.scanner.core", "org.slizaa.scanner.core.contentdefinition").versionAsInProject(),
-        mavenBundle("org.slizaa.scanner.core", "org.slizaa.scanner.core.classpathscanner").versionAsInProject(),
         mavenBundle("org.slizaa.scanner.core", "org.slizaa.scanner.core.cypherregistry").versionAsInProject().start(),
         mavenBundle("org.slizaa.scanner.neo4j", "org.slizaa.scanner.neo4j.osgi").versionAsInProject().start(),
         bundle("reference:" + jtypeFile.toURI().toString()).start(),

@@ -206,8 +206,8 @@
           <groupId>org.slizaa.scanner.neo4j</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>org.slizaa.scanner.core.classpathscanner</artifactId>
-          <groupId>org.slizaa.scanner.core</groupId>
+          <artifactId>org.slizaa.core.classpathscanner</artifactId>
+          <groupId>org.slizaa.core</groupId>
         </exclusion>
         <exclusion>
           <artifactId>pax-url-aether</artifactId>

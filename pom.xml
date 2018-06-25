@@ -55,7 +55,7 @@
 	<modules>
 		<module>org.slizaa.scanner.jtype</module>
 		<module>org.slizaa.scanner.jtype.osgi.itest</module>
-		<module>org.slizaa.scanner.jtype.eclipse.repo</module>
+		<module>org.slizaa.scanner.jtype.p2.repo</module>
 		<module>org.slizaa.scanner.jtype.apoc</module>
 	</modules>
 

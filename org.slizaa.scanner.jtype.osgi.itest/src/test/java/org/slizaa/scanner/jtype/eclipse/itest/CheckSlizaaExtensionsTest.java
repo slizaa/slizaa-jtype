@@ -13,8 +13,8 @@ import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.util.tracker.BundleTracker;
-import org.slizaa.scanner.core.classpathscanner.ClasspathScannerFactoryBuilder;
-import org.slizaa.scanner.core.classpathscanner.IClasspathScannerFactory;
+import org.slizaa.core.classpathscanner.ClasspathScannerFactoryBuilder;
+import org.slizaa.core.classpathscanner.IClasspathScannerFactory;
 import org.slizaa.scanner.core.spi.annotations.ParserFactory;
 import org.slizaa.scanner.jtype.bytecode.JTypeByteCodeParserFactory;
 
