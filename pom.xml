@@ -3,8 +3,8 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.slizaa.scanner.jtype</groupId>
-	<artifactId>org.slizaa.scanner.jtype.parent</artifactId>
+	<groupId>org.slizaa.jtype</groupId>
+	<artifactId>org.slizaa.jtype.parent</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 
 	<packaging>pom</packaging>
@@ -31,9 +31,9 @@
 	</developers>
 
 	<scm>
-		<connection>scm:git:git://github.com/slizaa/slizaa-scanner-jtype.git</connection>
-		<developerConnection>scm:git:ssh://github.com:slizaa/slizaa-scanner-jtype.git</developerConnection>
-		<url>http://github.com/slizaa/slizaa-scanner-jtype</url>
+		<connection>scm:git:git://github.com/slizaa/slizaa-jtype.git</connection>
+		<developerConnection>scm:git:ssh://github.com:slizaa/slizaa-jtype.git</developerConnection>
+		<url>http://github.com/slizaa/slizaa-jtype</url>
 	</scm>
 
 	<distributionManagement>
@@ -53,10 +53,11 @@
 	</properties>
 
 	<modules>
-		<module>org.slizaa.scanner.jtype</module>
-		<module>org.slizaa.scanner.jtype.osgi.itest</module>
-		<module>org.slizaa.scanner.jtype.p2.repo</module>
-		<module>org.slizaa.scanner.jtype.apoc</module>
+		<module>org.slizaa.jtype.scanner</module>
+		<module>org.slizaa.jtype.scanner.apoc</module>
+		<module>org.slizaa.jtype.hierarchicalgraph</module>
+		<module>org.slizaa.jtype.itest-osgi</module>
+		<module>org.slizaa.jtype.p2-repo</module>
 	</modules>
 
 </project>
