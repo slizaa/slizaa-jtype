@@ -8,26 +8,27 @@
 package org.slizaa.jtype.scanner.itest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.slizaa.scanner.neo4j.testfwk.ContentDefinitionsUtils.multipleBinaryMvnArtifacts;
+import static org.slizaa.scanner.core.testfwk.ContentDefinitionProviderFactory.multipleBinaryMvnArtifacts;
 
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.neo4j.driver.v1.StatementResult;
-import org.slizaa.scanner.neo4j.testfwk.SlizaaClientRule;
-import org.slizaa.scanner.neo4j.testfwk.SlizaaTestServerRule;
+import org.slizaa.core.boltclient.testfwk.BoltClientConnectionRule;
+import org.slizaa.jtype.scanner.JTypeSlizaaTestServerRule;
 
 /**
   */
 public class CreateSampleDatabase {
 
   @ClassRule
-  public static SlizaaTestServerRule _server = new SlizaaTestServerRule(
+  public static JTypeSlizaaTestServerRule _server = new JTypeSlizaaTestServerRule(
       multipleBinaryMvnArtifacts(new String[] { "org.mapstruct", "mapstruct", "1.2.0.Final" },
           new String[] { "org.mapstruct", "mapstruct-processor", "1.2.0.Final" }));
 
   @Rule
-  public SlizaaClientRule            _client = new SlizaaClientRule();
+  public BoltClientConnectionRule         _client = new BoltClientConnectionRule();
 
   /**
    * <p>
@@ -36,10 +37,12 @@ public class CreateSampleDatabase {
    * @throws Exception
    */
   @Test
+  @Ignore
   public void test() throws Exception {
 
     //
-    StatementResult statementResult = this._client.getSession().run("Match (t:Type) return count(t)");
+    StatementResult statementResult = this._client.getBoltClient()
+        .syncExecCypherQuery("Match (t:Type) return count(t)");
     assertThat(statementResult.single().get(0).asInt()).isEqualTo(1054);
 
     //

@@ -8,24 +8,24 @@
 package org.slizaa.jtype.scanner.itest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.slizaa.scanner.neo4j.testfwk.ContentDefinitionsUtils.multipleBinaryMvnArtifacts;
+import static org.slizaa.scanner.core.testfwk.ContentDefinitionProviderFactory.multipleBinaryMvnArtifacts;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.neo4j.driver.v1.StatementResult;
-import org.slizaa.scanner.neo4j.testfwk.SlizaaClientRule;
-import org.slizaa.scanner.neo4j.testfwk.SlizaaTestServerRule;
+import org.slizaa.core.boltclient.testfwk.BoltClientConnectionRule;
+import org.slizaa.jtype.scanner.JTypeSlizaaTestServerRule;
 
 public class DumpProceduresTest {
 
   @ClassRule
-  public static SlizaaTestServerRule _server = new SlizaaTestServerRule(
+  public static JTypeSlizaaTestServerRule _server = new JTypeSlizaaTestServerRule(
       multipleBinaryMvnArtifacts(new String[] { "com.netflix.eureka", "eureka-core", "1.8.2" },
           new String[] { "com.netflix.eureka", "eureka-client", "1.8.2" }));
 
   @Rule
-  public SlizaaClientRule            _client = new SlizaaClientRule();
+  public BoltClientConnectionRule         _client = new BoltClientConnectionRule();
 
   /**
    * <p>
@@ -40,12 +40,12 @@ public class DumpProceduresTest {
     // System.out.println(res.single().asMap());
 
     // check types
-    StatementResult statementResult = this._client.getSession()
-        .run("MATCH (tref:TypeReference)-[rel:BOUND_TO {derived:true}]->(t:Type) RETURN count(rel)");
+    StatementResult statementResult = this._client.getBoltClient()
+        .syncExecCypherQuery("MATCH (tref:TypeReference)-[rel:BOUND_TO {derived:true}]->(t:Type) RETURN count(rel)");
     assertThat(statementResult.single().get("count(rel)").asInt()).isEqualTo(2403);
 
-    statementResult = this._client.getSession()
-        .run("MATCH (t1:Type)-[rel:DEPENDS_ON {derived:true}]->(t2:Type) RETURN count(rel)");
+    statementResult = this._client.getBoltClient()
+        .syncExecCypherQuery("MATCH (t1:Type)-[rel:DEPENDS_ON {derived:true}]->(t2:Type) RETURN count(rel)");
     assertThat(statementResult.single().get("count(rel)").asInt()).isEqualTo(2061);
 
     // //

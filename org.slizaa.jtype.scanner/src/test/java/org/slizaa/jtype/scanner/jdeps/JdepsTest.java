@@ -2,7 +2,7 @@ package org.slizaa.jtype.scanner.jdeps;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.slizaa.scanner.neo4j.testfwk.ContentDefinitionsUtils.simpleBinaryFile;
+import static org.slizaa.scanner.core.testfwk.ContentDefinitionProviderFactory.simpleBinaryFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,26 +20,26 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import org.neo4j.driver.v1.StatementResult;
+import org.slizaa.core.boltclient.testfwk.BoltClientConnectionRule;
+import org.slizaa.jtype.scanner.JTypeSlizaaTestServerRule;
 import org.slizaa.jtype.scanner.jdeps.internal.JavapWrapper;
-import org.slizaa.scanner.neo4j.testfwk.SlizaaClientRule;
-import org.slizaa.scanner.neo4j.testfwk.SlizaaTestServerRule;
 
 @Ignore
 @RunWith(Parameterized.class)
 public class JdepsTest {
 
   @Rule
-  public SlizaaTestServerRule _slizaaTestServerRule = new SlizaaTestServerRule(
-      () -> simpleBinaryFile("dummy", "dummy", getJarFile()));
+  public JTypeSlizaaTestServerRule _slizaaTestServerRule = new JTypeSlizaaTestServerRule(
+      simpleBinaryFile("dummy", "dummy", getJarFile()));
 
   @Rule
-  public SlizaaClientRule     _client               = new SlizaaClientRule();
+  public BoltClientConnectionRule  _client               = new BoltClientConnectionRule();
 
   @Rule
-  public JDepsRule            _jDepsRule            = new JDepsRule(() -> getJarFile());
+  public JDepsRule                 _jDepsRule            = new JDepsRule(() -> getJarFile());
 
   /** - */
-  private File                _jarFile;
+  private File                     _jarFile;
 
   /**
    * <p>
@@ -49,7 +49,7 @@ public class JdepsTest {
    * @param jarFile
    */
   public JdepsTest(File jarFile) {
-    _jarFile = checkNotNull(jarFile);
+    this._jarFile = checkNotNull(jarFile);
   }
 
   /**
@@ -59,7 +59,7 @@ public class JdepsTest {
    * @return
    */
   public File getJarFile() {
-    return _jarFile;
+    return this._jarFile;
   }
 
   /**
@@ -68,9 +68,9 @@ public class JdepsTest {
    */
   @Test
   public void test() {
-    System.out.println("Testing " + _jarFile.getAbsolutePath());
-    _jDepsRule.getJdepAnalysis().keySet().stream().sorted().forEach(fqn -> assertSameReferences(fqn));
-    System.out.println("Done " + _jarFile.getAbsolutePath());
+    System.out.println("Testing " + this._jarFile.getAbsolutePath());
+    this._jDepsRule.getJdepAnalysis().keySet().stream().sorted().forEach(fqn -> assertSameReferences(fqn));
+    System.out.println("Done " + this._jarFile.getAbsolutePath());
   }
 
   /**
@@ -82,7 +82,7 @@ public class JdepsTest {
   private void assertSameReferences(String fqn) {
 
     //
-    StatementResult statementResult = _client.getSession().run(
+    StatementResult statementResult = this._client.getBoltClient().syncExecCypherQuery(
         "Match (t:TYPE {fqn: $name})-[:DEPENDS_ON]->(tr:TYPE_REFERENCE) return tr.fqn",
         Collections.singletonMap("name", fqn));
 
@@ -92,9 +92,9 @@ public class JdepsTest {
     //
     try {
       assertThat(referencesDetectedBySlizaa)
-          .containsExactlyInAnyOrder(_jDepsRule.getJdepAnalysis().get(fqn).toArray(new String[0]));
+          .containsExactlyInAnyOrder(this._jDepsRule.getJdepAnalysis().get(fqn).toArray(new String[0]));
     } catch (AssertionError e) {
-      JavapWrapper.doIt(_jarFile.getAbsolutePath(), fqn);
+      JavapWrapper.doIt(this._jarFile.getAbsolutePath(), fqn);
       throw e;
     }
   }

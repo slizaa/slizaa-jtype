@@ -8,7 +8,7 @@
 package org.slizaa.jtype.scanner.itest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.slizaa.scanner.neo4j.testfwk.ContentDefinitionsUtils.multipleBinaryMvnArtifacts;
+import static org.slizaa.scanner.core.testfwk.ContentDefinitionProviderFactory.multipleBinaryMvnArtifacts;
 
 import java.io.IOException;
 
@@ -16,20 +16,20 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.neo4j.driver.v1.StatementResult;
-import org.slizaa.scanner.neo4j.testfwk.SlizaaClientRule;
-import org.slizaa.scanner.neo4j.testfwk.SlizaaTestServerRule;
+import org.slizaa.core.boltclient.testfwk.BoltClientConnectionRule;
+import org.slizaa.jtype.scanner.JTypeSlizaaTestServerRule;
 
 /**
   */
 public class SimpleJTypeMapStructTest {
 
   @ClassRule
-  public static SlizaaTestServerRule _server = new SlizaaTestServerRule(
+  public static JTypeSlizaaTestServerRule _server = new JTypeSlizaaTestServerRule(
       multipleBinaryMvnArtifacts(new String[] { "org.mapstruct", "mapstruct", "1.0.0.Beta1" },
           new String[] { "org.mapstruct", "mapstruct-processor", "1.0.0.Beta1" }));
 
   @Rule
-  public SlizaaClientRule            _client = new SlizaaClientRule();
+  public BoltClientConnectionRule         _client = new BoltClientConnectionRule();
 
   /**
    * <p>
@@ -42,7 +42,8 @@ public class SimpleJTypeMapStructTest {
   public void test() throws Exception {
 
     //
-    StatementResult statementResult = this._client.getSession().run("Match (t:Type) return count(t)");
+    StatementResult statementResult = this._client.getBoltClient()
+        .syncExecCypherQuery("Match (t:Type) return count(t)");
     assertThat(statementResult.single().get(0).asInt()).isEqualTo(148);
   }
 }

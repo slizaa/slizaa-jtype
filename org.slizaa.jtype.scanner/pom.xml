@@ -67,15 +67,14 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.neo4j.test</groupId>
-			<artifactId>neo4j-harness</artifactId>
-			<scope>test</scope>
+			<groupId>org.slizaa.core</groupId>
+			<artifactId>org.slizaa.core.boltclient.testfwk</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>org.slizaa.scanner.neo4j</groupId>
-			<artifactId>org.slizaa.scanner.neo4j.testfwk</artifactId>
-			<version>${project.version}</version>
-			<scope>test</scope>
+			<groupId>org.slizaa.scanner.core</groupId>
+			<artifactId>org.slizaa.scanner.core.testfwk</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.neo4j.driver</groupId>

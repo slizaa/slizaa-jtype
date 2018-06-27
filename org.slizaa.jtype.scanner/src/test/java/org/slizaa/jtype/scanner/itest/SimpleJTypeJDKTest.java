@@ -15,21 +15,21 @@ import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.neo4j.driver.v1.StatementResult;
+import org.slizaa.core.boltclient.testfwk.BoltClientConnectionRule;
+import org.slizaa.jtype.scanner.JTypeSlizaaTestServerRule;
 import org.slizaa.scanner.core.contentdefinition.FileBasedContentDefinitionProvider;
 import org.slizaa.scanner.core.spi.contentdefinition.AnalyzeMode;
 import org.slizaa.scanner.core.spi.contentdefinition.IContentDefinitionProvider;
-import org.slizaa.scanner.neo4j.testfwk.SlizaaClientRule;
-import org.slizaa.scanner.neo4j.testfwk.SlizaaTestServerRule;
 
 /**
  */
 public class SimpleJTypeJDKTest {
 
   @ClassRule
-  public static SlizaaTestServerRule _server = new SlizaaTestServerRule(getSystemDefinition());
+  public static JTypeSlizaaTestServerRule _server = new JTypeSlizaaTestServerRule(getSystemDefinition());
 
   @Rule
-  public SlizaaClientRule            _client = new SlizaaClientRule();
+  public BoltClientConnectionRule         _client = new BoltClientConnectionRule();
 
   /**
    * <p>
@@ -40,11 +40,12 @@ public class SimpleJTypeJDKTest {
   public void test() {
 
     //
-    StatementResult statementResult = this._client.getSession().run("Match (t:TYPE) return count(t)");
+    StatementResult statementResult = this._client.getBoltClient()
+        .syncExecCypherQuery("Match (t:TYPE) return count(t)");
     System.out.println(statementResult.single().get(0).asInt());
 
     //
-    this._client.getSession().run("CALL slizaa.exportDatabase({fileName})",
+    this._client.getBoltClient().syncExecCypherQuery("CALL slizaa.exportDatabase({fileName})",
         Collections.singletonMap("fileName", "C:\\tmp\\exportDatabase.txt")).summary();
   }
 

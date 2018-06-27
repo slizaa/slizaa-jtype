@@ -9,7 +9,7 @@ package org.slizaa.jtype.scanner.itest;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.slizaa.scanner.neo4j.testfwk.ContentDefinitionsUtils.simpleBinaryFile;
+import static org.slizaa.scanner.core.testfwk.ContentDefinitionProviderFactory.simpleBinaryFile;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,6 +19,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.neo4j.driver.v1.StatementResult;
 import org.neo4j.driver.v1.types.Node;
+import org.slizaa.core.boltclient.testfwk.BoltClientConnectionRule;
+import org.slizaa.jtype.scanner.JTypeSlizaaTestServerRule;
 import org.slizaa.jtype.scanner.itest.examplecode.AbstractExampleClass;
 import org.slizaa.jtype.scanner.itest.examplecode.ExampleAnnotation;
 import org.slizaa.jtype.scanner.itest.examplecode.ExampleClass;
@@ -28,17 +30,15 @@ import org.slizaa.jtype.scanner.itest.examplecode.SimpleClassWithOneField;
 import org.slizaa.jtype.scanner.itest.examplecode.SuperClass;
 import org.slizaa.jtype.scanner.itest.examplecode.SuperInterface;
 import org.slizaa.jtype.scanner.model.ITypeNode;
-import org.slizaa.scanner.neo4j.testfwk.SlizaaClientRule;
-import org.slizaa.scanner.neo4j.testfwk.SlizaaTestServerRule;
 
 public class ExampleCodeTest {
 
   @ClassRule
-  public static SlizaaTestServerRule _server = new SlizaaTestServerRule(simpleBinaryFile("jtype", "1.2.3",
+  public static JTypeSlizaaTestServerRule _server = new JTypeSlizaaTestServerRule(simpleBinaryFile("jtype", "1.2.3",
       ExampleCodeTest.class.getProtectionDomain().getCodeSource().getLocation().getFile()));
 
   @Rule
-  public SlizaaClientRule            _client = new SlizaaClientRule();
+  public BoltClientConnectionRule         _client = new BoltClientConnectionRule();
 
   /**
    * <p>
@@ -163,7 +163,7 @@ public class ExampleCodeTest {
   @Test
   public void testImplements() {
 
-    StatementResult statementResult = this._client.getSession().run(
+    StatementResult statementResult = this._client.getBoltClient().syncExecCypherQuery(
         "Match (t:Type {fqn: $name })-[rel:IMPLEMENTS]->(typeReference:TypeReference) return typeReference.fqn",
         Collections.singletonMap("name", ExampleClass.class.getName()));
 
@@ -184,7 +184,7 @@ public class ExampleCodeTest {
   @Test
   public void testExtends_1() {
 
-    StatementResult statementResult = this._client.getSession().run(
+    StatementResult statementResult = this._client.getBoltClient().syncExecCypherQuery(
         "Match (t:Type {fqn: $name })-[rel:EXTENDS]->(typeReference:TypeReference) return typeReference.fqn",
         Collections.singletonMap("name", ExampleClass.class.getName()));
 
@@ -205,7 +205,7 @@ public class ExampleCodeTest {
   @Test
   public void testExtends_2() {
 
-    StatementResult statementResult = this._client.getSession().run(
+    StatementResult statementResult = this._client.getBoltClient().syncExecCypherQuery(
         "Match (t:Type {fqn: $name })-[rel:EXTENDS]->(typeReference:TypeReference) return typeReference.fqn",
         Collections.singletonMap("name", SuperClass.class.getName()));
 
@@ -221,7 +221,8 @@ public class ExampleCodeTest {
   @Test
   public void testAbstract_1() {
 
-    StatementResult statementResult = this._client.getSession().run("Match (t:Type {fqn: $name }) return t.abstract",
+    StatementResult statementResult = this._client.getBoltClient().syncExecCypherQuery(
+        "Match (t:Type {fqn: $name }) return t.abstract",
         Collections.singletonMap("name", AbstractExampleClass.class.getName()));
 
     assertThat(statementResult.single().get(0).asBoolean()).isTrue();
@@ -234,7 +235,8 @@ public class ExampleCodeTest {
   @Test
   public void testAbstract_2() {
 
-    StatementResult statementResult = this._client.getSession().run("Match (t:Type {fqn: $name }) return t.abstract",
+    StatementResult statementResult = this._client.getBoltClient().syncExecCypherQuery(
+        "Match (t:Type {fqn: $name }) return t.abstract",
         Collections.singletonMap("name", ExampleInterface.class.getName()));
 
     assertThat(statementResult.single().get(0).asBoolean()).isTrue();
@@ -251,15 +253,14 @@ public class ExampleCodeTest {
   public void testInvokesMethod() {
 
     //
-    StatementResult statementResult = this._client.getSession().run(
+    StatementResult statementResult = this._client.getBoltClient().syncExecCypherQuery(
         "MATCH (m:Method {name: 'exampleInvokesMethod'})-[:INVOKES]->(mref:MethodReference)-[rel]->(typeReference:TypeReference) return mref.name, type(rel), typeReference.fqn");
 
     List<String[]> records = statementResult
         .list(rec -> new String[] { rec.get(0).asString(), rec.get(1).asString(), rec.get(2).asString() });
 
     assertThat(records).containsOnly(
-        new String[] { "beginTx", "IS_DEFINED_BY", "org.neo4j.graphdb.GraphDatabaseService" },
-        new String[] { "beginTx", "RETURNS", "org.neo4j.graphdb.Transaction" });
+        new String[] { "test", "IS_DEFINED_BY", "org.slizaa.jtype.scanner.itest.examplecode.ExampleClassWithArrays" });
   }
 
   /**
@@ -316,8 +317,8 @@ public class ExampleCodeTest {
   public void testMethodReference_1() {
 
     //
-    StatementResult statementResult = this._client.getSession()
-        .run("MATCH (m:Method {name: 'exampleInvokesMethod'})-[:INVOKES]->(mref:MethodReference) return mref");
+    StatementResult statementResult = this._client.getBoltClient().syncExecCypherQuery(
+        "MATCH (m:Method {name: 'exampleInvokesMethod'})-[:INVOKES]->(mref:MethodReference) return mref");
 
     List<Node> nodes = statementResult.list(rec -> rec.get(0).asNode());
 
@@ -344,7 +345,7 @@ public class ExampleCodeTest {
   public void testFieldReference_1() {
 
     //
-    StatementResult statementResult = this._client.getSession().run(
+    StatementResult statementResult = this._client.getBoltClient().syncExecCypherQuery(
         "Match (m:Method {name: $name})-[:READS]->(fref:FieldReference) return fref",
         Collections.singletonMap("name", "fieldRef"));
 
@@ -414,8 +415,8 @@ public class ExampleCodeTest {
   private Node getTypeNode(Class<?> clazz) {
 
     //
-    StatementResult statementResult = this._client.getSession().run("Match (t:Type {fqn: $name }) return t",
-        Collections.singletonMap("name", checkNotNull(clazz).getName()));
+    StatementResult statementResult = this._client.getBoltClient().syncExecCypherQuery(
+        "Match (t:Type {fqn: $name }) return t", Collections.singletonMap("name", checkNotNull(clazz).getName()));
 
     //
     return statementResult.single().get(0).asNode();
@@ -431,7 +432,7 @@ public class ExampleCodeTest {
   private List<Node> getFieldNodes(Class<?> clazz) {
 
     //
-    StatementResult statementResult = this._client.getSession().run(
+    StatementResult statementResult = this._client.getBoltClient().syncExecCypherQuery(
         "Match (t:Type {fqn: $name})-[:CONTAINS]->(f:Field) return f",
         Collections.singletonMap("name", checkNotNull(clazz).getName()));
 
@@ -449,7 +450,7 @@ public class ExampleCodeTest {
   private List<Node> getMethodNodes(Class<?> clazz) {
 
     //
-    StatementResult statementResult = this._client.getSession().run(
+    StatementResult statementResult = this._client.getBoltClient().syncExecCypherQuery(
         "Match (t:Type {fqn: $name})-[:CONTAINS]->(m:Method) return m",
         Collections.singletonMap("name", checkNotNull(clazz).getName()));
 

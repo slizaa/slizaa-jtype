@@ -1,12 +1,10 @@
 package org.slizaa.jtype.scanner.itest.examplecode;
 
-import org.neo4j.graphdb.GraphDatabaseService;
-
 public class ExampleInvokesMethod {
 
-  private GraphDatabaseService _service;
+  private ExampleClassWithArrays _classWithArrays;
 
   public void exampleInvokesMethod() {
-    _service.beginTx();
+    this._classWithArrays.test(null);
   }
 }

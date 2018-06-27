@@ -7,25 +7,23 @@
  ******************************************************************************/
 package org.slizaa.jtype.scanner.apoc;
 
-import static org.slizaa.scanner.neo4j.testfwk.ContentDefinitionsUtils.multipleBinaryMvnArtifacts;
+import static org.slizaa.scanner.core.testfwk.ContentDefinitionProviderFactory.multipleBinaryMvnArtifacts;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.neo4j.driver.v1.StatementResult;
-import org.slizaa.jtype.scanner.apoc.JTypeProcedures;
-import org.slizaa.scanner.neo4j.testfwk.SlizaaClientRule;
-import org.slizaa.scanner.neo4j.testfwk.SlizaaTestServerRule;
+import org.slizaa.core.boltclient.testfwk.BoltClientConnectionRule;
 
 public class JtypeProceduresTest {
 
   @ClassRule
-  public static SlizaaTestServerRule _server = new SlizaaTestServerRule(
+  public static JTypeSlizaaTestServerRule _server = new JTypeSlizaaTestServerRule(
       multipleBinaryMvnArtifacts(new String[] { "com.netflix.eureka", "eureka-core", "1.8.2" },
-          new String[] { "com.netflix.eureka", "eureka-client", "1.8.2" })).withExtensionClass(JTypeProcedures.class);
+          new String[] { "com.netflix.eureka", "eureka-client", "1.8.2" }));
 
   @Rule
-  public SlizaaClientRule            _client = new SlizaaClientRule();
+  public BoltClientConnectionRule         _client = new BoltClientConnectionRule();
 
   /**
    * <p>
@@ -33,8 +31,9 @@ public class JtypeProceduresTest {
    */
   @Test
   public void testJtypeProcedures() {
-    
+
     //
-    StatementResult statementResult = this._client.getSession().run("CALL slizaa.jtype.test()");
+    StatementResult statementResult = this._client.getBoltClient().syncExecCypherQuery("CALL slizaa.jtype.test()");
+    statementResult.forEachRemaining(record -> System.out.println(record));
   }
 }

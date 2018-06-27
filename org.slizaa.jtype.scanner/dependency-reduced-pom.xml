@@ -119,12 +119,6 @@
       <artifactId>slf4j-simple</artifactId>
       <version>1.7.25</version>
       <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>slf4j-api</artifactId>
-          <groupId>org.slf4j</groupId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
@@ -149,92 +143,16 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.neo4j.test</groupId>
-      <artifactId>neo4j-harness</artifactId>
-      <version>3.4.0</version>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>neo4j</artifactId>
-          <groupId>org.neo4j</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>neo4j-server</artifactId>
-          <groupId>org.neo4j.app</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>neo4j-common</artifactId>
-          <groupId>org.neo4j</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>neo4j-kernel</artifactId>
-          <groupId>org.neo4j</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>neo4j-io</artifactId>
-          <groupId>org.neo4j</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>jersey-client</artifactId>
-          <groupId>com.sun.jersey</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>neo4j-server</artifactId>
-          <groupId>org.neo4j.app</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>commons-codec</artifactId>
-          <groupId>commons-codec</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>httpclient</artifactId>
-          <groupId>org.apache.httpcomponents</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>httpcore</artifactId>
-          <groupId>org.apache.httpcomponents</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>neo4j-kernel</artifactId>
-          <groupId>org.neo4j</groupId>
-        </exclusion>
-      </exclusions>
+      <groupId>org.slizaa.core</groupId>
+      <artifactId>org.slizaa.core.boltclient.testfwk</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+      <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.slizaa.scanner.neo4j</groupId>
-      <artifactId>org.slizaa.scanner.neo4j.testfwk</artifactId>
+      <groupId>org.slizaa.scanner.core</groupId>
+      <artifactId>org.slizaa.scanner.core.testfwk</artifactId>
       <version>1.0.0-SNAPSHOT</version>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>org.slizaa.scanner.core.contentdefinition</artifactId>
-          <groupId>org.slizaa.scanner.core</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>org.slizaa.scanner.core.cypherregistry</artifactId>
-          <groupId>org.slizaa.scanner.core</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>org.slizaa.scanner.neo4j.importer</artifactId>
-          <groupId>org.slizaa.scanner.neo4j</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>org.slizaa.scanner.neo4j.graphdbfactory</artifactId>
-          <groupId>org.slizaa.scanner.neo4j</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>org.slizaa.core.classpathscanner</artifactId>
-          <groupId>org.slizaa.core</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>pax-url-aether</artifactId>
-          <groupId>org.ops4j.pax.url</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>org.eclipse.osgi</artifactId>
-          <groupId>org.eclipse.platform</groupId>
-        </exclusion>
-      </exclusions>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.neo4j.driver</groupId>
