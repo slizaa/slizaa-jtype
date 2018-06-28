@@ -1,8 +1,8 @@
 package org.slizaa.jtype.hierarchicalgraph;
 
-import org.slizaa.hierarchicalgraph.HGNode;
+import org.slizaa.hierarchicalgraph.core.model.HGNode;
+import org.slizaa.hierarchicalgraph.core.model.spi.INodeComparator;
 import org.slizaa.hierarchicalgraph.graphdb.model.GraphDbNodeSource;
-import org.slizaa.hierarchicalgraph.spi.INodeComparator;
 
 public class JType_NodeComparator implements INodeComparator {
 

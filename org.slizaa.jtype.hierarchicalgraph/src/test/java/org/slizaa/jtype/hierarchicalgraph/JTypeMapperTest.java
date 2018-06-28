@@ -14,15 +14,15 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.slizaa.core.boltclient.testfwk.BoltClientConnectionRule;
-import org.slizaa.hierarchicalgraph.HGNode;
-import org.slizaa.hierarchicalgraph.HGRootNode;
-import org.slizaa.hierarchicalgraph.HierarchicalgraphPackage;
 import org.slizaa.hierarchicalgraph.core.algorithms.AdjacencyMatrix;
+import org.slizaa.hierarchicalgraph.core.model.HGNode;
+import org.slizaa.hierarchicalgraph.core.model.HGRootNode;
+import org.slizaa.hierarchicalgraph.core.model.HierarchicalgraphPackage;
+import org.slizaa.hierarchicalgraph.core.model.impl.CustomHierarchicalgraphFactoryImpl;
 import org.slizaa.hierarchicalgraph.graphdb.mapping.service.internal.DefaultMappingService;
 import org.slizaa.hierarchicalgraph.graphdb.model.GraphDbHierarchicalgraphPackage;
 import org.slizaa.hierarchicalgraph.graphdb.model.GraphDbNodeSource;
 import org.slizaa.hierarchicalgraph.graphdb.model.impl.CustomGraphDbHierarchicalgraphFactoryImpl;
-import org.slizaa.hierarchicalgraph.impl.CustomHierarchicalgraphFactoryImpl;
 
 /**
  * <p>
@@ -40,34 +40,6 @@ public class JTypeMapperTest {
   @ClassRule
   public static BoltClientConnectionRule  CLIENT = new BoltClientConnectionRule();
 
-  @BeforeClass
-  public static void classInit() {
-
-    EPackage.Registry.INSTANCE.put(HierarchicalgraphPackage.eNS_URI, new EPackage.Descriptor() {
-      @Override
-      public EPackage getEPackage() {
-        return HierarchicalgraphPackage.eINSTANCE;
-      }
-
-      @Override
-      public EFactory getEFactory() {
-        return new CustomHierarchicalgraphFactoryImpl();
-      }
-    });
-
-    EPackage.Registry.INSTANCE.put(GraphDbHierarchicalgraphPackage.eNS_URI, new EPackage.Descriptor() {
-      @Override
-      public EPackage getEPackage() {
-        return GraphDbHierarchicalgraphPackage.eINSTANCE;
-      }
-
-      @Override
-      public EFactory getEFactory() {
-        return new CustomGraphDbHierarchicalgraphFactoryImpl();
-      }
-    });
-  }
-
   @Test
   public void testMatrix() {
 
@@ -82,6 +54,7 @@ public class JTypeMapperTest {
     //
     int[][] dependencies = AdjacencyMatrix.computeAdjacencyMatrix(packageNodes);
 
+    //
     assertThat(dependencies).isEqualTo(new int[][] { { 74, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 18, 9, 0, 0 },
         { 0, 235, 0, 0, 0, 47, 3, 0, 0, 0, 0, 0, 15, 1, 76, 0 },
         { 0, 0, 483, 22, 0, 71, 0, 0, 0, 0, 0, 0, 21, 1, 24, 0 },
@@ -95,35 +68,35 @@ public class JTypeMapperTest {
         { 3, 0, 0, 0, 0, 55, 0, 0, 0, 0, 0, 0, 21, 1, 75, 372 } });
   }
 
-  @Test
-  public void testIt() {
-
-    HGRootNode rootNode = new DefaultMappingService().convert(new JType_Hierarchical_MappingProvider(),
-        CLIENT.getBoltClient(), null);
-
-    //
-    List<Long> list = CLIENT.getBoltClient().syncExecCypherQuery("MATCH (t:Type) WHERE t.fqn CONTAINS '$' RETURN id(t)")
-        .list(record -> record.get("id(t)").asLong());
-
-    for (Long l : list) {
-      HGNode node = rootNode.lookupNode(l);
-      assertThat(node.getParent().getNodeSource(GraphDbNodeSource.class).get().getLabels()).contains("Type");
-    }
-  }
-
-  @Test
-  public void testIt_2() {
-
-    HGRootNode rootNode = new DefaultMappingService().convert(new JType_Hierarchical_MappingProvider(),
-        CLIENT.getBoltClient(), null);
-
-    //
-    List<Long> list = CLIENT.getBoltClient().syncExecCypherQuery("MATCH (t:Type) WHERE t.fqn CONTAINS '$' RETURN id(t)")
-        .list(record -> record.get("id(t)").asLong());
-
-    for (Long l : list) {
-      HGNode node = rootNode.lookupNode(l);
-      assertThat(node.getParent().getNodeSource(GraphDbNodeSource.class).get().getLabels()).contains("Type");
-    }
-  }
+//  @Test
+//  public void testIt() {
+//
+//    HGRootNode rootNode = new DefaultMappingService().convert(new JType_Hierarchical_MappingProvider(),
+//        CLIENT.getBoltClient(), null);
+//
+//    //
+//    List<Long> list = CLIENT.getBoltClient().syncExecCypherQuery("MATCH (t:Type) WHERE t.fqn CONTAINS '$' RETURN id(t)")
+//        .list(record -> record.get("id(t)").asLong());
+//
+//    for (Long l : list) {
+//      HGNode node = rootNode.lookupNode(l);
+//      assertThat(node.getParent().getNodeSource(GraphDbNodeSource.class).get().getLabels()).contains("Type");
+//    }
+//  }
+//
+//  @Test
+//  public void testIt_2() {
+//
+//    HGRootNode rootNode = new DefaultMappingService().convert(new JType_Hierarchical_MappingProvider(),
+//        CLIENT.getBoltClient(), null);
+//
+//    //
+//    List<Long> list = CLIENT.getBoltClient().syncExecCypherQuery("MATCH (t:Type) WHERE t.fqn CONTAINS '$' RETURN id(t)")
+//        .list(record -> record.get("id(t)").asLong());
+//
+//    for (Long l : list) {
+//      HGNode node = rootNode.lookupNode(l);
+//      assertThat(node.getParent().getNodeSource(GraphDbNodeSource.class).get().getLabels()).contains("Type");
+//    }
+//  }
 }

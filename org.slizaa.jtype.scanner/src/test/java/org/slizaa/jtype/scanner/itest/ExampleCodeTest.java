@@ -15,7 +15,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 import org.neo4j.driver.v1.StatementResult;
 import org.neo4j.driver.v1.types.Node;
@@ -33,12 +32,14 @@ import org.slizaa.jtype.scanner.model.ITypeNode;
 
 public class ExampleCodeTest {
 
+  /** - */
   @ClassRule
   public static JTypeSlizaaTestServerRule _server = new JTypeSlizaaTestServerRule(simpleBinaryFile("jtype", "1.2.3",
       ExampleCodeTest.class.getProtectionDomain().getCodeSource().getLocation().getFile()));
 
-  @Rule
-  public BoltClientConnectionRule         _client = new BoltClientConnectionRule();
+  /** - */
+  @ClassRule
+  public static BoltClientConnectionRule  _client = new BoltClientConnectionRule();
 
   /**
    * <p>
@@ -84,29 +85,6 @@ public class ExampleCodeTest {
     assertThat(node.asMap()).containsEntry(ITypeNode.ABSTRACT, false);
   }
 
-  @Test
-  public void test_Method() {
-
-    // get the type node
-    List<Node> nodes = getMethodNodes(ExampleClass.class);
-
-    for (Node node : nodes) {
-      System.out.println(node.labels());
-    }
-
-    // // asserts
-    // assertThat(node.labels()).containsExactly("Type", "Class");
-    // assertThat(node.asMap()).containsOnlyKeys(ITypeNode.CLASS_VERSION, ITypeNode.ABSTRACT,
-    // ITypeNode.SOURCE_FILE_NAME,
-    // ITypeNode.DEPRECATED, ITypeNode.FINAL, ITypeNode.FQN, ITypeNode.NAME, ITypeNode.STATIC, ITypeNode.VISIBILITY);
-    //
-    // assertThat(node.asMap()).containsEntry(ITypeNode.FQN, ExampleClass.class.getName());
-    // assertThat(node.asMap()).containsEntry(ITypeNode.NAME, ExampleClass.class.getSimpleName());
-    // assertThat(node.asMap()).containsEntry(ITypeNode.VISIBILITY, "public");
-    // assertThat(node.asMap()).containsEntry(ITypeNode.SOURCE_FILE_NAME, "ExampleClass.java");
-    // assertThat(node.asMap()).containsEntry(ITypeNode.ABSTRACT, false);
-  }
-
   /**
    * <p>
    * </p>
@@ -150,6 +128,29 @@ public class ExampleCodeTest {
     assertThat(node.asMap()).containsEntry(ITypeNode.VISIBILITY, "public");
     assertThat(node.asMap()).containsEntry(ITypeNode.SOURCE_FILE_NAME, "ExampleAnnotation.java");
     assertThat(node.asMap()).containsEntry(ITypeNode.ABSTRACT, true);
+  }
+
+  @Test
+  public void test_Method() {
+
+    // get the type node
+    List<Node> nodes = getMethodNodes(ExampleClass.class);
+
+    for (Node node : nodes) {
+      System.out.println(node.labels());
+    }
+
+    // // asserts
+    // assertThat(node.labels()).containsExactly("Type", "Class");
+    // assertThat(node.asMap()).containsOnlyKeys(ITypeNode.CLASS_VERSION, ITypeNode.ABSTRACT,
+    // ITypeNode.SOURCE_FILE_NAME,
+    // ITypeNode.DEPRECATED, ITypeNode.FINAL, ITypeNode.FQN, ITypeNode.NAME, ITypeNode.STATIC, ITypeNode.VISIBILITY);
+    //
+    // assertThat(node.asMap()).containsEntry(ITypeNode.FQN, ExampleClass.class.getName());
+    // assertThat(node.asMap()).containsEntry(ITypeNode.NAME, ExampleClass.class.getSimpleName());
+    // assertThat(node.asMap()).containsEntry(ITypeNode.VISIBILITY, "public");
+    // assertThat(node.asMap()).containsEntry(ITypeNode.SOURCE_FILE_NAME, "ExampleClass.java");
+    // assertThat(node.asMap()).containsEntry(ITypeNode.ABSTRACT, false);
   }
 
   /**

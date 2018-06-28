@@ -7,9 +7,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.slizaa.hierarchicalgraph.DefaultNodeSource;
-import org.slizaa.hierarchicalgraph.HGNode;
-import org.slizaa.hierarchicalgraph.INodeSource;
+import org.slizaa.hierarchicalgraph.core.model.DefaultNodeSource;
+import org.slizaa.hierarchicalgraph.core.model.HGNode;
+import org.slizaa.hierarchicalgraph.core.model.INodeSource;
 
 public class HGNodeUtils {
 

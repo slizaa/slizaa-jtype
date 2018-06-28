@@ -2,7 +2,7 @@ package org.slizaa.jtype.hierarchicalgraph;
 
 import java.util.function.Function;
 
-import org.slizaa.hierarchicalgraph.HGNode;
+import org.slizaa.hierarchicalgraph.core.model.HGNode;
 import org.slizaa.hierarchicalgraph.graphdb.mapping.spi.ILabelDefinitionProvider;
 import org.slizaa.hierarchicalgraph.graphdb.mapping.spi.labelprovider.AbstractLabelDefinitionProvider;
 
