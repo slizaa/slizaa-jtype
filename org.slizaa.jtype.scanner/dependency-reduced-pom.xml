@@ -127,6 +127,10 @@
       <scope>test</scope>
       <exclusions>
         <exclusion>
+          <artifactId>byte-buddy</artifactId>
+          <groupId>net.bytebuddy</groupId>
+        </exclusion>
+        <exclusion>
           <artifactId>byte-buddy-agent</artifactId>
           <groupId>net.bytebuddy</groupId>
         </exclusion>
@@ -171,12 +175,6 @@
           <groupId>org.hamcrest</groupId>
         </exclusion>
       </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>net.bytebuddy</groupId>
-      <artifactId>byte-buddy</artifactId>
-      <version>1.7.1</version>
-      <scope>test</scope>
     </dependency>
   </dependencies>
   <dependencyManagement>
