@@ -34,9 +34,9 @@
 						<configuration>
 							<featureDefinitions>
 								<feature>
-									<id>org.slizaa.scanner.jtype.eclipse.feature</id>
+									<id>org.slizaa.scanner.jtype.feature</id>
 									<version>${project.version}</version>
-									<label>org.slizaa.scanner.jtype.eclipse.feature</label>
+									<label>org.slizaa.scanner.jtype.feature</label>
 									<providerName>${project.groupId}</providerName>
 									<description>${project.description}</description>
 									<license url="http://www.gnu.org/licenses/gpl-3.0.html">
@@ -694,12 +694,17 @@
 									<generateSourceFeature>false</generateSourceFeature>
 									<artifacts>
 										<artifact>
-											<id>org.slizaa.scanner.jtype:org.slizaa.scanner.jtype:${project.version}</id>
+											<id>org.slizaa.jtype:org.slizaa.jtype.scanner:${project.version}</id>
 											<transitive>false</transitive>
 											<source>true</source>
 										</artifact>
 										<artifact>
-											<id>org.slizaa.scanner.jtype:org.slizaa.scanner.jtype.apoc:${project.version}</id>
+											<id>org.slizaa.jtype:org.slizaa.jtype.scanner.apoc:${project.version}</id>
+											<transitive>false</transitive>
+											<source>true</source>
+										</artifact>
+										<artifact>
+											<id>org.slizaa.jtype:org.slizaa.jtype.hierarchicalgraph:${project.version}</id>
 											<transitive>false</transitive>
 											<source>true</source>
 										</artifact>
