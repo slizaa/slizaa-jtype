@@ -5,7 +5,7 @@ target_dir=slizaa-jtype
 
 echo TRAVIS_BUILD_DIR: $TRAVIS_BUILD_DIR
 
-PRODUCTS_DIR=$TRAVIS_BUILD_DIR/org.slizaa.scanner.jtype.p2-repo/target/repository
+PRODUCTS_DIR=$TRAVIS_BUILD_DIR/org.slizaa.jtype.p2-repo/target/repository
 echo PRODUCTS_DIR: $PRODUCTS_DIR
 
 filesToUpload=$(find $PRODUCTS_DIR -name "*.jar" -printf '%P\n')
