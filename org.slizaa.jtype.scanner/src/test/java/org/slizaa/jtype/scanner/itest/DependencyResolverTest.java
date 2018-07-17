@@ -40,15 +40,11 @@ public class DependencyResolverTest {
     assertThat(statementResult.single().get("count(rel)").asInt()).isEqualTo(2403);
 
     statementResult = this._client.getBoltClient()
-        .syncExecCypherQuery("MATCH (t1:Type)-[rel:DEPENDS_ON {derived:true}]->(t2:Type) RETURN count(rel)");
-    assertThat(statementResult.single().get("count(rel)").asInt()).isEqualTo(2061);
+        .syncExecCypherQuery("MATCH p=(t1:Type)-[:DEPENDS_ON]->(tref:TypeReference)-[:BOUND_TO {derived:true}]->(t2:Type) RETURN count(p)");
+    assertThat(statementResult.single().get("count(p)").asInt()).isEqualTo(2061);
 
     statementResult = this._client.getBoltClient()
         .syncExecCypherQuery("MATCH p=(sourceNode)-[rel]->(tref:TypeReference)-[:BOUND_TO]->(t:Type) RETURN count(p)");
-    assertThat(statementResult.single().get("count(p)").asInt()).isEqualTo(15549);
-
-    statementResult = this._client.getBoltClient().syncExecCypherQuery(
-        "MATCH p=(sourceNode)-[rel {derived:true}]->(t:Type) where type(rel)<>\"BOUND_TO\" RETURN count(p)");
     assertThat(statementResult.single().get("count(p)").asInt()).isEqualTo(15549);
 
     // check method references
@@ -60,10 +56,6 @@ public class DependencyResolverTest {
         "MATCH p=(sourceNode)-[rel]->(mref:MethodReference)-[:BOUND_TO]->(method:Method) RETURN count(p)");
     assertThat(statementResult.single().get("count(p)").asInt()).isEqualTo(4129);
 
-    statementResult = this._client.getBoltClient().syncExecCypherQuery(
-        "MATCH p=(sourceNode)-[rel {derived:true}]->(method:Method) where type(rel)<>\"BOUND_TO\" RETURN count(p)");
-    assertThat(statementResult.single().get("count(p)").asInt()).isEqualTo(4129);
-
     // check field references
     statementResult = this._client.getBoltClient()
         .syncExecCypherQuery("MATCH (fref:FieldReference)-[rel:BOUND_TO {derived:true}]->(f:Field) RETURN count(rel)");
@@ -71,10 +63,6 @@ public class DependencyResolverTest {
 
     statementResult = this._client.getBoltClient().syncExecCypherQuery(
         "MATCH p=(sourceNode)-[rel]->(fref:FieldReference)-[:BOUND_TO]->(f:Field) RETURN count(p)");
-    assertThat(statementResult.single().get("count(p)").asInt()).isEqualTo(5333);
-
-    statementResult = this._client.getBoltClient().syncExecCypherQuery(
-        "MATCH p=(sourceNode)-[rel {derived:true}]->(f:Field) where type(rel)<>\"BOUND_TO\" RETURN count(p)");
     assertThat(statementResult.single().get("count(p)").asInt()).isEqualTo(5333);
 
     // unbound type references (3514)

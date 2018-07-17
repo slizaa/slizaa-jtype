@@ -50,6 +50,6 @@ public class CypherRegistryTest extends AbstractJTypeTest {
    */
   @Test
   public void testCypherStatementRegistry() throws BundleException {
-    assertThat(this._registry.getAllStatements()).hasSize(7);
+    assertThat(this._registry.getAllStatements()).hasSize(4);
   }
 }
