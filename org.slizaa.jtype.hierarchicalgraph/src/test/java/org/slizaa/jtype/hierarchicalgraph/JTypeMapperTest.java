@@ -8,21 +8,13 @@ import static org.slizaa.scanner.core.testfwk.ContentDefinitionProviderFactory.m
 
 import java.util.List;
 
-import org.eclipse.emf.ecore.EFactory;
-import org.eclipse.emf.ecore.EPackage;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.slizaa.core.boltclient.testfwk.BoltClientConnectionRule;
 import org.slizaa.hierarchicalgraph.core.algorithms.AdjacencyMatrix;
 import org.slizaa.hierarchicalgraph.core.model.HGNode;
 import org.slizaa.hierarchicalgraph.core.model.HGRootNode;
-import org.slizaa.hierarchicalgraph.core.model.HierarchicalgraphPackage;
-import org.slizaa.hierarchicalgraph.core.model.impl.CustomHierarchicalgraphFactoryImpl;
-import org.slizaa.hierarchicalgraph.graphdb.mapping.service.internal.DefaultMappingService;
-import org.slizaa.hierarchicalgraph.graphdb.model.GraphDbHierarchicalgraphPackage;
-import org.slizaa.hierarchicalgraph.graphdb.model.GraphDbNodeSource;
-import org.slizaa.hierarchicalgraph.graphdb.model.impl.CustomGraphDbHierarchicalgraphFactoryImpl;
+import org.slizaa.hierarchicalgraph.graphdb.mapping.service.MappingFactory;
 
 /**
  * <p>
@@ -43,8 +35,8 @@ public class JTypeMapperTest {
   @Test
   public void testMatrix() {
 
-    HGRootNode rootNode = new DefaultMappingService().convert(new JType_Hierarchical_MappingProvider(),
-        CLIENT.getBoltClient(), null);
+    HGRootNode rootNode = MappingFactory.createMappingServiceForStandaloneSetup().
+        convert(new JType_Hierarchical_MappingProvider(), CLIENT.getBoltClient(), null);
 
     //
     List<HGNode> packageNodes = CLIENT.getBoltClient()
