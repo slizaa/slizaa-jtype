@@ -151,7 +151,7 @@ public class JTypeMethodVisitor extends MethodVisitor {
   public void visitLocalVariable(String name, String desc, String signature, Label start, Label end, int index) {
     Type type = Type.getType(desc);
     if (!this._typeBean.getFullyQualifiedName().equals(type.getClassName())) {
-      addTypeReference(this._methodNodeBean, type, JTypeModelRelationshipType.USES);
+      addTypeReference(this._methodNodeBean, type, JTypeModelRelationshipType.DEFINES_LOCAL_VARIABLE);
     }
   }
 
@@ -196,14 +196,19 @@ public class JTypeMethodVisitor extends MethodVisitor {
     INode methodReference = methodReferenceRelationship.getTargetBean();
 
     // owner
-    addTypeReference(methodReference, Type.getObjectType(owner), JTypeModelRelationshipType.IS_DEFINED_BY);
+    Type ownerTyper = Type.getObjectType(owner);
+    addTypeReference(methodReference, ownerTyper, JTypeModelRelationshipType.IS_DEFINED_BY);
+    addTypeReference(this._methodNodeBean, ownerTyper, JTypeModelRelationshipType.INVOKES_METHOD_FROM);
 
     // return type
-    addTypeReference(methodReference, Type.getReturnType(rawSignature), JTypeModelRelationshipType.RETURNS);
+    Type returnType = Type.getReturnType(rawSignature);
+    addTypeReference(methodReference, returnType, JTypeModelRelationshipType.RETURNS);
+    addTypeReference(this._methodNodeBean, returnType, JTypeModelRelationshipType.INVOKED_METHOD_RETURNS);
 
     // arg types type
-    for (Type type : Type.getArgumentTypes(rawSignature)) {
-      addTypeReference(methodReference, type, JTypeModelRelationshipType.HAS_PARAMETER);
+    for (Type argumentType : Type.getArgumentTypes(rawSignature)) {
+      addTypeReference(methodReference, argumentType, JTypeModelRelationshipType.HAS_PARAMETER);
+      addTypeReference(this._methodNodeBean, argumentType, JTypeModelRelationshipType.INVOKED_METHOD_HAS_PARAMETER);
     }
   }
 
@@ -214,7 +219,7 @@ public class JTypeMethodVisitor extends MethodVisitor {
   public void visitMultiANewArrayInsn(String desc, int dims) {
 
     //
-    addTypeReference(this._methodNodeBean, Type.getType(desc), JTypeModelRelationshipType.USES);
+    addTypeReference(this._methodNodeBean, Type.getType(desc), JTypeModelRelationshipType.REFERENCES);
   }
 
   /**
@@ -266,11 +271,9 @@ public class JTypeMethodVisitor extends MethodVisitor {
   @Override
   public void visitLdcInsn(Object cst) {
 
-    // TODO
+    //
     if (cst instanceof Type) {
-
-      //
-      addTypeReference(this._methodNodeBean, (Type) cst, JTypeModelRelationshipType.REFERENCES);
+      addTypeReference(this._methodNodeBean, (Type) cst, JTypeModelRelationshipType.USES_TYPE_CONSTANT);
     }
   }
 
@@ -287,7 +290,7 @@ public class JTypeMethodVisitor extends MethodVisitor {
     //
     if (targetType != null && !Utils.isVoidOrPrimitive(targetType)) {
 
-      //
+      // add the type reference
       this._typeLocalReferenceCache.addTypeReference(startNode, Utils.resolveArrayType(targetType), relationshipType);
     }
   }

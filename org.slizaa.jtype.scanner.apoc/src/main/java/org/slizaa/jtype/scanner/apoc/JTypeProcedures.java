@@ -19,9 +19,6 @@ public class JTypeProcedures {
   public Stream<RelationshipResult> test() {
 
     // if (!existsOutgoingDerivedRelationship(from, to, originalRelationship.getType())) {
-
-    System.out.println("SCHNULLI");
-
     return Stream.of();
     // }
     // System.out.println(String.format("SKIP: %s - %s - %s",from.getId(), to.getId(), originalRelationship.getType()));

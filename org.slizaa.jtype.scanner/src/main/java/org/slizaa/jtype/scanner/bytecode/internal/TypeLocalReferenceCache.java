@@ -1,12 +1,9 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 Slizaa project team.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- *    Slizaa project team - initial API and implementation
+ * Copyright (c) 2011-2015 Slizaa project team. All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is
+ * available at http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: Slizaa project team - initial API and implementation
  ******************************************************************************/
 package org.slizaa.jtype.scanner.bytecode.internal;
 
@@ -31,7 +28,7 @@ import com.google.common.cache.LoadingCache;
  * <p>
  * A cache that stores type references.
  * </p>
- * 
+ *
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class TypeLocalReferenceCache {
@@ -60,31 +57,35 @@ public class TypeLocalReferenceCache {
    * </p>
    */
   public TypeLocalReferenceCache(IPrimitiveDatatypeNodeProvider primitiveDatatypeNodes) {
-    _primitiveDatatypeNodes = checkNotNull(primitiveDatatypeNodes);
+    this._primitiveDatatypeNodes = checkNotNull(primitiveDatatypeNodes);
 
     //
-    _typeReferenceNodeCache = CacheBuilder.newBuilder().build(new CacheLoader<String, INode>() {
+    this._typeReferenceNodeCache = CacheBuilder.newBuilder().build(new CacheLoader<String, INode>() {
+      @Override
       public INode load(String referencedTypeName) {
         return JTypeNodeHelper.createTypeReferenceNode(referencedTypeName);
       }
     });
 
     //
-    _fieldReferenceNodeCache = CacheBuilder.newBuilder().build(new CacheLoader<FieldReferenceDescriptor, INode>() {
+    this._fieldReferenceNodeCache = CacheBuilder.newBuilder().build(new CacheLoader<FieldReferenceDescriptor, INode>() {
+      @Override
       public INode load(FieldReferenceDescriptor referencedField) {
         return JTypeNodeHelper.createFieldReferenceNode(referencedField);
       }
     });
 
     //
-    _methodReferenceNodeCache = CacheBuilder.newBuilder().build(new CacheLoader<MethodReferenceDescriptor, INode>() {
-      public INode load(MethodReferenceDescriptor referencedMethod) {
-        return JTypeNodeHelper.createMethodReferenceNode(referencedMethod);
-      }
-    });
+    this._methodReferenceNodeCache = CacheBuilder.newBuilder()
+        .build(new CacheLoader<MethodReferenceDescriptor, INode>() {
+          @Override
+          public INode load(MethodReferenceDescriptor referencedMethod) {
+            return JTypeNodeHelper.createMethodReferenceNode(referencedMethod);
+          }
+        });
 
     //
-    _dependsOnRelationshipTargets = new ArrayList<>();
+    this._dependsOnRelationshipTargets = new ArrayList<>();
   }
 
   /**
@@ -94,7 +95,7 @@ public class TypeLocalReferenceCache {
    * @return
    */
   public Set<String> getAllReferencedTypes() {
-    return _typeReferenceNodeCache.asMap().keySet();
+    return this._typeReferenceNodeCache.asMap().keySet();
   }
 
   /**
@@ -104,7 +105,7 @@ public class TypeLocalReferenceCache {
    * @return
    */
   public INode getTypeBean() {
-    return _typeBean;
+    return this._typeBean;
   }
 
   /**
@@ -114,13 +115,13 @@ public class TypeLocalReferenceCache {
    * @param typeBean
    */
   public void setTypeBean(INode typeBean) {
-    _typeBean = typeBean;
+    this._typeBean = typeBean;
   }
 
   /**
    * <p>
    * </p>
-   * 
+   *
    * @param startNode
    * @param fieldDescriptor
    * @param relationshipType
@@ -130,17 +131,23 @@ public class TypeLocalReferenceCache {
       final RelationshipType relationshipType) {
 
     // step 1: resolve the type of the referenced field (and add a depends-on-relationship)
-    INode fieldTypeBean = _typeReferenceNodeCache.getUnchecked(fieldDescriptor.getFieldType().replace('/', '.'));
+    String fieldTypeFqn = fieldDescriptor.getFieldType().replace('/', '.');
+    INode fieldTypeBean = this._typeReferenceNodeCache.getUnchecked(fieldTypeFqn);
     if (!fieldDescriptor.isPrimitive()) {
       addDependsOnRelationship(fieldTypeBean);
+
+      addTypeReference(startNode, fieldTypeFqn,
+          relationshipType == JTypeModelRelationshipType.READS ? JTypeModelRelationshipType.READS_FIELD_OF_TYPE
+              : JTypeModelRelationshipType.WRITES_FIELD_OF_TYPE);
     }
 
     // step 2: resolve the type that contains the referenced field (and add a depends-on-relationship)
-    INode fieldOwnerBean = _typeReferenceNodeCache.getUnchecked(fieldDescriptor.getOwnerTypeName().replace('/', '.'));
+    INode fieldOwnerBean = this._typeReferenceNodeCache
+        .getUnchecked(fieldDescriptor.getOwnerTypeName().replace('/', '.'));
     addDependsOnRelationship(fieldOwnerBean);
 
     // step 3: add the field access
-    return startNode.addRelationship(_fieldReferenceNodeCache.getUnchecked(fieldDescriptor), relationshipType);
+    return startNode.addRelationship(this._fieldReferenceNodeCache.getUnchecked(fieldDescriptor), relationshipType);
   }
 
   /**
@@ -153,28 +160,28 @@ public class TypeLocalReferenceCache {
       final MethodReferenceDescriptor methodReferenceDescriptor, final RelationshipType relationshipType) {
 
     //
-    INode fieldOwnerBean = _typeReferenceNodeCache
+    INode fieldOwnerBean = this._typeReferenceNodeCache
         .getUnchecked(methodReferenceDescriptor.getOwnerTypeName().replace('/', '.'));
     addDependsOnRelationship(fieldOwnerBean);
 
     // field access
-    return startNode.addRelationship(_methodReferenceNodeCache.getUnchecked(methodReferenceDescriptor),
+    return startNode.addRelationship(this._methodReferenceNodeCache.getUnchecked(methodReferenceDescriptor),
         relationshipType);
   }
 
   /**
    * <p>
    * </p>
-   * 
+   *
    * @param referencedTypeName
    * @param relationshipType
    */
-  public IRelationship addTypeReference(final INode startNode, String referencedTypeName,
+  public void addTypeReference(final INode startNode, String referencedTypeName,
       final RelationshipType relationshipType) {
 
     //
     if (referencedTypeName == null) {
-      return null;
+      return;
     }
 
     // TODO
@@ -194,9 +201,16 @@ public class TypeLocalReferenceCache {
     referencedTypeName = referencedTypeName.replace('/', '.');
 
     //
-    INode targetBean = _typeReferenceNodeCache.getUnchecked(referencedTypeName);
+    INode targetBean = this._typeReferenceNodeCache.getUnchecked(referencedTypeName);
     addDependsOnRelationship(targetBean);
-    return startNode.addRelationship(targetBean, relationshipType);
+    startNode.addRelationship(targetBean, relationshipType);
+
+    //
+    String outerClassName = referencedTypeName;
+    while (outerClassName.contains("$")) {
+      outerClassName = outerClassName.substring(0, outerClassName.lastIndexOf("$"));
+      addTypeReference(startNode, outerClassName, relationshipType);
+    }
   }
 
   public IRelationship addInnerClass(final INode outerClass, INode innerClass,
@@ -214,35 +228,29 @@ public class TypeLocalReferenceCache {
   /**
    * <p>
    * </p>
-   * 
+   *
    * @param referencedType
    * @param relationshipType
    */
-  public IRelationship addTypeReference(final INode startNode, final Type referencedType,
+  public void addTypeReference(final INode startNode, final Type referencedType,
       final RelationshipType relationshipType) {
 
     //
     if (referencedType == null) {
       throw new RuntimeException();
-      // return null;
     }
 
     //
     if (Utils.isVoidOrPrimitive(referencedType)) {
       throw new RuntimeException();
-      // return null;
     }
 
-    String referencedTypeName = Utils.getFullyQualifiedTypeName(referencedType);
-
     //
+    String referencedTypeName = Utils.getFullyQualifiedTypeName(referencedType);
     if (referencedTypeName == null) {
       throw new RuntimeException(referencedType.toString());
-      // return null;
     }
-
-    //
-    return addTypeReference(startNode, referencedTypeName, relationshipType);
+    addTypeReference(startNode, referencedTypeName, relationshipType);
   }
 
   /**
@@ -274,11 +282,11 @@ public class TypeLocalReferenceCache {
    * @param targetBean
    */
   private void addDependsOnRelationship(INode targetBean) {
-    if (!targetBean.getFullyQualifiedName().equals(_typeBean.getFullyQualifiedName())
-        && !_dependsOnRelationshipTargets.contains(targetBean)) {
+    if (!targetBean.getFullyQualifiedName().equals(this._typeBean.getFullyQualifiedName())
+        && !this._dependsOnRelationshipTargets.contains(targetBean)) {
 
-      _dependsOnRelationshipTargets.add(targetBean);
-      _typeBean.addRelationship(targetBean, JTypeModelRelationshipType.DEPENDS_ON);
+      this._dependsOnRelationshipTargets.add(targetBean);
+      this._typeBean.addRelationship(targetBean, JTypeModelRelationshipType.DEPENDS_ON);
     }
   }
 }

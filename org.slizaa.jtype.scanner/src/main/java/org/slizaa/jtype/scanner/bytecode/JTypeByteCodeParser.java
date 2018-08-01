@@ -101,7 +101,7 @@ public class JTypeByteCodeParser extends AbstractParser<JTypeByteCodeParserFacto
     for (String constantPoolClass : getConstantPoolClasses(reader)) {
       if (!allReferencedTypes.contains(constantPoolClass.replace('/', '.'))) {
         visitor.getTypeLocalReferenceCache().addTypeReference(visitor.getTypeBean(),
-            constantPoolClass.replace('/', '.'), JTypeModelRelationshipType.USES);
+            constantPoolClass.replace('/', '.'), JTypeModelRelationshipType.REFERENCES);
       }
     }
 
@@ -124,16 +124,19 @@ public class JTypeByteCodeParser extends AbstractParser<JTypeByteCodeParserFacto
 
     for (int n = 1; n < itemCount; n++) {
       int pos = reader.getItem(n);
-      if (pos == 0 || reader.b[pos - 1] != 7)
+      if (pos == 0 || reader.b[pos - 1] != 7) {
         continue;
+      }
 
       Arrays.fill(buffer, (char) 0);
       String string = reader.readUTF8(pos, buffer);
 
-      if (string.startsWith("["))
+      if (string.startsWith("[")) {
         continue;
-      if (string.length() < 1)
+      }
+      if (string.length() < 1) {
         continue;
+      }
 
       strings.add(string);
     }

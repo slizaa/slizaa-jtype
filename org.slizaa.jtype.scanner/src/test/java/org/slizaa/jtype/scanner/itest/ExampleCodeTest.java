@@ -315,6 +315,21 @@ public class ExampleCodeTest {
   }
 
   @Test
+  public void testField_3() {
+
+    //
+    StatementResult statementResult = this._client.getBoltClient()
+        .syncExecCypherQuery("MATCH p=(:Type {name: 'FieldInstance'})-[rel]->(target) return target.fqn");
+
+    List<String> names = statementResult.list(rec -> rec.get(0).asString());
+
+    //
+    for (String name : names) {
+      System.out.println(name);
+    }
+  }
+
+  @Test
   public void testMethodReference_1() {
 
     //

@@ -10,7 +10,6 @@ package org.slizaa.jtype.scanner.bytecode.internal;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import org.objectweb.asm.AnnotationVisitor;
-import org.objectweb.asm.Attribute;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;
@@ -19,6 +18,9 @@ import org.objectweb.asm.Type;
 import org.objectweb.asm.TypePath;
 import org.objectweb.asm.signature.SignatureReader;
 import org.slizaa.jtype.scanner.bytecode.JTypeByteCodeParserFactory;
+import org.slizaa.jtype.scanner.bytecode.internal.signature.JTypeClassSignatureVisitor;
+import org.slizaa.jtype.scanner.bytecode.internal.signature.JTypeMethodSignatureVisitor;
+import org.slizaa.jtype.scanner.bytecode.internal.signature.JTypeTypeSignatureVisitor;
 import org.slizaa.jtype.scanner.model.IFieldNode;
 import org.slizaa.jtype.scanner.model.IMethodNode;
 import org.slizaa.jtype.scanner.model.ITypeNode;
@@ -39,7 +41,7 @@ public class JTypeClassVisitor extends ClassVisitor {
   private INode                      _typeBean;
 
   /** - */
-  private TypeLocalReferenceCache    _classLocalTypeReferenceCache;
+  private TypeLocalReferenceCache    _classLocalReferenceCache;
 
   /** - */
   private JTypeByteCodeParserFactory _parserFactory;
@@ -58,7 +60,7 @@ public class JTypeClassVisitor extends ClassVisitor {
     this._parserFactory = checkNotNull(parserFactory);
 
     //
-    this._classLocalTypeReferenceCache = new TypeLocalReferenceCache(this._parserFactory.getDatatypeNodeProviderMap());
+    this._classLocalReferenceCache = new TypeLocalReferenceCache(this._parserFactory.getDatatypeNodeProviderMap());
   }
 
   /**
@@ -68,7 +70,7 @@ public class JTypeClassVisitor extends ClassVisitor {
    * @return
    */
   public TypeLocalReferenceCache getTypeLocalReferenceCache() {
-    return this._classLocalTypeReferenceCache;
+    return this._classLocalReferenceCache;
   }
 
   /**
@@ -92,7 +94,7 @@ public class JTypeClassVisitor extends ClassVisitor {
     this._typeBean = NodeFactory.createNode();
 
     // add type bean to type local cache
-    this._classLocalTypeReferenceCache.setTypeBean(this._typeBean);
+    this._classLocalReferenceCache.setTypeBean(this._typeBean);
 
     // add the type of the type
     this._typeBean.addLabel(JTypeLabel.Type);
@@ -143,28 +145,26 @@ public class JTypeClassVisitor extends ClassVisitor {
       // set signature
       this._typeBean.putProperty(ITypeNode.SIGNATURE, signature);
 
-      JTypeTypeSignatureVisitor sv = new JTypeTypeSignatureVisitor(this._typeBean, this._classLocalTypeReferenceCache);
+      JTypeClassSignatureVisitor sv = new JTypeClassSignatureVisitor(this._typeBean, this._classLocalReferenceCache);
       new SignatureReader(signature).accept(sv);
     }
 
     // add 'extends' references
-    this._classLocalTypeReferenceCache.addTypeReference(this._typeBean, superName, JTypeModelRelationshipType.EXTENDS);
+    this._classLocalReferenceCache.addTypeReference(this._typeBean, superName, JTypeModelRelationshipType.EXTENDS);
 
     // add 'implements' references
     for (String ifaceName : interfaces) {
 
       switch (getJTypeLabel(access)) {
       case Class:
-        this._classLocalTypeReferenceCache.addTypeReference(this._typeBean, ifaceName,
+        this._classLocalReferenceCache.addTypeReference(this._typeBean, ifaceName,
             JTypeModelRelationshipType.IMPLEMENTS);
         break;
       case Interface:
-        this._classLocalTypeReferenceCache.addTypeReference(this._typeBean, ifaceName,
-            JTypeModelRelationshipType.EXTENDS);
+        this._classLocalReferenceCache.addTypeReference(this._typeBean, ifaceName, JTypeModelRelationshipType.EXTENDS);
         break;
       case Annotation:
-        this._classLocalTypeReferenceCache.addTypeReference(this._typeBean, ifaceName,
-            JTypeModelRelationshipType.EXTENDS);
+        this._classLocalReferenceCache.addTypeReference(this._typeBean, ifaceName, JTypeModelRelationshipType.EXTENDS);
         break;
       default:
         break;
@@ -179,7 +179,7 @@ public class JTypeClassVisitor extends ClassVisitor {
   public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
 
     // class annotation
-    this._classLocalTypeReferenceCache.addTypeReference(this._typeBean, Type.getType(desc),
+    this._classLocalReferenceCache.addTypeReference(this._typeBean, Type.getType(desc),
         JTypeModelRelationshipType.ANNOTATED_BY);
 
     //
@@ -211,7 +211,7 @@ public class JTypeClassVisitor extends ClassVisitor {
     if (signature != null) {
       methodBean.putProperty("signature", signature);
       new SignatureReader(signature)
-          .accept(new JTypeMethodSignatureVisitor(methodBean, this._classLocalTypeReferenceCache));
+          .accept(new JTypeMethodSignatureVisitor(methodBean, this._classLocalReferenceCache));
     }
 
     //
@@ -247,8 +247,10 @@ public class JTypeClassVisitor extends ClassVisitor {
     Type[] types = Type.getArgumentTypes(desc);
     methodBean.putProperty(IMethodNode.PARAMETER_COUNT, types.length + 1);
     for (int i = 0; i < types.length; i++) {
-      IRelationship relationship = addReference(methodBean, types[i], JTypeModelRelationshipType.HAS_PARAMETER);
-      relationship.putRelationshipProperty(IMethodNode.PARAMETER_INDEX, i);
+
+      // TODO!!!
+      addReference(methodBean, types[i], JTypeModelRelationshipType.HAS_PARAMETER);
+      // relationship.putRelationshipProperty(IMethodNode.PARAMETER_INDEX, i);
     }
 
     // return type
@@ -262,7 +264,7 @@ public class JTypeClassVisitor extends ClassVisitor {
     }
 
     //
-    return new JTypeMethodVisitor(this._typeBean, methodBean, this._classLocalTypeReferenceCache);
+    return new JTypeMethodVisitor(this._typeBean, methodBean, this._classLocalReferenceCache);
   }
 
   /**
@@ -319,10 +321,9 @@ public class JTypeClassVisitor extends ClassVisitor {
       // signature
       fieldBean.putProperty(IFieldNode.SIGNATURE, signature);
 
-      // TODO
-      // JTypeTypeSignatureVisitor sv = new JTypeTypeSignatureVisitor(0);
-      // SignatureReader r = new SignatureReader(signature);
-      // r.acceptType(sv);
+      //
+      new SignatureReader(signature)
+          .acceptType(new JTypeTypeSignatureVisitor(fieldBean, this._classLocalReferenceCache));
     }
 
     // TODO
@@ -339,10 +340,9 @@ public class JTypeClassVisitor extends ClassVisitor {
    */
   @Override
   public void visitOuterClass(String owner, String name, String rawSignature) {
-    // System.out.println("visitOuterClass: " + owner + " : " + name + " : " + rawSignature);
 
     // owner
-    this._classLocalTypeReferenceCache.addTypeReference(this._typeBean, Type.getObjectType(owner),
+    this._classLocalReferenceCache.addTypeReference(this._typeBean, Type.getObjectType(owner),
         JTypeModelRelationshipType.REFERENCES);
 
     // TODO: EnclosingMethod!
@@ -351,7 +351,7 @@ public class JTypeClassVisitor extends ClassVisitor {
       // return type
       Type returnType = org.objectweb.asm.Type.getReturnType(rawSignature);
       if (!Utils.isVoidOrPrimitive(returnType)) {
-        this._classLocalTypeReferenceCache.addTypeReference(this._typeBean,
+        this._classLocalReferenceCache.addTypeReference(this._typeBean,
             Utils.resolveArrayType(returnType).getClassName(), JTypeModelRelationshipType.REFERENCES);
       }
 
@@ -361,7 +361,7 @@ public class JTypeClassVisitor extends ClassVisitor {
         if (!Utils.isVoidOrPrimitive(types[i])) {
 
           // TODO: array types!
-          this._classLocalTypeReferenceCache.addTypeReference(this._typeBean,
+          this._classLocalReferenceCache.addTypeReference(this._typeBean,
               Utils.resolveArrayType(types[i]).getClassName(), JTypeModelRelationshipType.REFERENCES);
         }
       }
@@ -375,22 +375,13 @@ public class JTypeClassVisitor extends ClassVisitor {
   }
 
   @Override
-  public void visitAttribute(Attribute attr) {
-    // TODO Auto-generated method stub
-    super.visitAttribute(attr);
-  }
-
-  @Override
   public void visitInnerClass(String name, String outerName, String innerName, int access) {
-
-    // System.out.println(_typeBean.getFullyQualifiedName() + " - visitInnerClass(" + name + ", " + outerName + ", "
-    // + innerName + ", " + access + ")");
 
     //
     if (name.replace('/', '.').equals(this._typeBean.getFullyQualifiedName())) {
 
       if (outerName != null) {
-        this._classLocalTypeReferenceCache.addTypeReference(this._typeBean, outerName.replace('/', '.'),
+        this._classLocalReferenceCache.addTypeReference(this._typeBean, outerName.replace('/', '.'),
             JTypeModelRelationshipType.IS_INNER_CLASS_DEFINED_BY);
       }
 
@@ -431,12 +422,12 @@ public class JTypeClassVisitor extends ClassVisitor {
 
       //
       if (outerName.replace('/', '.').equals(this._typeBean.getFullyQualifiedName())) {
-        this._classLocalTypeReferenceCache.addTypeReference(this._typeBean, name.replace('/', '.'),
+        this._classLocalReferenceCache.addTypeReference(this._typeBean, name.replace('/', '.'),
             JTypeModelRelationshipType.DEFINES_INNER_CLASS);
       }
       //
       else {
-        this._classLocalTypeReferenceCache.addTypeReference(this._typeBean, outerName.replace('/', '.'),
+        this._classLocalReferenceCache.addTypeReference(this._typeBean, outerName.replace('/', '.'),
             JTypeModelRelationshipType.REFERENCES);
       }
     }
@@ -457,19 +448,19 @@ public class JTypeClassVisitor extends ClassVisitor {
    * @param fieldBean
    * @param type
    */
-  private IRelationship addReference(INode fieldBean, Type type, JTypeModelRelationshipType relationshipType) {
+  private void addReference(INode fieldBean, Type type, JTypeModelRelationshipType relationshipType) {
 
     //
     Type t = Utils.resolveArrayType(type);
 
     //
     if (Utils.isVoid(type)) {
-      return null;
+      return;
     } else if (Utils.isPrimitive(t)) {
-      return fieldBean.addRelationship(
+      IRelationship relationship = fieldBean.addRelationship(
           Utils.getPrimitiveDatatypeNode(t, this._parserFactory.getDatatypeNodeProviderMap()), relationshipType);
     } else {
-      return this._classLocalTypeReferenceCache.addTypeReference(fieldBean, t.getClassName(), relationshipType);
+      this._classLocalReferenceCache.addTypeReference(fieldBean, t.getClassName(), relationshipType);
     }
   }
 
