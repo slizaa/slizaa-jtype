@@ -25,6 +25,8 @@ import org.slizaa.jtype.scanner.itest.examplecode.ExampleAnnotation;
 import org.slizaa.jtype.scanner.itest.examplecode.ExampleClass;
 import org.slizaa.jtype.scanner.itest.examplecode.ExampleEnum;
 import org.slizaa.jtype.scanner.itest.examplecode.ExampleInterface;
+import org.slizaa.jtype.scanner.itest.examplecode.OuterClass;
+import org.slizaa.jtype.scanner.itest.examplecode.OuterClass.InnerClass;
 import org.slizaa.jtype.scanner.itest.examplecode.SimpleClassWithOneField;
 import org.slizaa.jtype.scanner.itest.examplecode.SuperClass;
 import org.slizaa.jtype.scanner.itest.examplecode.SuperInterface;
@@ -83,6 +85,35 @@ public class ExampleCodeTest {
     assertThat(node.asMap()).containsEntry(ITypeNode.VISIBILITY, "public");
     assertThat(node.asMap()).containsEntry(ITypeNode.SOURCE_FILE_NAME, "ExampleClass.java");
     assertThat(node.asMap()).containsEntry(ITypeNode.ABSTRACT, false);
+  }
+
+  /**
+   * <p>
+   * </p>
+   */
+  @Test
+  public void test_innerOuterClass() {
+
+    //
+    StatementResult statementResult = _client.getBoltClient().syncExecCypherQuery("Match (t:Type {fqn: $fqn})-[rel:DEFINES_INNER_CLASS]->(target) return type(rel), target",
+        Collections.singletonMap("fqn", OuterClass.class.getName()));
+
+    System.out.println("HAE: " + statementResult.list(rec -> rec.get(0).asString() + " : " +  rec.get(1).asNode().asMap()));
+
+    // //
+    // return statementResult.list(rec -> rec.get(0).asNode());
+    //
+    // // asserts
+    // assertThat(node.labels()).containsExactly("Type", "Class");
+    // assertThat(node.asMap()).containsOnlyKeys(ITypeNode.CLASS_VERSION, ITypeNode.ABSTRACT,
+    // ITypeNode.SOURCE_FILE_NAME,
+    // ITypeNode.DEPRECATED, ITypeNode.FINAL, ITypeNode.FQN, ITypeNode.NAME, ITypeNode.STATIC, ITypeNode.VISIBILITY);
+    //
+    // assertThat(node.asMap()).containsEntry(ITypeNode.FQN, ExampleClass.class.getName());
+    // assertThat(node.asMap()).containsEntry(ITypeNode.NAME, ExampleClass.class.getSimpleName());
+    // assertThat(node.asMap()).containsEntry(ITypeNode.VISIBILITY, "public");
+    // assertThat(node.asMap()).containsEntry(ITypeNode.SOURCE_FILE_NAME, "ExampleClass.java");
+    // assertThat(node.asMap()).containsEntry(ITypeNode.ABSTRACT, false);
   }
 
   /**

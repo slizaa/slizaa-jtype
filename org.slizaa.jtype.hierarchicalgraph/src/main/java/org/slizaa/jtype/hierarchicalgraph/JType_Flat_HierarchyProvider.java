@@ -33,9 +33,9 @@ public class JType_Flat_HierarchyProvider extends AbstractQueryBasedHierarchyPro
     return new String[] {
         "MATCH (g:Group)-[:CONTAINS]->(m:Module) RETURN id(g), id(m)",
         "MATCH (g1:Group)-[:CONTAINS]->(g2:Group) RETURN id(g1), id(g2)",
-        "Match (module:Module)-[:CONTAINS]->(d:Directory) WHERE d.isEmpty=false Return DISTINCT id(module), id(d)",
-        "Match (d:Directory)-[:CONTAINS]->(r:Resource) Return id(d), id(r)",
-        "Match (r:Resource)-[:CONTAINS]->(t:Type) Return id(r), id(t)",
+        "Match (module:Module)-[:CONTAINS]->(d:Directory) WHERE d.isEmpty=false RETURN DISTINCT id(module), id(d)",
+        "Match (d:Directory)-[:CONTAINS]->(r:Resource) WHERE NOT (r)-[:CONTAINS]->(t:Type {innerClass: 'true'}) RETURN id(d), id(r)",
+        "Match (r:Resource)-[:CONTAINS]->(t:Type) WHERE NOT EXISTS(t.innerClass) Return id(r), id(t)",
         "Match (t:Type)-[:CONTAINS]->(m:Method) Return id(t), id(m)",
         "Match (t:Type)-[:CONTAINS]->(f:Field) Return id(t), id(f)"
     };

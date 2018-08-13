@@ -418,10 +418,10 @@ public class JTypeClassVisitor extends ClassVisitor {
 
     // http://stackoverflow.com/questions/24622658/access-flag-for-private-inner-classes-in-java-spec-inconsistent-with-reflectio
     // TODO
-    else if (outerName != null) {
-
+    else if (outerName != null && ! outerName.equals(name)) {
       //
       if (outerName.replace('/', '.').equals(this._typeBean.getFullyQualifiedName())) {
+        System.out.println("TEST: " + outerName + " - " + name + "(" + _typeBean.getFullyQualifiedName() + ")");
         this._classLocalReferenceCache.addTypeReference(this._typeBean, name.replace('/', '.'),
             JTypeModelRelationshipType.DEFINES_INNER_CLASS);
       }

@@ -209,7 +209,7 @@ public class TypeLocalReferenceCache {
     String outerClassName = referencedTypeName;
     while (outerClassName.contains("$")) {
       outerClassName = outerClassName.substring(0, outerClassName.lastIndexOf("$"));
-      addTypeReference(startNode, outerClassName, relationshipType);
+      addTypeReference(startNode, outerClassName, JTypeModelRelationshipType.INNER_CLASS_REFERENCES);
     }
   }
 
