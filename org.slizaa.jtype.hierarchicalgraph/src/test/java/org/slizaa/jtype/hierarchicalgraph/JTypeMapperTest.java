@@ -74,7 +74,7 @@ public class JTypeMapperTest {
     HGRootNode rootNode = MappingFactory.createMappingServiceForStandaloneSetup()
         .convert(new JType_Hierarchical_MappingProvider(), CLIENT.getBoltClient(), null);
 
-    //
-    HGNodeUtils.dumpNode(rootNode);
+    // //
+    // HGNodeUtils.dumpNode(rootNode);
   }
 }
