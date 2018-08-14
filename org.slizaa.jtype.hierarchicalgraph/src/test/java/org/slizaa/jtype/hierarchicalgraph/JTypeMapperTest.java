@@ -16,6 +16,7 @@ import org.slizaa.hierarchicalgraph.core.algorithms.AdjacencyMatrix;
 import org.slizaa.hierarchicalgraph.core.model.HGNode;
 import org.slizaa.hierarchicalgraph.core.model.HGRootNode;
 import org.slizaa.hierarchicalgraph.graphdb.mapping.service.MappingFactory;
+import org.slizaa.jtype.hierarchicalgraph.utils.HGNodeUtils;
 import org.slizaa.jtype.hierarchicalgraph.utils.JTypeSlizaaTestServerRule;
 
 /**
@@ -64,5 +65,16 @@ public class JTypeMapperTest {
         { 0, 0, 0, 0, 0, 36, 0, 0, 0, 0, 0, 0, 34, 106, 0, 0 },
         { 12, 0, 0, 0, 0, 443, 0, 0, 0, 0, 0, 0, 283, 22, 4114, 0 },
         { 3, 0, 0, 0, 0, 55, 0, 0, 0, 0, 0, 0, 21, 1, 75, 372 } });
+  }
+
+  @Test
+  public void testDump() {
+
+    //
+    HGRootNode rootNode = MappingFactory.createMappingServiceForStandaloneSetup()
+        .convert(new JType_Hierarchical_MappingProvider(), CLIENT.getBoltClient(), null);
+
+    //
+    HGNodeUtils.dumpNode(rootNode);
   }
 }

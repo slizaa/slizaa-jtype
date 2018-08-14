@@ -59,10 +59,36 @@ public class HGNodeUtils {
     return Collections.emptyList();
   }
 
-  public static void dumpChildren(HGNode hgNode) {
-    for (HGNode node : checkNotNull(hgNode).getChildren()) {
-      System.out.println(node.getIdentifier() + " : " + HGNodeUtils.getProperties(node));
-    }
+  /**
+   * <p>
+   * </p>
+   *
+   * @param hgNode
+   */
+  public static void dumpNode(HGNode hgNode) {
+    dumpNode(hgNode, 0);
   }
 
+  /**
+   * <p>
+   * </p>
+   *
+   * @param hgNode
+   * @param indent
+   */
+  private static void dumpNode(final HGNode node, final int indent) {
+
+    //
+    String indentSpace = new String(new char[indent]).replace('\0', ' ');
+
+    //
+    System.out.println(indentSpace + node.getIdentifier() + " : " + HGNodeUtils.getProperties(node).get("fqn"));
+
+    //
+    for (HGNode childNode : checkNotNull(node).getChildren()) {
+
+      //
+      dumpNode(childNode, indent + 1);
+    }
+  }
 }

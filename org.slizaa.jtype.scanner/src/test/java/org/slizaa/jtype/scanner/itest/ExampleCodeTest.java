@@ -95,10 +95,10 @@ public class ExampleCodeTest {
   public void test_innerOuterClass() {
 
     //
-    StatementResult statementResult = _client.getBoltClient().syncExecCypherQuery("Match (t:Type {fqn: $fqn})-[rel:DEFINES_INNER_CLASS]->(target) return type(rel), target",
-        Collections.singletonMap("fqn", OuterClass.class.getName()));
+    StatementResult statementResult = _client.getBoltClient()
+        .syncExecCypherQuery("MATCH (t:Type)-[rel:DEFINES_INNER_CLASS]->(target) RETURN t.fqn, target.fqn");
 
-    System.out.println("HAE: " + statementResult.list(rec -> rec.get(0).asString() + " : " +  rec.get(1).asNode().asMap()));
+    statementResult.forEachRemaining(rec -> System.out.println(rec.get(0) + " : " + rec.get(1)));
 
     // //
     // return statementResult.list(rec -> rec.get(0).asNode());

@@ -37,7 +37,7 @@ public class DependencyResolverTest {
     // check type references
     StatementResult statementResult = this._client.getBoltClient()
         .syncExecCypherQuery("MATCH (tref:TypeReference)-[rel:BOUND_TO {derived:true}]->(t:Type) RETURN count(rel)");
-    assertThat(statementResult.single().get("count(rel)").asInt()).isEqualTo(2407);
+    assertThat(statementResult.single().get("count(rel)").asInt()).isEqualTo(2408);
 
     statementResult = this._client.getBoltClient().syncExecCypherQuery(
         "MATCH p=(t1:Type)-[:DEPENDS_ON]->(tref:TypeReference)-[:BOUND_TO {derived:true}]->(t2:Type) RETURN count(p)");
@@ -45,7 +45,7 @@ public class DependencyResolverTest {
 
     statementResult = this._client.getBoltClient()
         .syncExecCypherQuery("MATCH p=(sourceNode)-[rel]->(tref:TypeReference)-[:BOUND_TO]->(t:Type) RETURN count(p)");
-    assertThat(statementResult.single().get("count(p)").asInt()).isEqualTo(32268);
+    assertThat(statementResult.single().get("count(p)").asInt()).isEqualTo(32286);
 
     // check method references
     statementResult = this._client.getBoltClient().syncExecCypherQuery(

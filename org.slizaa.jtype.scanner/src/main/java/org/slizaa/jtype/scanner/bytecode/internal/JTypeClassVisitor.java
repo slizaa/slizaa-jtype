@@ -378,21 +378,38 @@ public class JTypeClassVisitor extends ClassVisitor {
   public void visitInnerClass(String name, String outerName, String innerName, int access) {
 
     //
-    if (name.replace('/', '.').equals(this._typeBean.getFullyQualifiedName())) {
+    String fullyQualifiedName = name.replace('/', '.');
+    String computedOuterFullyQualifiedName = fullyQualifiedName.substring(0, fullyQualifiedName.lastIndexOf('$'));
 
+    //
+    if (fullyQualifiedName.equals(this._typeBean.getFullyQualifiedName())) {
+
+      // named inner class...
       if (outerName != null) {
+
+        //
         this._classLocalReferenceCache.addTypeReference(this._typeBean, outerName.replace('/', '.'),
             JTypeModelRelationshipType.IS_INNER_CLASS_DEFINED_BY);
+
+        this._typeBean.putProperty(ITypeNode.OUTER_CLASSNAME, outerName.replace('/', '.'));
+      }
+
+      // anonymous inner class
+      else {
+
+        //
+        this._classLocalReferenceCache.addTypeReference(this._typeBean, computedOuterFullyQualifiedName,
+            JTypeModelRelationshipType.IS_INNER_CLASS_DEFINED_BY);
+
+        //
+        this._typeBean.putProperty(ITypeNode.OUTER_CLASSNAME, computedOuterFullyQualifiedName);
+
       }
 
       this._typeBean.putProperty(ITypeNode.INNER_CLASS, true);
 
-      // outer name
-      if (outerName != null) {
-        this._typeBean.putProperty(ITypeNode.OUTER_CLASSNAME, outerName.replace('/', '.'));
-      }
-
       // access flags
+      // http://stackoverflow.com/questions/24622658/access-flag-for-private-inner-classes-in-java-spec-inconsistent-with-reflectio
       if (access != 0) {
 
         this._typeBean.putProperty(ITypeNode.INNER_CLASS_ACCESS_FLAGS, Integer.toHexString(access).toUpperCase());
@@ -416,22 +433,21 @@ public class JTypeClassVisitor extends ClassVisitor {
       }
     }
 
-    // http://stackoverflow.com/questions/24622658/access-flag-for-private-inner-classes-in-java-spec-inconsistent-with-reflectio
     // TODO
-    else if (outerName != null && ! outerName.equals(name)) {
+    else if (computedOuterFullyQualifiedName.equals(this._typeBean.getFullyQualifiedName())) {
+
       //
-      if (outerName.replace('/', '.').equals(this._typeBean.getFullyQualifiedName())) {
-        System.out.println("TEST: " + outerName + " - " + name + "(" + _typeBean.getFullyQualifiedName() + ")");
-        this._classLocalReferenceCache.addTypeReference(this._typeBean, name.replace('/', '.'),
-            JTypeModelRelationshipType.DEFINES_INNER_CLASS);
-      }
-      //
-      else {
-        this._classLocalReferenceCache.addTypeReference(this._typeBean, outerName.replace('/', '.'),
-            JTypeModelRelationshipType.REFERENCES);
-      }
+      this._classLocalReferenceCache.addTypeReference(this._typeBean, fullyQualifiedName,
+          JTypeModelRelationshipType.DEFINES_INNER_CLASS);
     }
 
+    // //
+    // else {
+    // this._classLocalReferenceCache.addTypeReference(this._typeBean, outerName.replace('/', '.'),
+    // JTypeModelRelationshipType.REFERENCES);
+    // }
+
+    //
     super.visitInnerClass(name, outerName, innerName, access);
   }
 
