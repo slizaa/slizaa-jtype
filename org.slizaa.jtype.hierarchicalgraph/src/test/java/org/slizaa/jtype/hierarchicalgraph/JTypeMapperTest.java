@@ -75,6 +75,6 @@ public class JTypeMapperTest {
         .convert(new JType_Hierarchical_MappingProvider(), CLIENT.getBoltClient(), null);
 
     // //
-    // HGNodeUtils.dumpNode(rootNode);
+    HGNodeUtils.dumpNode(rootNode);
   }
 }

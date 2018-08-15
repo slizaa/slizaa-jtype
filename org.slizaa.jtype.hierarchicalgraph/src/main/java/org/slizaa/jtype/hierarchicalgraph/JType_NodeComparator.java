@@ -40,37 +40,90 @@ public class JType_NodeComparator implements INodeComparator {
    * {@inheritDoc}
    */
   @Override
-  public int compare(Object e1, Object e2) {
+  public int compare(Object node1, Object node2) {
 
     //
-    if (!(e1 instanceof HGNode && e2 instanceof HGNode)) {
+    if (!(hasGraphDbNodeSource(node1) || hasGraphDbNodeSource(node2))) {
       return 0;
     }
 
     //
-    GraphDbNodeSource nodeSource1 = (GraphDbNodeSource) ((HGNode) e1).getNodeSource();
-    GraphDbNodeSource nodeSource2 = (GraphDbNodeSource) ((HGNode) e2).getNodeSource();
-
-    //
-    if ((nodeSource1.getLabels().contains("Field") && nodeSource2.getLabels().contains("Field"))
-        || (nodeSource1.getLabels().contains("Method") && nodeSource2.getLabels().contains("Method"))
-        || (nodeSource1.getLabels().contains("Type") && nodeSource2.getLabels().contains("Type"))) {
-
-      return nodeSource1.getProperties().get("name").compareTo(nodeSource2.getProperties().get("name"));
+    if (hasLabel(node1, node2, "Field") || hasLabel(node1, node2, "Method") || hasLabel(node1, node2, "Type")) {
+      return compareProperties(node1, node2, "name");
     }
-    //
-    else if (((nodeSource1.getLabels().contains("Directory") && nodeSource2.getLabels().contains("Directory"))
-        || (nodeSource1.getLabels().contains("Resource") && nodeSource2.getLabels().contains("Resource")))) {
 
-      return nodeSource1.getProperties().get("fqn").compareTo(nodeSource2.getProperties().get("fqn"));
-    }
     //
-    else if (((nodeSource1.getLabels().contains("Module") && nodeSource2.getLabels().contains("Module")))
-        && nodeSource1.getProperties().containsKey("name") && nodeSource2.getProperties().containsKey("name")) {
-      return nodeSource1.getProperties().get("name").compareTo(nodeSource2.getProperties().get("name"));
+    if (hasLabel(node1, node2, "Directory") || hasLabel(node1, node2, "Resource")) {
+      return compareProperties(node1, node2, "name");
+    }
+
+    //
+    if (hasLabel(node1, node2, "Module")) {
+      return compareProperties(node1, node2, "name");
     }
 
     //
     return -1;
+  }
+
+  /**
+   * <p>
+   * </p>
+   *
+   * @param node
+   * @param label
+   * @return
+   */
+  private boolean hasLabel(Object node, String label) {
+    return ((GraphDbNodeSource) ((HGNode) node).getNodeSource()).getLabels().contains(label);
+  }
+
+  /**
+   * <p>
+   * </p>
+   *
+   * @param node1
+   * @param node2
+   * @param label
+   * @return
+   */
+  private boolean hasLabel(Object node1, Object node2, String label) {
+    return hasLabel(node1, label) && hasLabel(node2, label);
+  }
+
+  /**
+   * <p>
+   * </p>
+   *
+   * @param node
+   * @param label
+   * @return
+   */
+  private int compareProperties(Object node1, Object node2, String property) {
+
+    //
+    if (!(((GraphDbNodeSource) ((HGNode) node1).getNodeSource()).getProperties().containsKey(property))) {
+      return 0;
+    }
+
+    //
+    if (!(((GraphDbNodeSource) ((HGNode) node2).getNodeSource()).getProperties().containsKey(property))) {
+      return 0;
+    }
+
+    //
+    return ((GraphDbNodeSource) ((HGNode) node1).getNodeSource()).getProperties().get(property)
+        .compareTo(((GraphDbNodeSource) ((HGNode) node2).getNodeSource()).getProperties().get(property));
+  }
+
+  /**
+   * <p>
+   * </p>
+   *
+   * @param object
+   * @return
+   */
+  private boolean hasGraphDbNodeSource(Object object) {
+    return object instanceof HGNode && ((HGNode) object).getNodeSource() instanceof GraphDbNodeSource;
   }
 }
