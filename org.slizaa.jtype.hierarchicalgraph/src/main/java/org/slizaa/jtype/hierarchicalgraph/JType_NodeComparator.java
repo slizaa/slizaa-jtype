@@ -13,23 +13,31 @@ public class JType_NodeComparator implements INodeComparator {
   public int category(Object element) {
 
     //
-    if (element instanceof HGNode) {
-      HGNode hgNode = (HGNode) element;
-      GraphDbNodeSource nodeSource = (GraphDbNodeSource) hgNode.getNodeSource();
+    if (!(hasGraphDbNodeSource(element))) {
+      return 0;
+    }
 
-      if (nodeSource.getLabels().contains("Field")) {
-        return 1;
-      } else if (nodeSource.getLabels().contains("Method")) {
-        return 2;
-      } else if (nodeSource.getLabels().contains("Package")) {
-        return 2;
-      } else if (nodeSource.getLabels().contains("Directory")) {
-        return 1;
-      } else if (nodeSource.getLabels().contains("Resource")) {
-        return 3;
-      } else if (nodeSource.getLabels().contains("Type")) {
-        return 4;
+    //
+    if (hasLabel(element, "Directory")) {
+      if (hasLabel(element, "Package")) {
+        return 20;
+      } else {
+        return 50;
       }
+    }
+
+    //
+    if (hasLabel(element, "Resource")) {
+      return 30;
+    }
+
+    //
+    if (hasLabel(element, "Type")) {
+      return 10;
+    } else if (hasLabel(element, "Field")) {
+      return 20;
+    } else if (hasLabel(element, "Method")) {
+      return 30;
     }
 
     //
