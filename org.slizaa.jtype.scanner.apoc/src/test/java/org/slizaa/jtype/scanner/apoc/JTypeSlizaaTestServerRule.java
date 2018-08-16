@@ -53,6 +53,7 @@ public class JTypeSlizaaTestServerRule extends SlizaaTestServerRule {
     return job -> job
         .withDependency("org.slizaa.scanner.neo4j:org.slizaa.scanner.neo4j.importer:1.0.0-SNAPSHOT")
         .withDependency("org.slizaa.scanner.neo4j:org.slizaa.scanner.neo4j.graphdbfactory:1.0.0-SNAPSHOT")
+        .withDependency("org.slizaa.jtype:org.slizaa.jtype.scanner:1.0.0-SNAPSHOT")
         .withExclusionPattern("*:org.slizaa.scanner.core.spi-api")
         .withExclusionPattern("*:jdk.tools");
     // @formatter:on
