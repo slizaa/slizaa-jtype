@@ -68,7 +68,7 @@ public class DependencyResolverTest {
     // unbound type references (3514)
     statementResult = this._client.getBoltClient()
         .syncExecCypherQuery("MATCH (tref:TypeReference) WHERE NOT (tref)-[:BOUND_TO]->(:Type) RETURN count(tref)");
-    assertThat(statementResult.single().get("count(tref)").asInt()).isEqualTo(3514);
+    assertThat(statementResult.single().get("count(tref)").asInt()).isEqualTo(3490);
 
     // unbound method references (3549)
     statementResult = this._client.getBoltClient()

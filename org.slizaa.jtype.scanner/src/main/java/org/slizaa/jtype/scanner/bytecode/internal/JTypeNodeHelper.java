@@ -52,8 +52,16 @@ public class JTypeNodeHelper {
    * @param fullyQualifiedName
    * @return
    */
-  public static INode createTypeReferenceNode(final String fullyQualifiedName) {
+  public static INode createTypeReferenceNode(String fullyQualifiedName) {
 
+    //
+    if (fullyQualifiedName.startsWith("[")) {
+      Type arrayType = Type.getType(fullyQualifiedName);
+      Type type = Utils.resolveArrayType(arrayType);
+      fullyQualifiedName = type.getClassName();
+    }
+
+    //
     INode node = NodeFactory.createNode();
     node.addLabel(JTypeLabel.TypeReference);
     node.putProperty(ITypeReferenceNode.FQN, fullyQualifiedName.replace('/', '.'));

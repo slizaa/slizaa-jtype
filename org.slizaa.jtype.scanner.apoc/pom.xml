@@ -21,8 +21,12 @@
 		</dependencies>
 	</dependencyManagement>
 
-
 	<dependencies>
+		<dependency>
+			<groupId>org.slizaa.jtype</groupId>
+			<artifactId>org.slizaa.jtype.scanner</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.neo4j</groupId>
 			<artifactId>server-api</artifactId>
