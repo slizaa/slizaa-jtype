@@ -37,6 +37,8 @@
 			<artifactId>apoc</artifactId>
 			<scope>provided</scope>
 		</dependency>
+
+		<!-- TEST -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
@@ -56,11 +58,25 @@
 			<groupId>org.slizaa.core</groupId>
 			<artifactId>org.slizaa.core.boltclient.testfwk</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slizaa.scanner.core</groupId>
 			<artifactId>org.slizaa.scanner.core.testfwk</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slizaa.scanner.neo4j</groupId>
+			<artifactId>org.slizaa.scanner.neo4j.importer</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slizaa.scanner.neo4j</groupId>
+			<artifactId>org.slizaa.scanner.neo4j.graphdbfactory</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.neo4j.driver</groupId>
@@ -77,6 +93,20 @@
 	<build>
 		<plugins>
 
+			<plugin>
+				<groupId>org.apache.servicemix.tooling</groupId>
+				<artifactId>depends-maven-plugin</artifactId>
+				<version>1.4.0</version>
+				<executions>
+					<execution>
+						<id>generate-depends-file</id>
+						<goals>
+							<goal>generate-depends-file</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 			<!-- configure the maven bundle plugin -->
 			<plugin>
 				<groupId>biz.aQute.bnd</groupId>
@@ -90,6 +120,7 @@
 					</execution>
 				</executions>
 			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>

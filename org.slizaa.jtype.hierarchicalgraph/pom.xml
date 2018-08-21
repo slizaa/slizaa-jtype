@@ -53,6 +53,12 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.slizaa.jtype</groupId>
+			<artifactId>org.slizaa.jtype.scanner.apoc</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.slizaa.core</groupId>
 			<artifactId>org.slizaa.core.boltclient.testfwk</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
