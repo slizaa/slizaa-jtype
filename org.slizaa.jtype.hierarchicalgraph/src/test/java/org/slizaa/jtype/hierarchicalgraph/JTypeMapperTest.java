@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slizaa.core.boltclient.testfwk.BoltClientConnectionRule;
 import org.slizaa.hierarchicalgraph.core.algorithms.AdjacencyMatrix;
@@ -68,7 +69,8 @@ public class JTypeMapperTest {
   }
 
   @Test
-  public void testDump() {
+  @Ignore
+  public void dump() {
 
     //
     HGRootNode rootNode = MappingFactory.createMappingServiceForStandaloneSetup()

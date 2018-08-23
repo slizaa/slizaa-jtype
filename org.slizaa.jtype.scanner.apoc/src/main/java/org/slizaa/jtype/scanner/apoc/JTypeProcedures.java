@@ -22,10 +22,10 @@ public class JTypeProcedures {
   public Stream<RelationshipResult> test() {
 
     //
-    final VirtualNodesCreator virtualPackageCreator = new VirtualNodesCreator(_databaseService);
+    final MissingTypesCreator virtualPackageCreator = new MissingTypesCreator(this._databaseService);
 
     //
-    Result result = _databaseService
+    Result result = this._databaseService
         .execute("MATCH (tref:TypeReference) WHERE NOT (tref)-[:BOUND_TO]->(:Type) RETURN tref, tref.fqn");
 
     //
@@ -36,6 +36,18 @@ public class JTypeProcedures {
 
       //
       Node typeReferenceNode = (Node) map.get("tref");
+
+      // byte, short, int, long, float, double, char, and boolean
+      if (fullyQualifiedPackageName.equals("byte") || fullyQualifiedPackageName.equals("short")
+          || fullyQualifiedPackageName.equals("int") || fullyQualifiedPackageName.equals("long")
+          || fullyQualifiedPackageName.equals("float") || fullyQualifiedPackageName.equals("double")
+          || fullyQualifiedPackageName.equals("char") || fullyQualifiedPackageName.equals("boolean")) {
+
+        //
+        throw new RuntimeException("" + typeReferenceNode.getAllProperties());
+      }
+
+      //
       Node virtualTypeNode = virtualPackageCreator.getOrCreateVirtualType(fullyQualifiedPackageName);
 
       //

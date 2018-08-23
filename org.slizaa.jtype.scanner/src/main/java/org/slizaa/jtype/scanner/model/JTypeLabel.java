@@ -10,5 +10,8 @@ package org.slizaa.jtype.scanner.model;
 import org.slizaa.scanner.core.spi.parser.model.Label;
 
 public enum JTypeLabel implements Label {
-  Void, PrimitiveDataType, Type, Method, Field, TypeReference, MethodReference, FieldReference, Annotation, Class, Enum, Interface, Constructor, Package, ClassFile;
+  Void, PrimitiveDataType, Type, Method, Field, TypeReference, MethodReference, FieldReference, Annotation, Class, Enum, Interface, Constructor, Package, ClassFile,
+
+  //
+  MissingType;
 }

@@ -12,9 +12,7 @@ import static org.slizaa.scanner.core.testfwk.ContentDefinitionProviderFactory.m
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.neo4j.driver.v1.StatementResult;
 import org.slizaa.core.boltclient.testfwk.BoltClientConnectionRule;
-import org.slizaa.scanner.core.testfwk.AbstractSlizaaTestServerRule;
 
 public class JTypeProceduresTest {
 
@@ -24,7 +22,7 @@ public class JTypeProceduresTest {
           new String[] { "com.netflix.eureka", "eureka-client", "1.8.2" }));
 
   @Rule
-  public BoltClientConnectionRule                       _client = new BoltClientConnectionRule();
+  public BoltClientConnectionRule         _client = new BoltClientConnectionRule();
 
   /**
    * <p>
@@ -34,7 +32,7 @@ public class JTypeProceduresTest {
   public void testJtypeProcedures() {
 
     //
-//    StatementResult statementResult = this._client.getBoltClient().syncExecCypherQuery("CALL slizaa.jtype.test()");
-//    statementResult.forEachRemaining(record -> System.out.println(record));
+    // StatementResult statementResult = this._client.getBoltClient().syncExecCypherQuery("CALL slizaa.jtype.test()");
+    // statementResult.forEachRemaining(record -> System.out.println(record));
   }
 }

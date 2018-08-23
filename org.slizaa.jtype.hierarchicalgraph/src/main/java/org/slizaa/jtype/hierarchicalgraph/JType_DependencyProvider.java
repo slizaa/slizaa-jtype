@@ -12,7 +12,10 @@ public class JType_DependencyProvider extends AbstractQueryBasedDependencyProvid
 
     // @formatter:off
     addProxyDependencyDefinitions(
-        "Match (t1:Type)-[r:DEPENDS_ON]->(tref:TypeReference)-[:BOUND_TO]->(t2:Type) RETURN id(t1), id(t2), id(r), 'DEPENDS_ON'",
+        new String[] {
+            "Match (t1:Type)-[r:DEPENDS_ON]->(tref:TypeReference)-[:BOUND_TO]->(t2:Type) RETURN id(t1), id(t2), id(r), 'DEPENDS_ON'",
+            "Match (t1:Type)-[r:DEPENDS_ON]->(tref:TypeReference)-[:BOUND_TO]->(t2:MissingType) RETURN id(t1), id(t2), id(r), 'DEPENDS_ON'"
+        },
         new String[] {
             "MATCH (n1)-[rel]->(ref)-[:BOUND_TO]->(n2) "
             + "WHERE id(n1) in {from} AND id(n2) in {to} "

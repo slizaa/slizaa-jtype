@@ -132,8 +132,8 @@ public class TypeLocalReferenceCache {
 
     // step 1: resolve the type of the referenced field (and add a depends-on-relationship)
     String fieldTypeFqn = fieldDescriptor.getFieldType().replace('/', '.');
-    INode fieldTypeBean = this._typeReferenceNodeCache.getUnchecked(fieldTypeFqn);
     if (!fieldDescriptor.isPrimitive()) {
+      INode fieldTypeBean = this._typeReferenceNodeCache.getUnchecked(fieldTypeFqn);
       addDependsOnRelationship(fieldTypeBean);
 
       addTypeReference(startNode, fieldTypeFqn,
@@ -160,9 +160,19 @@ public class TypeLocalReferenceCache {
       final MethodReferenceDescriptor methodReferenceDescriptor, final RelationshipType relationshipType) {
 
     //
-    INode fieldOwnerBean = this._typeReferenceNodeCache
-        .getUnchecked(methodReferenceDescriptor.getOwnerTypeName().replace('/', '.'));
-    addDependsOnRelationship(fieldOwnerBean);
+    String ownerTypeName = methodReferenceDescriptor.getOwnerTypeName();
+    // System.out.println("HAAHHEHE : " + Type.getObjectType(ownerTypeName));
+
+    //
+    TODO: try {
+      INode fieldOwnerBean = this._typeReferenceNodeCache
+          .getUnchecked(methodReferenceDescriptor.getOwnerTypeName().replace('/', '.'));
+      addDependsOnRelationship(fieldOwnerBean);
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+      System.out.println(ownerTypeName);
+    }
 
     // field access
     return startNode.addRelationship(this._methodReferenceNodeCache.getUnchecked(methodReferenceDescriptor),
@@ -184,20 +194,15 @@ public class TypeLocalReferenceCache {
       return;
     }
 
-    // TODO
-    if (referencedTypeName.equals("boolean")) {
-      throw new RuntimeException();
-    }
-    // TODO
-    if (referencedTypeName.equals("int")) {
-      throw new RuntimeException();
-    }
+    //
+    JTypeNodeHelper.assertNoPrimitiveType(referencedTypeName);
 
-    // TODO
+    //
     if (referencedTypeName.endsWith("[]")) {
-      throw new RuntimeException();
+      throw new RuntimeException(referencedTypeName);
     }
 
+    //
     referencedTypeName = referencedTypeName.replace('/', '.');
 
     //

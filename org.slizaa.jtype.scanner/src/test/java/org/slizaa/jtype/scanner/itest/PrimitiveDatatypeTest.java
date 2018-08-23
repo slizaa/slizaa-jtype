@@ -21,8 +21,7 @@ public class PrimitiveDatatypeTest {
 
   @ClassRule
   public static JTypeSlizaaTestServerRule _server = new JTypeSlizaaTestServerRule(
-      multipleBinaryMvnArtifacts(new String[] { "com.netflix.eureka", "eureka-core", "1.8.2" },
-          new String[] { "com.netflix.eureka", "eureka-client", "1.8.2" }));
+      multipleBinaryMvnArtifacts(new String[] { "com.google.guava", "guava", "23.6.1-jre" }));
 
   @Rule
   public BoltClientConnectionRule         _client = new BoltClientConnectionRule();
@@ -38,5 +37,11 @@ public class PrimitiveDatatypeTest {
     StatementResult statementResult = this._client.getBoltClient()
         .syncExecCypherQuery("MATCH (p:PrimitiveDataType) RETURN count(p)");
     assertThat(statementResult.single().get("count(p)").asInt()).isEqualTo(8);
+
+    //
+    statementResult = this._client.getBoltClient().syncExecCypherQuery(
+        "MATCH (t:TypeReference) WHERE t.fqn IN ['byte', 'short', 'int', 'long', 'float', 'double', 'char', 'boolean'] RETURN count(t)");
+    assertThat(statementResult.single().get("count(t)").asInt()).isEqualTo(0);
+
   }
 }

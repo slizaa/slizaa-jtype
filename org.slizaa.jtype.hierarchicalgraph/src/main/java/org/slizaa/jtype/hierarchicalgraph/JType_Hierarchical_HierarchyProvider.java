@@ -33,6 +33,7 @@ public class JType_Hierarchical_HierarchyProvider extends AbstractQueryBasedHier
         "MATCH (g1:Group)-[:CONTAINS]->(g2:Group) RETURN id(g1), id(g2)",
         "MATCH (module:Module)-[:CONTAINS]->(d:Directory) WHERE NOT (:Directory)-[:CONTAINS]->(d) RETURN id(module), id(d)",
         "MATCH (d1:Directory)-[:CONTAINS]->(d2:Directory) RETURN id(d1), id(d2)",
+        "MATCH (d:Directory)-[:CONTAINS]->(mt:MissingType) RETURN id(d), id(mt)",
         "MATCH (d:Directory)-[:CONTAINS]->(r:Resource) WHERE NOT (r)-[:CONTAINS]->(:Type {innerClass: true}) RETURN id(d), id(r)",
         "MATCH (r:Resource)-[:CONTAINS]->(t:Type) WHERE NOT EXISTS(t.innerClass) RETURN id(r), id(t)",
         "MATCH (t:Type)-[rel:DEFINES_INNER_CLASS]->(target)-[:BOUND_TO]->(boundedTarget) RETURN id(t), id(boundedTarget)",

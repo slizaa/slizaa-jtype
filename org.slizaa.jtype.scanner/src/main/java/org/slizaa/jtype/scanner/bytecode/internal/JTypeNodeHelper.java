@@ -17,32 +17,32 @@ import org.slizaa.scanner.core.spi.parser.model.NodeFactory;
 
 public class JTypeNodeHelper {
 
-  /**
-   * <p>
-   * </p>
-   *
-   * @param batchInserter
-   * @param type
-   * @return
-   */
-  public static INode createTypeReferenceNode(final Type type) {
-
-    //
-    if (type == null) {
-      return null;
-    }
-
-    //
-    String fqn = Utils.getFullyQualifiedTypeName(type);
-
-    //
-    if (fqn != null) {
-      return createTypeReferenceNode(fqn);
-    }
-
-    //
-    return null;
-  }
+  // /**
+  // * <p>
+  // * </p>
+  // *
+  // * @param batchInserter
+  // * @param type
+  // * @return
+  // */
+  // public static INode createTypeReferenceNode(final Type type) {
+  //
+  // //
+  // if (type == null) {
+  // return null;
+  // }
+  //
+  // //
+  // String fqn = Utils.getFullyQualifiedTypeName(type);
+  //
+  // //
+  // if (fqn != null) {
+  // return createTypeReferenceNode(fqn);
+  // }
+  //
+  // //
+  // return null;
+  // }
 
   /**
    * <p>
@@ -60,6 +60,9 @@ public class JTypeNodeHelper {
       Type type = Utils.resolveArrayType(arrayType);
       fullyQualifiedName = type.getClassName();
     }
+
+    //
+    assertNoPrimitiveType(fullyQualifiedName);
 
     //
     INode node = NodeFactory.createNode();
@@ -121,5 +124,22 @@ public class JTypeNodeHelper {
    */
   public static boolean hasFlag(int value, int flag) {
     return (value & flag) == flag;
+  }
+
+  /**
+   * <p>
+   * </p>
+   *
+   * @param referencedTypeName
+   */
+  public static void assertNoPrimitiveType(String referencedTypeName) {
+
+    // byte, short, int, long, float, double, char, and boolean
+    if (referencedTypeName.equals("byte") || referencedTypeName.equals("short") || referencedTypeName.equals("int")
+        || referencedTypeName.equals("long") || referencedTypeName.equals("float")
+        || referencedTypeName.equals("double") || referencedTypeName.equals("char")
+        || referencedTypeName.equals("boolean")) {
+      throw new RuntimeException(referencedTypeName);
+    }
   }
 }

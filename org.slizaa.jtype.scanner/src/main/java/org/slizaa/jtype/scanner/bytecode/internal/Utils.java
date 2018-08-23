@@ -32,6 +32,13 @@ public class Utils {
     return type.getSort() == Type.VOID;
   }
 
+  /**
+   * <p>
+   * </p>
+   *
+   * @param type
+   * @return
+   */
   public static boolean isPrimitive(Type type) {
 
     type = resolveArrayType(type);
