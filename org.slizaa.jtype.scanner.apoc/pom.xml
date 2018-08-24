@@ -27,6 +27,12 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.slizaa.scanner.core</groupId>
+			<artifactId>org.slizaa.scanner.core.spi-api</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.neo4j</groupId>
 			<artifactId>server-api</artifactId>
 			<scope>provided</scope>

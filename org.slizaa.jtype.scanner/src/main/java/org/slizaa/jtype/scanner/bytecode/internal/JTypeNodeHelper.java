@@ -139,6 +139,8 @@ public class JTypeNodeHelper {
         || referencedTypeName.equals("long") || referencedTypeName.equals("float")
         || referencedTypeName.equals("double") || referencedTypeName.equals("char")
         || referencedTypeName.equals("boolean")) {
+
+      //
       throw new RuntimeException(referencedTypeName);
     }
   }

@@ -11,6 +11,17 @@ public class Utils {
   /**
    * <p>
    * </p>
+   *
+   * @param type
+   * @return
+   */
+  public static boolean isArray(Type type) {
+   return checkNotNull(type).getSort() == Type.ARRAY;
+  }
+  
+  /**
+   * <p>
+   * </p>
    */
   public static Type resolveArrayType(Type type) {
     switch (checkNotNull(type).getSort()) {

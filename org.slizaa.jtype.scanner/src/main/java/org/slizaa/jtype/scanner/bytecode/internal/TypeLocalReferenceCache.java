@@ -161,17 +161,14 @@ public class TypeLocalReferenceCache {
 
     //
     String ownerTypeName = methodReferenceDescriptor.getOwnerTypeName();
-    // System.out.println("HAAHHEHE : " + Type.getObjectType(ownerTypeName));
 
-    //
-    TODO: try {
-      INode fieldOwnerBean = this._typeReferenceNodeCache
+    // TODO: How to handle the array type?
+    if (!Utils.isArray(Type.getObjectType(ownerTypeName))) {
+
+      INode methodOwnerBean = this._typeReferenceNodeCache
           .getUnchecked(methodReferenceDescriptor.getOwnerTypeName().replace('/', '.'));
-      addDependsOnRelationship(fieldOwnerBean);
-    } catch (Exception e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-      System.out.println(ownerTypeName);
+
+      addDependsOnRelationship(methodOwnerBean);
     }
 
     // field access

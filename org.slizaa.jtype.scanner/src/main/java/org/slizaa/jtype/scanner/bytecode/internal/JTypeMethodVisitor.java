@@ -194,17 +194,14 @@ public class JTypeMethodVisitor extends MethodVisitor {
 
     //
     INode methodReference = methodReferenceRelationship.getTargetBean();
-
     // owner
     Type ownerTyper = Type.getObjectType(owner);
     addTypeReference(methodReference, ownerTyper, JTypeModelRelationshipType.IS_DEFINED_BY);
     addTypeReference(this._methodNodeBean, ownerTyper, JTypeModelRelationshipType.INVOKES_METHOD_FROM);
-
     // return type
     Type returnType = Type.getReturnType(rawSignature);
     addTypeReference(methodReference, returnType, JTypeModelRelationshipType.RETURNS);
     addTypeReference(this._methodNodeBean, returnType, JTypeModelRelationshipType.INVOKED_METHOD_RETURNS);
-
     // arg types type
     for (Type argumentType : Type.getArgumentTypes(rawSignature)) {
       addTypeReference(methodReference, argumentType, JTypeModelRelationshipType.HAS_PARAMETER);
