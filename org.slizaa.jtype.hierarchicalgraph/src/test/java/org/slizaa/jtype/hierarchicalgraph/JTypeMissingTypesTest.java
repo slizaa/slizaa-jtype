@@ -43,6 +43,6 @@ public class JTypeMissingTypesTest {
         .list(record -> record.get("t").asNode());
 
     //
-    assertThat(missingTypes).hasSize(352);
+    assertThat(missingTypes).hasSize(349);
   }
 }
