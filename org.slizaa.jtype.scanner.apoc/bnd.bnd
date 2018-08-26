@@ -1,4 +1,5 @@
 Frgament-Host: org.slizaa.scanner.neo4j.osgi
+Slizaa-Extension: true
 Import-Package:!*
 -snapshot: BUILD-${tstamp}
 -includeresource: OSGI-OPT/src=src/main/java
