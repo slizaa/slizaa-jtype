@@ -50,8 +50,9 @@ public class CheckSlizaaExtensionsTest extends AbstractJTypeTest {
         (source, pf) -> scanResult.put(((Bundle) source).getSymbolicName(), pf)).scan();
 
     //
-    assertThat(scanResult).hasSize(2);
+    assertThat(scanResult).hasSize(3);
     assertThat(scanResult.get("org.slizaa.scanner.core.contentdefinition")).isNotNull().isEmpty();
+    assertThat(scanResult.get("org.slizaa.jtype.scanner.apoc")).isNotNull().isEmpty();
     assertThat(scanResult.get("org.slizaa.jtype.scanner")).isNotNull()
         .containsExactly(JTypeByteCodeParserFactory.class);
   }
