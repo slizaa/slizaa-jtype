@@ -52,7 +52,7 @@ public class CheckSlizaaExtensionsTest extends AbstractJTypeTest {
     //
     assertThat(scanResult).hasSize(3);
     assertThat(scanResult.get("org.slizaa.scanner.core.contentdefinition")).isNotNull().isEmpty();
-    assertThat(scanResult.get("org.slizaa.jtype.scanner.apoc")).isNotNull().isEmpty();
+//    assertThat(scanResult.get("org.slizaa.jtype.scanner.apoc")).isNotNull().isEmpty();
     assertThat(scanResult.get("org.slizaa.jtype.scanner")).isNotNull()
         .containsExactly(JTypeByteCodeParserFactory.class);
   }
