@@ -17,6 +17,7 @@ import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.MavenUtils;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.junit.PaxExam;
+import org.ops4j.pax.exam.options.WrappedUrlProvisionOption.OverwriteMode;
 import org.ops4j.pax.exam.spi.reactors.ExamReactorStrategy;
 import org.ops4j.pax.exam.spi.reactors.PerMethod;
 import org.ops4j.pax.url.mvn.MavenResolvers;
@@ -84,19 +85,17 @@ public abstract class AbstractJTypeTest {
         mavenBundle("org.ops4j.pax.url", "pax-url-aether").versionAsInProject(),
 
         //
-        wrappedBundle(mavenBundle("org.neo4j.driver", "neo4j-java-driver").versionAsInProject()),
-        wrappedBundle(mavenBundle("io.netty", "netty-transport").versionAsInProject()),
-        wrappedBundle(mavenBundle("io.netty", "netty-buffer").versionAsInProject()),
-        wrappedBundle(mavenBundle("io.netty", "netty-common").versionAsInProject()),
-        wrappedBundle(mavenBundle("io.netty", "netty-resolver").versionAsInProject()),
-        wrappedBundle(mavenBundle("io.netty", "netty-codec").versionAsInProject()),
-        wrappedBundle(mavenBundle("io.netty", "netty-handler").versionAsInProject()),
+        wrappedBundle(mavenBundle("org.neo4j.driver", "neo4j-java-driver").versionAsInProject())
+            .imports("!io.netty.*,!org.HdrHistogram.*,javax.net.ssl,org.neo4j.driver.v1*;version=\"[1.6,2)\"")
+            .exports("org.neo4j.driver.v1*;version=\"1.6.1\"").overwriteManifest(OverwriteMode.FULL),
 
         //
         mavenBundle("org.slizaa.core", "org.slizaa.core.classpathscanner").versionAsInProject(),
 
         //
         mavenBundle("org.slizaa.scanner.core", "org.slizaa.scanner.core.spi-api").versionAsInProject(),
+        mavenBundle("org.slizaa.core", "org.slizaa.core.boltclient.testfwk").versionAsInProject(),
+        mavenBundle("org.slizaa.core", "org.slizaa.core.boltclient").versionAsInProject(),
         mavenBundle("org.slizaa.scanner.core", "org.slizaa.scanner.core.contentdefinition").versionAsInProject(),
         mavenBundle("org.slizaa.scanner.core", "org.slizaa.scanner.core.cypherregistry").versionAsInProject().start(),
         mavenBundle("org.slizaa.scanner.neo4j", "org.slizaa.scanner.neo4j.osgi").versionAsInProject().start(),
@@ -113,8 +112,8 @@ public abstract class AbstractJTypeTest {
   protected void startAllBundles() throws BundleException {
     for (Bundle bundle : this.bundleContext.getBundles()) {
       if (bundle.getHeaders().get("Fragment-Host") == null) {
-      System.out.println("Starting " + bundle.getSymbolicName() + " : " + bundle.getLocation());
-      bundle.start();
+        System.out.println("Starting " + bundle.getSymbolicName() + " : " + bundle.getLocation());
+        bundle.start();
       }
     }
   }
