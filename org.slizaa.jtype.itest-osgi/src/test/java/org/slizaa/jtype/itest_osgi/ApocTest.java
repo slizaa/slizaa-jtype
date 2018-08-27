@@ -5,10 +5,6 @@ import javax.inject.Inject;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import org.neo4j.driver.v1.Driver;
-import org.neo4j.driver.v1.GraphDatabase;
-import org.neo4j.driver.v1.Session;
-import org.neo4j.driver.v1.StatementResult;
 import org.osgi.framework.BundleException;
 import org.slizaa.scanner.core.api.graphdb.IGraphDb;
 import org.slizaa.scanner.core.api.graphdb.IGraphDbFactory;
@@ -38,18 +34,9 @@ public class ApocTest extends AbstractJTypeTest {
   @Test
   public void testApoc() throws Exception {
 
-//    //
-//    IGraphDb graphDb = _dbFactory.newGraphDb(folder.newFolder()).create();
-//
-//    //
-//    Driver driver = GraphDatabase.driver("bolt://localhost:5001");
-//    Session session = driver.session();
-//    StatementResult statementResult = session.run("CALL slizaa.jtype.createMissingTypes()");
-//    statementResult.forEachRemaining(r -> System.out.println(r));
-//    
-//    System.out.println("BUMM");
-//    
-//    driver.close();
-//    graphDb.close();
+    //
+    IGraphDb graphDb = this._dbFactory.newGraphDb(this.folder.newFolder()).create();
+
+    graphDb.close();
   }
 }

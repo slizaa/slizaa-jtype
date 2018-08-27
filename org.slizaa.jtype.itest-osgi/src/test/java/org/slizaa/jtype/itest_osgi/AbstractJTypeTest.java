@@ -94,8 +94,6 @@ public abstract class AbstractJTypeTest {
 
         //
         mavenBundle("org.slizaa.scanner.core", "org.slizaa.scanner.core.spi-api").versionAsInProject(),
-        mavenBundle("org.slizaa.core", "org.slizaa.core.boltclient.testfwk").versionAsInProject(),
-        mavenBundle("org.slizaa.core", "org.slizaa.core.boltclient").versionAsInProject(),
         mavenBundle("org.slizaa.scanner.core", "org.slizaa.scanner.core.contentdefinition").versionAsInProject(),
         mavenBundle("org.slizaa.scanner.core", "org.slizaa.scanner.core.cypherregistry").versionAsInProject().start(),
         mavenBundle("org.slizaa.scanner.neo4j", "org.slizaa.scanner.neo4j.osgi").versionAsInProject().start(),
