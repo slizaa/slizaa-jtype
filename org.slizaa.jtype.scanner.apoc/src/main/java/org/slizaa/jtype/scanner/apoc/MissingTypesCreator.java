@@ -10,7 +10,6 @@ import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Label;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.RelationshipType;
-import org.slizaa.jtype.scanner.model.JTypeLabel;
 import org.slizaa.scanner.core.spi.parser.model.resource.CoreModelElementType;
 import org.slizaa.scanner.core.spi.parser.model.resource.CoreModelRelationshipType;
 
@@ -27,12 +26,12 @@ import com.google.common.cache.LoadingCache;
 public class MissingTypesCreator {
 
   /** - */
-  private final Label                LABEL_MISSING_TYPE = Label.label(JTypeLabel.MissingType.name());
+  private final Label                LABEL_MISSING_TYPE = Label.label("MissingType");
 
   /** - */
-  private final Label                LABEL_PACKAGE      = Label.label(JTypeLabel.Package.name());
+  private final Label                LABEL_PACKAGE      = Label.label("Package");
 
-  private final Label                LABEL_DIRECTORY    = Label.label(CoreModelElementType.Directory.name());
+  private final Label                LABEL_DIRECTORY    = Label.label("Directory");
 
   /** - */
   private final RelationshipType     REL_CONTAINS       = RelationshipType

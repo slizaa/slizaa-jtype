@@ -22,11 +22,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.slizaa.jtype</groupId>
-			<artifactId>org.slizaa.jtype.scanner</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>org.slizaa.scanner.core</groupId>
 			<artifactId>org.slizaa.scanner.core.spi-api</artifactId>
 			<version>${project.version}</version>
