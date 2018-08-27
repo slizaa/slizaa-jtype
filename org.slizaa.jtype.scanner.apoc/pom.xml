@@ -22,6 +22,11 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.slizaa.jtype</groupId>
+			<artifactId>org.slizaa.jtype.scanner</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.slizaa.scanner.core</groupId>
 			<artifactId>org.slizaa.scanner.core.spi-api</artifactId>
 			<version>${project.version}</version>
@@ -44,6 +49,12 @@
 		</dependency>
 
 		<!-- TEST -->
+		<dependency>
+			<groupId>org.slizaa.jtype</groupId>
+			<artifactId>org.slizaa.jtype.scanner</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
