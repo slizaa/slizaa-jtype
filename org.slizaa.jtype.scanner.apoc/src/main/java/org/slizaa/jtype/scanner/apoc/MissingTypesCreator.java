@@ -65,6 +65,7 @@ public class MissingTypesCreator {
     this._missingTypeModuleNode = this._graphDatabaseService
         .createNode(Label.label(CoreModelElementType.Module.name()));
     this._missingTypeModuleNode.setProperty("fqn", "<<Missing Types>>");
+    this._missingTypeModuleNode.setProperty("name", "<<Missing Types>>");
 
     //
     this._virtualPackagesCache = CacheBuilder.newBuilder().build(new CacheLoader<String, Node>() {
