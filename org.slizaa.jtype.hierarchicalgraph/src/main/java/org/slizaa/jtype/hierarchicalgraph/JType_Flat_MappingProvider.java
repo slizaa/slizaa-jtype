@@ -11,13 +11,16 @@ import org.slizaa.hierarchicalgraph.graphdb.mapping.spi.annotations.SlizaaMappin
  *
  */
 @SlizaaMappingProvider
-public class JType_Flat_MappingProvider extends DefaultMappingProvider {
-	
-	public JType_Flat_MappingProvider() {
+public class JType_Flat_MappingProvider
+// extends DefaultMappingProvider
+{
 
-		//
-		super(IMappingProviderMetadata.createMetadata("org.slizaa.jtype.core.TypesOnly_FlatPackages", "Slizaa JType (types only, flat packages)", null, null), new JType_Flat_HierarchyProvider(),
-				new JType_DependencyProvider(), new JType_LabelProvider(true), new JType_NodeComparator());
-	}
+  // public JType_Flat_MappingProvider() {
+  //
+  // //
+  // super(IMappingProviderMetadata.createMetadata("org.slizaa.jtype.core.TypesOnly_FlatPackages", "Slizaa JType (types
+  // only, flat packages)", null, null), new JType_Flat_HierarchyProvider(),
+  // new JType_DependencyProvider(), new JType_LabelProvider(true), new JType_NodeComparator());
+  // }
 
 }
