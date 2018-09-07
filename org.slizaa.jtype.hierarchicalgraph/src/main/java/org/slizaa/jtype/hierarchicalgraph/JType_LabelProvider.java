@@ -5,6 +5,7 @@ import java.util.function.Function;
 import org.slizaa.hierarchicalgraph.core.model.HGNode;
 import org.slizaa.hierarchicalgraph.graphdb.mapping.spi.ILabelDefinitionProvider;
 import org.slizaa.hierarchicalgraph.graphdb.mapping.spi.labelprovider.AbstractLabelDefinitionProvider;
+import org.slizaa.hierarchicalgraph.graphdb.mapping.spi.labelprovider.dsl.ILabelDefinitionProcessor;
 
 /**
  * <p>
@@ -30,18 +31,18 @@ public class JType_LabelProvider extends AbstractLabelDefinitionProvider impleme
     this._showFullyQualifiedName = showFullyQualifiedName;
 
     //
-    _methodSignatureParser = new MethodSignatureParser();
+    this._methodSignatureParser = new MethodSignatureParser();
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  protected LabelDefinitionProcessor createLabelDefinitionProcessor() {
+  protected ILabelDefinitionProcessor createLabelDefinitionProcessor() {
 
     // @formatter:off
 		return exclusiveChoice().
-		    
+
         // Group
         when(nodeHasLabel("Group")).then(handleGroup()).
 
@@ -62,14 +63,14 @@ public class JType_LabelProvider extends AbstractLabelDefinitionProvider impleme
 
         // Field
         when(nodeHasLabel("Field")).then(handleField()).
-				
+
 				// all other nodes
 				otherwise(setBaseImage(fromClasspath("icons/jar_obj.png")).and(setLabelText(propertyValue("name"))));
 
 		// @formatter:on
   }
 
-  private LabelDefinitionProcessor handleGroup() {
+  private ILabelDefinitionProcessor handleGroup() {
     return setBaseImage(fromClasspath("icons/fldr_obj.png")).and(setLabelText(propertyValue("name")));
   }
 
@@ -79,7 +80,7 @@ public class JType_LabelProvider extends AbstractLabelDefinitionProvider impleme
    *
    * @return
    */
-  protected LabelDefinitionProcessor handleModule() {
+  protected ILabelDefinitionProcessor handleModule() {
     return setBaseImage(fromClasspath("icons/jar_obj.png")).and(setLabelText(propertyValue("name")));
   }
 
@@ -89,7 +90,7 @@ public class JType_LabelProvider extends AbstractLabelDefinitionProvider impleme
    *
    * @return
    */
-  protected LabelDefinitionProcessor handleDirectory() {
+  protected ILabelDefinitionProcessor handleDirectory() {
 
     // @formatter:off
 		return exclusiveChoice().
@@ -103,7 +104,7 @@ public class JType_LabelProvider extends AbstractLabelDefinitionProvider impleme
 		// @formatter:on
   }
 
-  private LabelDefinitionProcessor handleResource() {
+  private ILabelDefinitionProcessor handleResource() {
 
     // @formatter:off
 		return executeAll(
@@ -122,7 +123,7 @@ public class JType_LabelProvider extends AbstractLabelDefinitionProvider impleme
    *
    * @return
    */
-  protected LabelDefinitionProcessor handleType() {
+  protected ILabelDefinitionProcessor handleType() {
 
     // @formatter:off
 		return executeAll(
@@ -148,7 +149,7 @@ public class JType_LabelProvider extends AbstractLabelDefinitionProvider impleme
    *
    * @return
    */
-  protected LabelDefinitionProcessor handleMethod() {
+  protected ILabelDefinitionProcessor handleMethod() {
 
     // @formatter:off
     return executeAll(
@@ -171,7 +172,7 @@ public class JType_LabelProvider extends AbstractLabelDefinitionProvider impleme
    *
    * @return
    */
-  protected LabelDefinitionProcessor handleField() {
+  protected ILabelDefinitionProcessor handleField() {
 
     // @formatter:off
     return executeAll(
@@ -187,7 +188,7 @@ public class JType_LabelProvider extends AbstractLabelDefinitionProvider impleme
         when(nodeHasPropertyWithValue("visibility", "default")).then(setBaseImage(fromClasspath("icons/field_default_obj.png"))));
     // @formatter:on
   }
-  
+
   /**
    * <p>
    * </p>
@@ -196,6 +197,6 @@ public class JType_LabelProvider extends AbstractLabelDefinitionProvider impleme
    * @return
    */
   protected Function<HGNode, String> convertMethodSignature(Function<HGNode, String> function) {
-    return (node) -> _methodSignatureParser.parse(function.apply(node));
+    return (node) -> this._methodSignatureParser.parse(function.apply(node));
   }
 }
