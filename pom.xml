@@ -56,8 +56,6 @@
 		<module>org.slizaa.jtype.scanner</module>
 		<module>org.slizaa.jtype.scanner.apoc</module>
 		<module>org.slizaa.jtype.hierarchicalgraph</module>
-		<module>org.slizaa.jtype.itest-osgi</module>
-		<module>org.slizaa.jtype.p2-repo</module>
 	</modules>
 
 </project>
