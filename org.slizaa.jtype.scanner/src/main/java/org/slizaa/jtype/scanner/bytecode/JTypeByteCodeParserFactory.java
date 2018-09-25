@@ -9,11 +9,11 @@ package org.slizaa.jtype.scanner.bytecode;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.slizaa.jtype.scanner.bytecode.internal.PrimitiveDatatypeNodeProvider;
-import org.slizaa.scanner.core.spi.annotations.ParserFactory;
-import org.slizaa.scanner.core.spi.contentdefinition.IContentDefinitionProvider;
-import org.slizaa.scanner.core.spi.parser.ICypherStatementExecutor;
-import org.slizaa.scanner.core.spi.parser.IParser;
-import org.slizaa.scanner.core.spi.parser.IParserFactory;
+import org.slizaa.scanner.spi.annotations.ParserFactory;
+import org.slizaa.scanner.spi.contentdefinition.IContentDefinitionProvider;
+import org.slizaa.scanner.spi.parser.ICypherStatementExecutor;
+import org.slizaa.scanner.spi.parser.IParser;
+import org.slizaa.scanner.spi.parser.IParserFactory;
 
 /**
  * <p>

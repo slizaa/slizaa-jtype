@@ -16,9 +16,9 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.slizaa.jtype.scanner.model.JTypeModelRelationshipType;
-import org.slizaa.scanner.core.spi.parser.model.INode;
-import org.slizaa.scanner.core.spi.parser.model.IRelationship;
-import org.slizaa.scanner.core.spi.parser.model.RelationshipType;
+import org.slizaa.scanner.spi.parser.model.INode;
+import org.slizaa.scanner.spi.parser.model.IRelationship;
+import org.slizaa.scanner.spi.parser.model.RelationshipType;
 
 /**
  * <p>

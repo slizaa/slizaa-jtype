@@ -10,7 +10,7 @@
  ******************************************************************************/
 package org.slizaa.jtype.scanner.bytecode;
 
-import org.slizaa.scanner.core.spi.parser.model.INode;
+import org.slizaa.scanner.spi.parser.model.INode;
 
 /**
  * <p>

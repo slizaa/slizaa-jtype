@@ -28,10 +28,10 @@ import org.slizaa.jtype.scanner.model.IVisibility;
 import org.slizaa.jtype.scanner.model.JTypeLabel;
 import org.slizaa.jtype.scanner.model.JTypeModelRelationshipType;
 import org.slizaa.jtype.scanner.model.JavaTypeUtils;
-import org.slizaa.scanner.core.spi.parser.model.INode;
-import org.slizaa.scanner.core.spi.parser.model.IRelationship;
-import org.slizaa.scanner.core.spi.parser.model.NodeFactory;
-import org.slizaa.scanner.core.spi.parser.model.resource.CoreModelRelationshipType;
+import org.slizaa.scanner.spi.parser.model.INode;
+import org.slizaa.scanner.spi.parser.model.IRelationship;
+import org.slizaa.scanner.spi.parser.model.NodeFactory;
+import org.slizaa.scanner.spi.parser.model.resource.CoreModelRelationshipType;
 
 /**
  */

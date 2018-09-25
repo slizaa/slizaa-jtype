@@ -2,7 +2,7 @@ package org.slizaa.jtype.scanner.jdeps;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.slizaa.scanner.core.testfwk.ContentDefinitionProviderFactory.simpleBinaryFile;
+import static org.slizaa.scanner.testfwk.ContentDefinitionProviderFactory.simpleBinaryFile;
 
 import java.io.File;
 import java.io.IOException;

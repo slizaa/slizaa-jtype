@@ -17,9 +17,9 @@ import org.junit.Test;
 import org.neo4j.driver.v1.StatementResult;
 import org.slizaa.core.boltclient.testfwk.BoltClientConnectionRule;
 import org.slizaa.jtype.scanner.JTypeSlizaaTestServerRule;
-import org.slizaa.scanner.core.contentdefinition.FileBasedContentDefinitionProvider;
-import org.slizaa.scanner.core.spi.contentdefinition.AnalyzeMode;
-import org.slizaa.scanner.core.spi.contentdefinition.IContentDefinitionProvider;
+import org.slizaa.scanner.contentdefinition.FileBasedContentDefinitionProvider;
+import org.slizaa.scanner.spi.contentdefinition.AnalyzeMode;
+import org.slizaa.scanner.spi.contentdefinition.IContentDefinitionProvider;
 
 /**
  */

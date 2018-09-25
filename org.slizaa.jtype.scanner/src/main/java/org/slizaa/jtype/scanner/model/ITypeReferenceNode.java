@@ -10,7 +10,7 @@
  ******************************************************************************/
 package org.slizaa.jtype.scanner.model;
 
-import org.slizaa.scanner.core.spi.parser.model.INode;
+import org.slizaa.scanner.spi.parser.model.INode;
 
 public interface ITypeReferenceNode extends INode {
 

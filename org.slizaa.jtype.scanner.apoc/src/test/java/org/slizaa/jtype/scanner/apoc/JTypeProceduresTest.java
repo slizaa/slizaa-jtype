@@ -7,7 +7,7 @@
  ******************************************************************************/
 package org.slizaa.jtype.scanner.apoc;
 
-import static org.slizaa.scanner.core.testfwk.ContentDefinitionProviderFactory.multipleBinaryMvnArtifacts;
+import static org.slizaa.scanner.testfwk.ContentDefinitionProviderFactory.multipleBinaryMvnArtifacts;
 
 import org.junit.ClassRule;
 import org.junit.Rule;

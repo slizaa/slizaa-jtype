@@ -4,7 +4,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import org.objectweb.asm.Type;
 import org.slizaa.jtype.scanner.bytecode.IPrimitiveDatatypeNodeProvider;
-import org.slizaa.scanner.core.spi.parser.model.INode;
+import org.slizaa.scanner.spi.parser.model.INode;
 
 public class Utils {
 

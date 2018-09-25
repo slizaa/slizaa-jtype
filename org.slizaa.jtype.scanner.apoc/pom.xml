@@ -11,8 +11,8 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>org.slizaa.scanner.neo4j</groupId>
-				<artifactId>org.slizaa.scanner.neo4j.bom</artifactId>
+				<groupId>org.slizaa.neo4j</groupId>
+				<artifactId>org.slizaa.neo4j.bom</artifactId>
 				<version>${project.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
@@ -27,8 +27,8 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.slizaa.scanner.core</groupId>
-			<artifactId>org.slizaa.scanner.core.spi-api</artifactId>
+			<groupId>org.slizaa.scanner</groupId>
+			<artifactId>org.slizaa.scanner.spi-api</artifactId>
 			<version>${project.version}</version>
 			<scope>provided</scope>
 		</dependency>
@@ -77,20 +77,20 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.slizaa.scanner.core</groupId>
-			<artifactId>org.slizaa.scanner.core.testfwk</artifactId>
+			<groupId>org.slizaa.scanner</groupId>
+			<artifactId>org.slizaa.scanner.testfwk</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.slizaa.scanner.neo4j</groupId>
-			<artifactId>org.slizaa.scanner.neo4j.importer</artifactId>
+			<groupId>org.slizaa.neo4j</groupId>
+			<artifactId>org.slizaa.neo4j.importer</artifactId>
 			<version>${project.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.slizaa.scanner.neo4j</groupId>
-			<artifactId>org.slizaa.scanner.neo4j.graphdbfactory</artifactId>
+			<groupId>org.slizaa.neo4j</groupId>
+			<artifactId>org.slizaa.neo4j.graphdbfactory</artifactId>
 			<version>${project.version}</version>
 			<scope>test</scope>
 		</dependency>

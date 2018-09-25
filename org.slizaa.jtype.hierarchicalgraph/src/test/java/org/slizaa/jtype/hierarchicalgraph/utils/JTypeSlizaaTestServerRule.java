@@ -7,8 +7,8 @@ import java.io.File;
 import java.util.function.Consumer;
 
 import org.slizaa.core.mvnresolver.api.IMvnResolverService.IMvnResolverJob;
-import org.slizaa.scanner.core.spi.contentdefinition.IContentDefinitionProvider;
-import org.slizaa.scanner.core.testfwk.SlizaaTestServerRule;
+import org.slizaa.scanner.spi.contentdefinition.IContentDefinitionProvider;
+import org.slizaa.scanner.testfwk.SlizaaTestServerRule;
 
 /**
  * <p>
@@ -51,11 +51,11 @@ public class JTypeSlizaaTestServerRule extends SlizaaTestServerRule {
 
     // @formatter:off
     return job -> job
-        .withDependency(mavenArtifact("org.slizaa.scanner.neo4j", "org.slizaa.scanner.neo4j.importer", versionAsInProject()))
-        .withDependency(mavenArtifact("org.slizaa.scanner.neo4j", "org.slizaa.scanner.neo4j.graphdbfactory", versionAsInProject()))
+        .withDependency(mavenArtifact("org.slizaa.neo4j", "org.slizaa.neo4j.importer", versionAsInProject()))
+        .withDependency(mavenArtifact("org.slizaa.neo4j", "org.slizaa.neo4j.graphdbfactory", versionAsInProject()))
         .withDependency(mavenArtifact("org.slizaa.jtype", "org.slizaa.jtype.scanner", versionAsInProject()))
         .withDependency(mavenArtifact("org.slizaa.jtype", "org.slizaa.jtype.scanner.apoc", versionAsInProject()))
-        .withExclusionPattern("*:org.slizaa.scanner.core.spi-api")
+        .withExclusionPattern("*:org.slizaa.scanner.spi-api")
         .withExclusionPattern("*:jdk.tools");
     // @formatter:on
   }

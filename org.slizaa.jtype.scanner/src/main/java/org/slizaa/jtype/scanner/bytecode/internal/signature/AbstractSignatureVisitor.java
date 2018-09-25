@@ -6,7 +6,7 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.signature.SignatureVisitor;
 import org.slizaa.jtype.scanner.bytecode.internal.TypeLocalReferenceCache;
 import org.slizaa.jtype.scanner.model.JTypeModelRelationshipType;
-import org.slizaa.scanner.core.spi.parser.model.INode;
+import org.slizaa.scanner.spi.parser.model.INode;
 
 /**
  * <p>

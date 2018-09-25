@@ -9,7 +9,7 @@ package org.slizaa.jtype.scanner.itest;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.slizaa.scanner.core.testfwk.ContentDefinitionProviderFactory.simpleBinaryFile;
+import static org.slizaa.scanner.testfwk.ContentDefinitionProviderFactory.simpleBinaryFile;
 
 import java.util.Collections;
 import java.util.List;

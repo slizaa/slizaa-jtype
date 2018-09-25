@@ -78,7 +78,7 @@
         </executions>
         <configuration>
           <services>
-            <param>org.slizaa.scanner.core.spi.parser.IParserFactory</param>
+            <param>org.slizaa.scanner.spi.parser.IParserFactory</param>
           </services>
         </configuration>
       </plugin>
@@ -86,8 +86,8 @@
   </build>
   <dependencies>
     <dependency>
-      <groupId>org.slizaa.scanner.core</groupId>
-      <artifactId>org.slizaa.scanner.core.spi-api</artifactId>
+      <groupId>org.slizaa.scanner</groupId>
+      <artifactId>org.slizaa.scanner.spi-api</artifactId>
       <version>1.0.0-SNAPSHOT</version>
       <scope>provided</scope>
       <exclusions>
@@ -166,8 +166,8 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.slizaa.scanner.neo4j</groupId>
-      <artifactId>org.slizaa.scanner.neo4j.importer</artifactId>
+      <groupId>org.slizaa.neo4j</groupId>
+      <artifactId>org.slizaa.neo4j.importer</artifactId>
       <version>1.0.0-SNAPSHOT</version>
       <scope>test</scope>
       <exclusions>
@@ -182,14 +182,14 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>org.slizaa.scanner.neo4j</groupId>
-      <artifactId>org.slizaa.scanner.neo4j.graphdbfactory</artifactId>
+      <groupId>org.slizaa.neo4j</groupId>
+      <artifactId>org.slizaa.neo4j.graphdbfactory</artifactId>
       <version>1.0.0-SNAPSHOT</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
-          <artifactId>org.slizaa.scanner.neo4j.apoc</artifactId>
-          <groupId>org.slizaa.scanner.neo4j</groupId>
+          <artifactId>org.slizaa.neo4j.apoc</artifactId>
+          <groupId>org.slizaa.neo4j</groupId>
         </exclusion>
         <exclusion>
           <artifactId>gson</artifactId>
@@ -222,18 +222,18 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>org.slizaa.scanner.core</groupId>
-      <artifactId>org.slizaa.scanner.core.testfwk</artifactId>
+      <groupId>org.slizaa.scanner</groupId>
+      <artifactId>org.slizaa.scanner.testfwk</artifactId>
       <version>1.0.0-SNAPSHOT</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
-          <artifactId>org.slizaa.scanner.core.contentdefinition</artifactId>
-          <groupId>org.slizaa.scanner.core</groupId>
+          <artifactId>org.slizaa.scanner.contentdefinition</artifactId>
+          <groupId>org.slizaa.scanner</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>org.slizaa.scanner.core.cypherregistry</artifactId>
-          <groupId>org.slizaa.scanner.core</groupId>
+          <artifactId>org.slizaa.scanner.cypherregistry</artifactId>
+          <groupId>org.slizaa.scanner</groupId>
         </exclusion>
         <exclusion>
           <artifactId>org.slizaa.core.mvnresolver.uber</artifactId>
@@ -263,8 +263,8 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>org.slizaa.scanner.neo4j</groupId>
-        <artifactId>org.slizaa.scanner.neo4j.bom</artifactId>
+        <groupId>org.slizaa.neo4j</groupId>
+        <artifactId>org.slizaa.neo4j.bom</artifactId>
         <version>${project.version}</version>
         <type>pom</type>
         <scope>import</scope>
@@ -272,9 +272,9 @@
     </dependencies>
   </dependencyManagement>
   <properties>
+    <org.slizaa.scanner.version>1.0.0-SNAPSHOT</org.slizaa.scanner.version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <org.slizaa.scanner.core.version>1.0.0-SNAPSHOT</org.slizaa.scanner.core.version>
   </properties>
 </project>
 

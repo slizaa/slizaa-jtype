@@ -19,15 +19,15 @@ import org.slizaa.jtype.scanner.bytecode.internal.JTypeClassVisitor;
 import org.slizaa.jtype.scanner.model.JTypeLabel;
 import org.slizaa.jtype.scanner.model.JTypeModelRelationshipType;
 import org.slizaa.jtype.scanner.model.JavaUtils;
-import org.slizaa.scanner.core.spi.contentdefinition.IContentDefinition;
-import org.slizaa.scanner.core.spi.contentdefinition.filebased.IFile;
-import org.slizaa.scanner.core.spi.parser.AbstractParser;
-import org.slizaa.scanner.core.spi.parser.IParser;
-import org.slizaa.scanner.core.spi.parser.IParserContext;
-import org.slizaa.scanner.core.spi.parser.IParserFactory;
-import org.slizaa.scanner.core.spi.parser.ParserType;
-import org.slizaa.scanner.core.spi.parser.model.INode;
-import org.slizaa.scanner.core.spi.parser.model.resource.CoreModelRelationshipType;
+import org.slizaa.scanner.spi.contentdefinition.IContentDefinition;
+import org.slizaa.scanner.spi.contentdefinition.filebased.IFile;
+import org.slizaa.scanner.spi.parser.AbstractParser;
+import org.slizaa.scanner.spi.parser.IParser;
+import org.slizaa.scanner.spi.parser.IParserContext;
+import org.slizaa.scanner.spi.parser.IParserFactory;
+import org.slizaa.scanner.spi.parser.ParserType;
+import org.slizaa.scanner.spi.parser.model.INode;
+import org.slizaa.scanner.spi.parser.model.resource.CoreModelRelationshipType;
 
 /**
  * <p>

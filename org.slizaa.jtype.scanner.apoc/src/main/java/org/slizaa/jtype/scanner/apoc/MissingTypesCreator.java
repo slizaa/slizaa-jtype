@@ -10,8 +10,8 @@ import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Label;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.RelationshipType;
-import org.slizaa.scanner.core.spi.parser.model.resource.CoreModelElementType;
-import org.slizaa.scanner.core.spi.parser.model.resource.CoreModelRelationshipType;
+import org.slizaa.scanner.spi.parser.model.resource.CoreModelElementType;
+import org.slizaa.scanner.spi.parser.model.resource.CoreModelRelationshipType;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;

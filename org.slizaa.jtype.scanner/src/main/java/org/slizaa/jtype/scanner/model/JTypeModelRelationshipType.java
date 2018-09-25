@@ -7,7 +7,7 @@
  ******************************************************************************/
 package org.slizaa.jtype.scanner.model;
 
-import org.slizaa.scanner.core.spi.parser.model.RelationshipType;
+import org.slizaa.scanner.spi.parser.model.RelationshipType;
 
 /**
  * <p>

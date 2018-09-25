@@ -12,10 +12,10 @@ package org.slizaa.jtype.scanner.bytecode.internal;
 
 import org.slizaa.jtype.scanner.bytecode.IPrimitiveDatatypeNodeProvider;
 import org.slizaa.jtype.scanner.model.JTypeLabel;
-import org.slizaa.scanner.core.spi.parser.ICypherStatementExecutor;
-import org.slizaa.scanner.core.spi.parser.ICypherStatementExecutor.IResult;
-import org.slizaa.scanner.core.spi.parser.model.INode;
-import org.slizaa.scanner.core.spi.parser.model.NodeFactory;
+import org.slizaa.scanner.spi.parser.ICypherStatementExecutor;
+import org.slizaa.scanner.spi.parser.ICypherStatementExecutor.IResult;
+import org.slizaa.scanner.spi.parser.model.INode;
+import org.slizaa.scanner.spi.parser.model.NodeFactory;
 
 public class PrimitiveDatatypeNodeProvider implements IPrimitiveDatatypeNodeProvider {
 

@@ -12,8 +12,8 @@ import org.slizaa.jtype.scanner.model.IFieldReferenceNode;
 import org.slizaa.jtype.scanner.model.IMethodReferenceNode;
 import org.slizaa.jtype.scanner.model.ITypeReferenceNode;
 import org.slizaa.jtype.scanner.model.JTypeLabel;
-import org.slizaa.scanner.core.spi.parser.model.INode;
-import org.slizaa.scanner.core.spi.parser.model.NodeFactory;
+import org.slizaa.scanner.spi.parser.model.INode;
+import org.slizaa.scanner.spi.parser.model.NodeFactory;
 
 public class JTypeNodeHelper {
 

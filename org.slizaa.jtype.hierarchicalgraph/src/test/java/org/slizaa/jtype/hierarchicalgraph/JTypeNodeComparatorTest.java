@@ -4,7 +4,7 @@
 package org.slizaa.jtype.hierarchicalgraph;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.slizaa.scanner.core.testfwk.ContentDefinitionProviderFactory.multipleBinaryMvnArtifacts;
+import static org.slizaa.scanner.testfwk.ContentDefinitionProviderFactory.multipleBinaryMvnArtifacts;
 
 import java.util.Arrays;
 import java.util.List;
