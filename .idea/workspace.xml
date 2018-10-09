@@ -2,23 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bcf20022-5dfd-4768-b41a-f0035f09671b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/slizaa-scanner-jtype.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/org.slizaa.jtype.itest-osgi/.classpath" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/org.slizaa.jtype.itest-osgi/.project" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/org.slizaa.jtype.itest-osgi/.settings/org.eclipse.jdt.core.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/org.slizaa.jtype.itest-osgi/.settings/org.eclipse.m2e.core.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/org.slizaa.jtype.itest-osgi/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/org.slizaa.jtype.itest-osgi/src/test/java/org/slizaa/jtype/itest_osgi/AbstractJTypeTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/org.slizaa.jtype.itest-osgi/src/test/java/org/slizaa/jtype/itest_osgi/ApocTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/org.slizaa.jtype.itest-osgi/src/test/java/org/slizaa/jtype/itest_osgi/CheckSlizaaExtensionsTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/org.slizaa.jtype.itest-osgi/src/test/java/org/slizaa/jtype/itest_osgi/CypherRegistryTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/org.slizaa.jtype.p2-repo/.project" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/org.slizaa.jtype.p2-repo/GPL_v3.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/org.slizaa.jtype.p2-repo/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/slizaa-scanner-jtype.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/slizaa-scanner-jtype.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
+    <ignored path="$PROJECT_DIR$/org.slizaa.jtype.hierarchicalgraph/target/" />
+    <ignored path="$PROJECT_DIR$/org.slizaa.jtype.scanner/target/" />
+    <ignored path="$PROJECT_DIR$/org.slizaa.jtype.scanner.apoc/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,6 +47,16 @@
         </counts>
       </usages-collector>
     </session>
+    <session id="680174080">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="2" />
+          <entry key="project.open.time.0" value="1" />
+          <entry key="project.open.time.1" value="1" />
+          <entry key="project.opened" value="2" />
+        </counts>
+      </usages-collector>
+    </session>
   </component>
   <component name="FileEditorManager">
     <leaf />
@@ -75,6 +77,13 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
   <component name="MavenProjectNavigator">
     <treeState>
       <expand>
@@ -92,10 +101,10 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="576" />
-    <option name="y" value="84" />
-    <option name="width" value="2928" />
-    <option name="height" value="1791" />
+    <option name="x" value="-9" />
+    <option name="y" value="-9" />
+    <option name="width" value="1937" />
+    <option name="height" value="1067" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -104,6 +113,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -115,13 +125,12 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../slizaa-application" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="C:/Program Files/nodejs/node" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
@@ -160,13 +169,13 @@
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="2575" height="1424" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25168985" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25646123" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32972136" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3290461" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -179,7 +188,7 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info anchor="right" id="Key Promoter X" order="4" />
-      <window_info anchor="right" id="Maven Projects" order="5" visible="true" weight="0.3280318" />
+      <window_info active="true" anchor="right" id="Maven Projects" order="5" visible="true" weight="0.3276342" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
