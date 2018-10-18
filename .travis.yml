@@ -8,8 +8,3 @@ env:
   - secure: TR8fVSsfl+3e8uXNTRAhtQraff+EUjjO9EHqwVqjGGocgdxPcSeY2tUc9H5Vgs3sJozrT85LF/3yr4Vh/MJ936WqgjYQ3yBZxGiObQ1KiINF/1vGoWi9paLlJ8YM4NLx5aYjf0sUOi4zGL96daolpAOChryYYf4PwG9AVLMuvxLatWFfAwgpGcNL+nN/eWaMLVlLt5nxcOFzkiVFCaMiwfQCI7/EoCFLbOKSUEv1tfdcHP7R6AlZsBzWluHmQORH4YywDTirkkljr24/WmKefDpRnnvoM2N3I7VrUHl9Ynh4ji3ED8m7FcqBYG2f10i+f/38KEo+2A2CL6veczh7wGUyzjssrok8BLs9efG9EDOYc8r9ktNs6khrDMp+l6WPc7MTCVQYGMUtiLpmQzfSiV2O/4UzqWpQ4eFkoFQYvqFeB+GmW2ULfii6l7vEclktHN/iF6UVST5s8yv3rhDiy5Wy37rzBp1KQXfL6hlb7/QDjptHJmn+jVcEA4K+t2s4ifeqrgqedhNBOiScI+WRHqGu1UhgBzRi+4fp9U30wKzWsrK5pqMITFCDNlm4KLt0jW/s8aRR9l+JeZYH9609bUom4wbIV8H6vS93jSrk2jSxyISIEruu0foxXkLKezG6t/YvkFo8FiOdodLeWmo/VUGfXz8NL4DTkNpjy8xHx5o=
 script:
 - mvn clean deploy --batch-mode -s .travis/travis-maven-settings.xml -f pom.xml -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
-after_success:
-- chmod +x ./.travis/artifact-delete.sh
-- chmod +x ./.travis/artifact-upload.sh
-- "./.travis/artifact-delete.sh"
-- "./.travis/artifact-upload.sh"
