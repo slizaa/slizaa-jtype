@@ -98,6 +98,18 @@
       </exclusions>
     </dependency>
     <dependency>
+      <groupId>org.slizaa.core</groupId>
+      <artifactId>org.slizaa.core.progressmonitor</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>slf4j-api</artifactId>
+          <groupId>org.slf4j</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
       <version>21.0</version>
@@ -120,12 +132,6 @@
           <groupId>com.google.code.findbugs</groupId>
         </exclusion>
       </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.platform</groupId>
-      <artifactId>org.eclipse.equinox.common</artifactId>
-      <version>3.9.0</version>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -279,6 +285,7 @@
     <org.slizaa.scanner.version>1.0.0-SNAPSHOT</org.slizaa.scanner.version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <org.slizaa.core.version>1.0.0-SNAPSHOT</org.slizaa.core.version>
   </properties>
 </project>
 

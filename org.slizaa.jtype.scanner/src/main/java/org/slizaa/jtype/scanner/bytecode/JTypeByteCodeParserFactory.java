@@ -7,8 +7,8 @@
  ******************************************************************************/
 package org.slizaa.jtype.scanner.bytecode;
 
+import org.slizaa.core.progressmonitor.IProgressMonitor;
 import org.slizaa.jtype.scanner.bytecode.internal.PrimitiveDatatypeNodeProvider;
-import org.slizaa.scanner.api.util.IProgressMonitor;
 import org.slizaa.scanner.spi.annotations.ParserFactory;
 import org.slizaa.scanner.spi.contentdefinition.IContentDefinitionProvider;
 import org.slizaa.scanner.spi.parser.ICypherStatementExecutor;

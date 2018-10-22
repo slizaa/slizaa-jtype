@@ -14,6 +14,7 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<org.slizaa.scanner.version>1.0.0-SNAPSHOT</org.slizaa.scanner.version>
+		<org.slizaa.core.version>1.0.0-SNAPSHOT</org.slizaa.core.version>
 	</properties>
 
 	<dependencyManagement>
@@ -36,13 +37,14 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
+			<groupId>org.slizaa.core</groupId>
+			<artifactId>org.slizaa.core.progressmonitor</artifactId>
+			<version>${org.slizaa.core.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.platform</groupId>
-			<artifactId>org.eclipse.equinox.common</artifactId>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
