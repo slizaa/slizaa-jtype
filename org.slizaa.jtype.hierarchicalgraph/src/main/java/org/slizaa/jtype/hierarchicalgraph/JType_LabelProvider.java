@@ -65,13 +65,13 @@ public class JType_LabelProvider extends AbstractLabelDefinitionProvider impleme
         when(nodeHasLabel("Field")).then(handleField()).
 
 				// all other nodes
-				otherwise(setBaseImage(fromClasspath("icons/jar_obj.png")).and(setLabelText(propertyValue("name"))));
+				otherwise(setBaseImage("icons/jar_obj.png").and(setLabelText(propertyValue("name"))));
 
 		// @formatter:on
   }
 
   private ILabelDefinitionProcessor handleGroup() {
-    return setBaseImage(fromClasspath("icons/fldr_obj.png")).and(setLabelText(propertyValue("name")));
+    return setBaseImage("icons/fldr_obj.png").and(setLabelText(propertyValue("name")));
   }
 
   /**
@@ -81,7 +81,7 @@ public class JType_LabelProvider extends AbstractLabelDefinitionProvider impleme
    * @return
    */
   protected ILabelDefinitionProcessor handleModule() {
-    return setBaseImage(fromClasspath("icons/jar_obj.png")).and(setLabelText(propertyValue("name")));
+    return setBaseImage("icons/jar_obj.png").and(setLabelText(propertyValue("name")));
   }
 
   /**
@@ -96,11 +96,11 @@ public class JType_LabelProvider extends AbstractLabelDefinitionProvider impleme
 		return exclusiveChoice().
 
 		// Packages
-		when(nodeHasLabel("Package")).then(setBaseImage(fromClasspath("icons/package_obj.png"))
+		when(nodeHasLabel("Package")).then(setBaseImage("icons/package_obj.png")
 				.and(setLabelText(propertyValue(this._showFullyQualifiedName ? "fqn" : "name", str -> str.replace('/', '.'))))).
 
 		// Directories
-		otherwise(setBaseImage(fromClasspath("icons/fldr_obj.png")).and(setLabelText(propertyValue(this._showFullyQualifiedName ? "fqn" : "name"))));
+		otherwise(setBaseImage("icons/fldr_obj.png").and(setLabelText(propertyValue(this._showFullyQualifiedName ? "fqn" : "name"))));
 		// @formatter:on
   }
 
@@ -110,8 +110,8 @@ public class JType_LabelProvider extends AbstractLabelDefinitionProvider impleme
 		return executeAll(
 
 				exclusiveChoice().when(nodeHasLabel("ClassFile"))
-						.then(setBaseImage(fromClasspath("icons/classf_obj.png")))
-						.otherwise(setBaseImage(fromClasspath("icons/file_obj.png"))),
+						.then(setBaseImage("icons/classf_obj.png"))
+						.otherwise(setBaseImage("icons/file_obj.png")),
 
 				setLabelText(propertyValue("name")));
 		// @formatter:on
@@ -131,15 +131,15 @@ public class JType_LabelProvider extends AbstractLabelDefinitionProvider impleme
 				setLabelText(propertyValue("name")),
 
 				when(nodeHasProperty("final"))
-						.then(setOverlayImage(fromClasspath("icons/class_obj.png"), OverlayPosition.TOP_RIGHT)),
+						.then(setOverlayImage("icons/class_obj.png", OverlayPosition.TOP_RIGHT)),
 
-				when(nodeHasLabel("Class")).then(setBaseImage(fromClasspath("icons/class_obj.png"))),
+				when(nodeHasLabel("Class")).then(setBaseImage("icons/class_obj.png")),
 
-				when(nodeHasLabel("Annotation")).then(setBaseImage(fromClasspath("icons/annotation_obj.png"))),
+				when(nodeHasLabel("Annotation")).then(setBaseImage("icons/annotation_obj.png")),
 
-				when(nodeHasLabel("Enum")).then(setBaseImage(fromClasspath("icons/enum_obj.png"))),
+				when(nodeHasLabel("Enum")).then(setBaseImage("icons/enum_obj.png")),
 
-				when(nodeHasLabel("Interface")).then(setBaseImage(fromClasspath("icons/int_obj.png"))));
+				when(nodeHasLabel("Interface")).then(setBaseImage("icons/int_obj.png")));
 		// @formatter:on
   }
 
@@ -156,13 +156,13 @@ public class JType_LabelProvider extends AbstractLabelDefinitionProvider impleme
 
         setLabelText(convertMethodSignature(propertyValue("fqn"))),
 
-        when(nodeHasPropertyWithValue("visibility", "public")).then(setBaseImage(fromClasspath("icons/methpub_obj.png"))),
+        when(nodeHasPropertyWithValue("visibility", "public")).then(setBaseImage("icons/methpub_obj.png")),
 
-        when(nodeHasPropertyWithValue("visibility", "private")).then(setBaseImage(fromClasspath("icons/methpri_obj.png"))),
+        when(nodeHasPropertyWithValue("visibility", "private")).then(setBaseImage("icons/methpri_obj.png")),
 
-        when(nodeHasPropertyWithValue("visibility", "protected")).then(setBaseImage(fromClasspath("icons/methpri_obj.png"))),
+        when(nodeHasPropertyWithValue("visibility", "protected")).then(setBaseImage("icons/methpri_obj.png")),
 
-        when(nodeHasPropertyWithValue("visibility", "default")).then(setBaseImage(fromClasspath("icons/methdef_obj.png"))));
+        when(nodeHasPropertyWithValue("visibility", "default")).then(setBaseImage("icons/methdef_obj.png")));
     // @formatter:on
   }
 
@@ -179,13 +179,13 @@ public class JType_LabelProvider extends AbstractLabelDefinitionProvider impleme
 
         setLabelText(propertyValue("fqn")),
 
-        when(nodeHasPropertyWithValue("visibility", "public")).then(setBaseImage(fromClasspath("icons/field_public_obj.png"))),
+        when(nodeHasPropertyWithValue("visibility", "public")).then(setBaseImage("icons/field_public_obj.png")),
 
-        when(nodeHasPropertyWithValue("visibility", "private")).then(setBaseImage(fromClasspath("icons/field_private_obj.png"))),
+        when(nodeHasPropertyWithValue("visibility", "private")).then(setBaseImage("icons/field_private_obj.png")),
 
-        when(nodeHasPropertyWithValue("visibility", "protected")).then(setBaseImage(fromClasspath("icons/field_protected_obj.png"))),
+        when(nodeHasPropertyWithValue("visibility", "protected")).then(setBaseImage("icons/field_protected_obj.png")),
 
-        when(nodeHasPropertyWithValue("visibility", "default")).then(setBaseImage(fromClasspath("icons/field_default_obj.png"))));
+        when(nodeHasPropertyWithValue("visibility", "default")).then(setBaseImage("icons/field_default_obj.png")));
     // @formatter:on
   }
 
@@ -193,7 +193,7 @@ public class JType_LabelProvider extends AbstractLabelDefinitionProvider impleme
    * <p>
    * </p>
    *
-   * @param key
+   * @param function
    * @return
    */
   protected Function<HGNode, String> convertMethodSignature(Function<HGNode, String> function) {
