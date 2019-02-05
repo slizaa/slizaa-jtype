@@ -12,7 +12,7 @@ import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slizaa.core.boltclient.testfwk.BoltClientConnectionRule;
-import org.slizaa.hierarchicalgraph.core.algorithms.AdjacencyMatrix;
+import org.slizaa.hierarchicalgraph.core.algorithms.GraphUtils;
 import org.slizaa.hierarchicalgraph.core.model.HGNode;
 import org.slizaa.hierarchicalgraph.core.model.HGRootNode;
 import org.slizaa.hierarchicalgraph.graphdb.mapping.service.MappingFactory;
@@ -47,7 +47,7 @@ public class JTypeMapperTest {
         .list(record -> rootNode.lookupNode(record.get("id(p)").asLong()));
 
     //
-    int[][] dependencies = AdjacencyMatrix.computeAdjacencyMatrix(packageNodes);
+    int[][] dependencies = GraphUtils.computeAdjacencyMatrix(packageNodes);
 
     //
     assertThat(dependencies).isEqualTo(new int[][] { { 372, 75, 1, 21, 0, 0, 0, 0, 0, 0, 55, 0, 0, 0, 0, 3 },

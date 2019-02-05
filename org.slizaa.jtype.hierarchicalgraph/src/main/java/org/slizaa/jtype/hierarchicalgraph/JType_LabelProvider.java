@@ -13,34 +13,35 @@ import org.slizaa.hierarchicalgraph.graphdb.mapping.spi.labelprovider.dsl.ILabel
  *
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class JType_LabelProvider extends AbstractLabelDefinitionProvider implements ILabelDefinitionProvider {
+public class JType_LabelProvider extends AbstractLabelDefinitionProvider
+		implements ILabelDefinitionProvider, JType_Constants {
 
-  /** - */
-  private boolean                     _showFullyQualifiedName;
+	/** - */
+	private boolean _showFullyQualifiedName;
 
-  /** - */
-  private final MethodSignatureParser _methodSignatureParser;
+	/** - */
+	private final MethodSignatureParser _methodSignatureParser;
 
-  /**
-   * <p>
-   * </p>
-   *
-   * @param showFullyQualifiedName
-   */
-  public JType_LabelProvider(boolean showFullyQualifiedName) {
-    this._showFullyQualifiedName = showFullyQualifiedName;
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @param showFullyQualifiedName
+	 */
+	public JType_LabelProvider(boolean showFullyQualifiedName) {
+		this._showFullyQualifiedName = showFullyQualifiedName;
 
-    //
-    this._methodSignatureParser = new MethodSignatureParser();
-  }
+		//
+		this._methodSignatureParser = new MethodSignatureParser();
+	}
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  protected ILabelDefinitionProcessor createLabelDefinitionProcessor() {
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected ILabelDefinitionProcessor createLabelDefinitionProcessor() {
 
-    // @formatter:off
+	// @formatter:off
 		return exclusiveChoice().
 
         // Group
@@ -65,138 +66,141 @@ public class JType_LabelProvider extends AbstractLabelDefinitionProvider impleme
         when(nodeHasLabel("Field")).then(handleField()).
 
 				// all other nodes
-				otherwise(setBaseImage("icons/jar_obj.png").and(setLabelText(propertyValue("name"))));
+				otherwise(setBaseImage(ICONS_JAR_OBJ_SVG).and(setLabelText(propertyValue("name"))));
 
 		// @formatter:on
-  }
+	}
 
-  private ILabelDefinitionProcessor handleGroup() {
-    return setBaseImage("icons/fldr_obj.png").and(setLabelText(propertyValue("name")));
-  }
+	private ILabelDefinitionProcessor handleGroup() {
+		return setBaseImage(ICONS_FLDR_OBJ_SVG).and(setLabelText(propertyValue("name")));
+	}
 
-  /**
-   * <p>
-   * </p>
-   *
-   * @return
-   */
-  protected ILabelDefinitionProcessor handleModule() {
-    return setBaseImage("icons/jar_obj.png").and(setLabelText(propertyValue("name")));
-  }
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @return
+	 */
+	protected ILabelDefinitionProcessor handleModule() {
+		return setBaseImage(ICONS_JAR_OBJ_SVG).and(setLabelText(propertyValue("name")));
+	}
 
-  /**
-   * <p>
-   * </p>
-   *
-   * @return
-   */
-  protected ILabelDefinitionProcessor handleDirectory() {
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @return
+	 */
+	protected ILabelDefinitionProcessor handleDirectory() {
 
-    // @formatter:off
+	// @formatter:off
 		return exclusiveChoice().
 
 		// Packages
-		when(nodeHasLabel("Package")).then(setBaseImage("icons/package_obj.png")
+		when(nodeHasLabel("Package")).then(setBaseImage(ICONS_PACKAGE_OBJ_SVG)
 				.and(setLabelText(propertyValue(this._showFullyQualifiedName ? "fqn" : "name", str -> str.replace('/', '.'))))).
 
 		// Directories
-		otherwise(setBaseImage("icons/fldr_obj.png").and(setLabelText(propertyValue(this._showFullyQualifiedName ? "fqn" : "name"))));
+		otherwise(setBaseImage(ICONS_FLDR_OBJ_SVG).and(setLabelText(propertyValue(this._showFullyQualifiedName ? "fqn" : "name"))));
 		// @formatter:on
-  }
+	}
 
-  private ILabelDefinitionProcessor handleResource() {
+	private ILabelDefinitionProcessor handleResource() {
 
-    // @formatter:off
+	// @formatter:off
 		return executeAll(
 
 				exclusiveChoice().when(nodeHasLabel("ClassFile"))
-						.then(setBaseImage("icons/classf_obj.png"))
-						.otherwise(setBaseImage("icons/file_obj.png")),
+						.then(setBaseImage(ICONS_CLASSF_OBJ_SVG))
+						.otherwise(setBaseImage(ICONS_FILE_OBJ_SVG)),
 
 				setLabelText(propertyValue("name")));
 		// @formatter:on
-  }
+	}
 
-  /**
-   * <p>
-   * </p>
-   *
-   * @return
-   */
-  protected ILabelDefinitionProcessor handleType() {
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @return
+	 */
+	protected ILabelDefinitionProcessor handleType() {
 
-    // @formatter:off
+	// @formatter:off
 		return executeAll(
 
 				setLabelText(propertyValue("name")),
+				setIsOverlayImage(true),
 
 				when(nodeHasProperty("final"))
-						.then(setOverlayImage("icons/class_obj.png", OverlayPosition.TOP_RIGHT)),
+						.then(setOverlayImage(ICONS_CLASS_OBJ_SVG, OverlayPosition.TOP_RIGHT)),
 
-				when(nodeHasLabel("Class")).then(setBaseImage("icons/class_obj.png")),
+				when(nodeHasLabel("Class")).then(setBaseImage(ICONS_CLASS_OBJ_SVG)),
 
-				when(nodeHasLabel("Annotation")).then(setBaseImage("icons/annotation_obj.png")),
+				when(nodeHasLabel("Annotation")).then(setBaseImage(ICONS_ANNOTATION_OBJ_SVG)),
 
-				when(nodeHasLabel("Enum")).then(setBaseImage("icons/enum_obj.png")),
+				when(nodeHasLabel("Enum")).then(setBaseImage(ICONS_ENUM_OBJ_SVG)),
 
-				when(nodeHasLabel("Interface")).then(setBaseImage("icons/int_obj.png")));
+				when(nodeHasLabel("Interface")).then(setBaseImage(ICONS_INT_OBJ_SVG)));
 		// @formatter:on
-  }
+	}
 
-  /**
-   * <p>
-   * </p>
-   *
-   * @return
-   */
-  protected ILabelDefinitionProcessor handleMethod() {
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @return
+	 */
+	protected ILabelDefinitionProcessor handleMethod() {
 
-    // @formatter:off
+	// @formatter:off
     return executeAll(
 
         setLabelText(convertMethodSignature(propertyValue("fqn"))),
+        setIsOverlayImage(true),
 
-        when(nodeHasPropertyWithValue("visibility", "public")).then(setBaseImage("icons/methpub_obj.png")),
+        when(nodeHasPropertyWithValue("visibility", "public")).then(setBaseImage(ICONS_METHPUB_OBJ_SVG)),
 
-        when(nodeHasPropertyWithValue("visibility", "private")).then(setBaseImage("icons/methpri_obj.png")),
+        when(nodeHasPropertyWithValue("visibility", "private")).then(setBaseImage(ICONS_METHOD_PRIVATE_OBJ_SVG)),
 
-        when(nodeHasPropertyWithValue("visibility", "protected")).then(setBaseImage("icons/methpri_obj.png")),
+        when(nodeHasPropertyWithValue("visibility", "protected")).then(setBaseImage(ICONS_METHOD_PROTECTED_OBJ_SVG)),
 
-        when(nodeHasPropertyWithValue("visibility", "default")).then(setBaseImage("icons/methdef_obj.png")));
+        when(nodeHasPropertyWithValue("visibility", "default")).then(setBaseImage(ICONS_METHDEF_OBJ_SVG)));
     // @formatter:on
-  }
+	}
 
-  /**
-   * <p>
-   * </p>
-   *
-   * @return
-   */
-  protected ILabelDefinitionProcessor handleField() {
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @return
+	 */
+	protected ILabelDefinitionProcessor handleField() {
 
-    // @formatter:off
+	// @formatter:off
     return executeAll(
 
         setLabelText(propertyValue("fqn")),
+        setIsOverlayImage(true),
 
-        when(nodeHasPropertyWithValue("visibility", "public")).then(setBaseImage("icons/field_public_obj.png")),
+        when(nodeHasPropertyWithValue("visibility", "public")).then(setBaseImage(ICONS_FIELD_PUBLIC_OBJ_SVG)),
 
-        when(nodeHasPropertyWithValue("visibility", "private")).then(setBaseImage("icons/field_private_obj.png")),
+        when(nodeHasPropertyWithValue("visibility", "private")).then(setBaseImage(ICONS_FIELD_PRIVATE_OBJ_SVG)),
 
-        when(nodeHasPropertyWithValue("visibility", "protected")).then(setBaseImage("icons/field_protected_obj.png")),
+        when(nodeHasPropertyWithValue("visibility", "protected")).then(setBaseImage(ICONS_FIELD_PROTECTED_OBJ_SVG)),
 
-        when(nodeHasPropertyWithValue("visibility", "default")).then(setBaseImage("icons/field_default_obj.png")));
+        when(nodeHasPropertyWithValue("visibility", "default")).then(setBaseImage(ICONS_FIELD_DEFAULT_OBJ_SVG)));
     // @formatter:on
-  }
+	}
 
-  /**
-   * <p>
-   * </p>
-   *
-   * @param function
-   * @return
-   */
-  protected Function<HGNode, String> convertMethodSignature(Function<HGNode, String> function) {
-    return (node) -> this._methodSignatureParser.parse(function.apply(node));
-  }
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @param function
+	 * @return
+	 */
+	protected Function<HGNode, String> convertMethodSignature(Function<HGNode, String> function) {
+		return (node) -> this._methodSignatureParser.parse(function.apply(node));
+	}
 }
