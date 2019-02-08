@@ -132,8 +132,8 @@ public class JType_LabelProvider extends AbstractLabelDefinitionProvider
 				setLabelText(propertyValue("name")),
 				setIsOverlayImage(true),
 
-				when(nodeHasProperty("final"))
-						.then(setOverlayImage(ICONS_CLASS_OBJ_SVG, OverlayPosition.TOP_RIGHT)),
+/*				when(nodeHasProperty("final"))
+						.then(setOverlayImage(ICO, OverlayPosition.TOP_RIGHT)),*/
 
 				when(nodeHasLabel("Class")).then(setBaseImage(ICONS_CLASS_OBJ_SVG)),
 
