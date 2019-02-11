@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-	 width="20px" height="20px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">
-<rect x="124.042" y="126.064" fill="#E1CCA7" stroke="#DABF91" stroke-miterlimit="10" width="748.542" height="747.78"/>
-<rect x="61.5" y="438.5" fill="#AF9478" width="876.239" height="125"/>
-<rect x="436.5" y="63.749" fill="#AF9478" width="125" height="873.14"/>
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="1000px" height="1000px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">
+<g>
+	<rect x="178.123" y="179.312" fill="#E1CCA7" stroke="#DABF91" stroke-miterlimit="10" width="639.521" height="642.749"/>
+	<rect x="124.69" y="447.864" fill="#AF9478" width="748.619" height="107.442"/>
+	<rect x="445.073" y="125.75" fill="#AF9478" width="106.795" height="750.5"/>
+</g>
 </svg>
