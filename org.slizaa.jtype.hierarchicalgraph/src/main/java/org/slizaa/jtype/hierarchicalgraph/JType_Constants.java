@@ -20,6 +20,8 @@ public interface JType_Constants {
 	  
 	  final String ICONS_PACKAGE_OBJ_SVG = "icons/package_obj.svg";
 	  
+	  final String ICONS_CLASSF_OBJ_SVG = "icons/classf_obj.svg";
+
 	  // TODO!
 	  final String ICONS_FIELD_DEFAULT_OBJ_SVG = "icons/field_default_obj.png";
 
@@ -33,7 +35,7 @@ public interface JType_Constants {
 
 	  final String ICONS_METHPUB_OBJ_SVG = "icons/methpub_obj.png";
 
-	  final String ICONS_FILE_OBJ_SVG = "icons/file_obj.png";
+	  final String ICONS_FILE_OBJ_SVG = "icons/classf_obj.svg";
 
-	  final String ICONS_CLASSF_OBJ_SVG = "icons/classf_obj.png";
+
 }
