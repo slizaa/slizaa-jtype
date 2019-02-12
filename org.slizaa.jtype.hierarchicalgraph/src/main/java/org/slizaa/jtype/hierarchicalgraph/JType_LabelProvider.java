@@ -66,7 +66,7 @@ public class JType_LabelProvider extends AbstractLabelDefinitionProvider
         when(nodeHasLabel("Field")).then(handleField()).
 
 				// all other nodes
-				otherwise(setBaseImage(ICONS_JAR_OBJ_SVG).and(setLabelText(propertyValue("name"))));
+				otherwise(setBaseImage(ICONS_JAR_OBJ_SVG).and(setLabelText(propertyValue("fqn"))));
 
 		// @formatter:on
 	}
